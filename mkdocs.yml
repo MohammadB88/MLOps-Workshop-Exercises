@@ -1,5 +1,6 @@
 # MkDocs configuration file
 site_name: MLOps Workshop
+copyright: Copyright &copy; Mohammad Bahmani 2024
 
 theme:
   name: material
@@ -14,9 +15,9 @@ theme:
     admonition:
       example: octicons/terminal-24
 
-  logo: assets/images/mlops-workshop-logo.jpeg
+  logo: assets/images/mlops-workshop-icon.jpeg
   language: en
-  favicon: assets/images/mlops-workshop-logo.jpeg
+  favicon: assets/images/mlops-workshop-icon.jpeg
 
   features:
     - content.code.annotate
@@ -73,7 +74,7 @@ markdown_extensions:
         - includes/abbreviations.md
       base_path:
         - .
-        -  docs/ansible-core/snippets
+        - docs/ansible-core/snippets
         - docs/automation-platform/snippets
         - docs/projects/cloud-automation/snippets
         - docs/projects/linux-automation/snippets
@@ -102,11 +103,16 @@ extra:
 
 extra_css:
   - assets/stylesheets/tables.css
-  
+
 extra_javascript:
   - assets/javascripts/extra/refresh-on-toggle-dark-light.js
   - assets/javascripts/extra/tablesort.min.js
   - assets/javascripts/extra/tablesort.js
 
 
-copyright: Copyright &copy; Mohammad Bahmani 2024
+# Navigation definition
+nav:
+  - "Workshop Overview":
+    - index.md
+  - "MLOps training":
+    - mlops.md
