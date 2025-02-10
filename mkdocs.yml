@@ -1,16 +1,33 @@
+# MkDocs configuration file
 site_name: MLOps Workshop
 
 theme:
   name: material
-  font: 
-    text: Merriweather Sans
-    code: Red Hat Mono
+  custom_dir: docs/assets/overrides
+
+  # font: 
+  #   text: Merriweather Sans
+  #   code: Red Hat Mono
   
+  icon:
+    repo: fontawesome/brands/github
+    admonition:
+      example: octicons/terminal-24
+
   logo: assets/images/mlops-workshop-logo.jpeg
+  language: en
   favicon: assets/images/mlops-workshop-logo.jpeg
 
   features:
-    - navigation.footer
+    - content.code.annotate
+    - content.code.copy
+    - navigation.indexes
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - search.suggest
 
   palette:    
     # Dark Mode
@@ -30,25 +47,48 @@ theme:
       accent: deep orange
 
 markdown_extensions:
+  - abbr
+  - admonition
   - attr_list
+  - def_list
+  - md_in_html
+  - pymdownx.critic
+  - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.highlight:
       anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
+      use_pygments: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+      base_path:
+        - .
+        -  docs/ansible-core/snippets
+        - docs/automation-platform/snippets
+        - docs/projects/cloud-automation/snippets
+        - docs/projects/linux-automation/snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-  - admonition
-  - pymdownx.details
+  - tables
+  - toc:
+      title: On this page
+
+# Add Repo URL and Repo Name
+repo_url: https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
+repo_name: mohammad/mlops-workshop-exercises
 
 # Add links to my social accounts
 extra:
@@ -59,5 +99,14 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/mohammad-bahmani-ph-d-03810978/
       name: LinkedIn Profile
+
+extra_css:
+  - assets/stylesheets/tables.css
+  
+extra_javascript:
+  - assets/javascripts/extra/refresh-on-toggle-dark-light.js
+  - assets/javascripts/extra/tablesort.min.js
+  - assets/javascripts/extra/tablesort.js
+
 
 copyright: Copyright &copy; Mohammad Bahmani 2024
