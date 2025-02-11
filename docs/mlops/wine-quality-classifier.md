@@ -23,6 +23,38 @@ Now that the model and its dependecies are pushed to the Github repository, we a
   <figcaption></figcaption>
 </figure>
 
+There are two important hints:
+
+* Take care of the specific permissions for images deployed on Openshift cluster.
+```
+RUN chgrp -R 0 /opt && chmod -R g=u /opt
+```
+
+* Configuring BuildConfig from Formular is prone to error. So use the below template and adjust the corresponding variables.
+```yaml title="BuildConfig" linenums="1" hl_lines="10-21"
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  namespace: BUILD_CONFIG_NAMESPACE
+  name: BUILD_CONFIG_NAME
+spec:
+  source:
+    type: Git
+    git:
+      uri: 'https://GIT_REPO_URL'
+    contextDir: /GENERATE_DIRECTORY_CONTAINER_FILE
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: 'python:3.9.4-slim'
+  output:
+    to:
+      kind: ImageStreamTag
+      name: model-clf:1.0
+```
+
 As shown in the image, we should create an *ImageStream* resource and then a BuildConfig to configure the image building process.
 
 When the container is running and the model API is ready, we can send a test requests as follows:
@@ -71,3 +103,4 @@ When the app is deployed and reachable through its route, we can test the model 
 
 
 ### 6. Model and Data Monitoring 
+
