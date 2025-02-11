@@ -114,5 +114,8 @@ extra_javascript:
 nav:
   - "Workshop Overview":
     - index.md
+    - demo-environment/red-hat-demo-environment.md
   - "MLOps training":
-    - mlops.md
+    - mlops-overview.md
+    - mlops/mlops-prerequisites.md
+    - mlops/wine-quality-classifier.md
