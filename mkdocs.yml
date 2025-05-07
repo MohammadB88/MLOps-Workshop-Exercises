@@ -119,3 +119,4 @@ nav:
     - mlops-overview.md
     - mlops/mlops-prerequisites.md
     - mlops/wine-quality-classifier.md
+    - mlops/bike-demand-forecasting.md

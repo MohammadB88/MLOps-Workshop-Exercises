@@ -10,9 +10,24 @@ Inside the first notebook we read the input data and perform some data explorati
 Processed data will be then splitted into 3 datasets, *train_dataset*, *test_dataset*, and *perfomance_dataset* and stored in the corresponding directories. 
 
 ### 2. Model Training and registration as well as Experment tracking
-We take the preprocessed data and start training a model.
+We take the preprocessed data and start training a model. The trained model as well as its performance and artifacts can be tracked using **MLflow**. 
+
+Usually, data scientists will not be satisfied with the first try. Hence, they will experiment with various sets of hyperparameters and different models. Next, these experiments will be compared on MLflow UI and the model with the best performance will be selected. 
+
+curl -X GET 'https://{us-south.ml.cloud.ibm.com}/ml/v1/foundation_model_specs?version=2024-07-25&filters=function_embedding'
+
 
 ### 3. Local model depoloyment with the help of MLflow
+This model can be deployed locally using 
+```
+mlflow models serve -m "models:/MODEL_NAME/MODEL_VERSION" --env-manager local --no-conda
+```
+
+But before starting the mlflow model server, the varialbe *MLFLOW_TRACKING_URI* should be defined:
+```
+export MLFLOW_TRACKING_URI=http://mlflow-mlflow.apps.cluster-db46l.dynamic.redhatworkshops.io
+```
+
 
 ### 4. Model packaging and deplyoment on the Openshift cluster
 Now that the model and its dependecies are pushed to the Github repository, we are ready to go to the openshift cluster and start building a container image for the model and deploying it on the cluster. finally we use the deployed model API to send prediction requests using a frontend application.
@@ -26,8 +41,14 @@ Now that the model and its dependecies are pushed to the Github repository, we a
 There are two important hints:
 
 * Take care of the specific permissions for images deployed on Openshift cluster.
+
+This line 
 ```
 RUN chgrp -R 0 /opt && chmod -R g=u /opt
+```
+should be added to the *Dockerfile* After below line:
+```
+RUN chmod o+rwX /opt/mlflow/
 ```
 
 * Configuring BuildConfig from Formular is prone to error. So use the below template and adjust the corresponding variables.
