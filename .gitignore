@@ -4,6 +4,9 @@ prompts/
 # Metadata in local mlflow sever
 mlruns/
 
+# Trained Models 
+workshop_materials/bike_demand_forecasting/models/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
