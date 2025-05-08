@@ -1,6 +1,9 @@
 # Prompts written for ChatGPT
 prompts/
 
+# Metadata in local mlflow sever
+mlruns/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
