@@ -1,4 +1,4 @@
-# 2 - Wine Quality Classifier
+# Wine Quality Classifier
 
 ## Objective
 In this exercise there are 4 steps from data to deployed model onto the openshift cluster.

@@ -112,11 +112,12 @@ extra_javascript:
 
 # Navigation definition
 nav:
-  - "Workshop Overview":
+  - "Home":
     - index.md
-    - demo-environment/red-hat-demo-environment.md
-  - "MLOps training":
+  - "What is MLOps?":
     - mlops-overview.md
-    - mlops/mlops-prerequisites.md
+    - demo-environment/red-hat-demo-environment.md
+  - "Hands-on Labs":
+    - workshop-overview.md
     - mlops/wine-quality-classifier.md
     - mlops/bike-demand-forecasting.md
