@@ -1,0 +1,252 @@
+{
+  "doc_type": "pipeline",
+  "version": "3.0",
+  "json_schema": "http://api.dataplatform.ibm.com/schemas/common-pipeline/pipeline-flow/pipeline-flow-v3-schema.json",
+  "id": "elyra-auto-generated-pipeline",
+  "primary_pipeline": "primary",
+  "pipelines": [
+    {
+      "id": "primary",
+      "nodes": [
+        {
+          "id": "70a640d2-6215-470d-a06a-40900c45f3dc",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [
+                "requirements.txt"
+              ],
+              "include_subdirectories": false,
+              "outputs": [
+                "processed_data.zip"
+              ],
+              "env_vars": [],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "01_data_exploration.ipynb"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "01_data_exploration.ipynb",
+              "image": "/notebook/bike-demand/bike-demand-wb/static/elyra/notebook.svg",
+              "x_pos": 71,
+              "y_pos": 188,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              }
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "16632b2e-7ccf-4750-9206-400981b34b1b",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [
+                "requirements.txt"
+              ],
+              "include_subdirectories": false,
+              "outputs": [
+                "models"
+              ],
+              "env_vars": [],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "02_model_training.ipynb"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "02_model_training.ipynb",
+              "image": "/notebook/bike-demand/bike-demand-wb/static/elyra/notebook.svg",
+              "x_pos": 121,
+              "y_pos": 332,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "78a91e21-9c67-4147-9a03-faa53e198a9f",
+                  "node_id_ref": "70a640d2-6215-470d-a06a-40900c45f3dc",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "b1a70ed0-cdc7-46dc-b3ad-bee0e4ab9b9d",
+          "type": "execution_node",
+          "op": "execute-notebook-node",
+          "app_data": {
+            "component_parameters": {
+              "dependencies": [
+                "requirements.txt"
+              ],
+              "include_subdirectories": false,
+              "outputs": [
+                "reports"
+              ],
+              "env_vars": [],
+              "kubernetes_pod_annotations": [],
+              "kubernetes_pod_labels": [],
+              "kubernetes_secrets": [],
+              "kubernetes_shared_mem_size": {},
+              "kubernetes_tolerations": [],
+              "mounted_volumes": [],
+              "filename": "04_drift_reports.ipynb"
+            },
+            "label": "",
+            "ui_data": {
+              "label": "04_drift_reports.ipynb",
+              "image": "/notebook/bike-demand/bike-demand-wb/static/elyra/notebook.svg",
+              "x_pos": 206,
+              "y_pos": 479,
+              "description": "Run notebook file"
+            }
+          },
+          "inputs": [
+            {
+              "id": "inPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Input Port"
+                }
+              },
+              "links": [
+                {
+                  "id": "01d5b5d4-3e25-41c8-b0da-e92247c7166f",
+                  "node_id_ref": "16632b2e-7ccf-4750-9206-400981b34b1b",
+                  "port_id_ref": "outPort"
+                }
+              ]
+            }
+          ],
+          "outputs": [
+            {
+              "id": "outPort",
+              "app_data": {
+                "ui_data": {
+                  "cardinality": {
+                    "min": 0,
+                    "max": -1
+                  },
+                  "label": "Output Port"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "app_data": {
+        "ui_data": {
+          "comments": []
+        },
+        "version": 8,
+        "runtime_type": "KUBEFLOW_PIPELINES",
+        "properties": {
+          "name": "bike-demand",
+          "runtime": "Data Science Pipelines",
+          "pipeline_defaults": {
+            "kubernetes_pod_labels": [],
+            "kubernetes_tolerations": [],
+            "kubernetes_pod_annotations": [],
+            "mounted_volumes": [],
+            "kubernetes_shared_mem_size": {},
+            "kubernetes_secrets": [
+              {
+                "env_var": "AWS_SECRET_ACCESS_KEY",
+                "name": "minio-bike",
+                "key": "AWS_SECRET_ACCESS_KEY"
+              },
+              {
+                "env_var": "AWS_S3_ENDPOINT",
+                "name": "minio-bike",
+                "key": "AWS_S3_ENDPOINT"
+              },
+              {
+                "env_var": "AWS_S3_BUCKET",
+                "name": "minio-bike",
+                "key": "AWS_S3_BUCKET"
+              },
+              {
+                "env_var": "AWS_ACCESS_KEY_ID",
+                "name": "minio-bike",
+                "key": "AWS_ACCESS_KEY_ID"
+              }
+            ],
+            "env_vars": [],
+            "runtime_image": "quay.io/modh/runtime-images@sha256:d107b3a514c5df24a5640a4c4d51a580a83cddac2659da2e3855c4a5e9987e1c"
+          }
+        }
+      },
+      "runtime_ref": ""
+    }
+  ],
+  "schemas": []
+}
