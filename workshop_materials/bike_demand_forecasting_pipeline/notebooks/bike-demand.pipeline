@@ -21,7 +21,12 @@
               "outputs": [
                 "processed_data.zip"
               ],
-              "env_vars": [],
+              "env_vars": [
+                {
+                  "env_var": "RUN_NUMBER",
+                  "value": "15"
+                }
+              ],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
               "kubernetes_secrets": [],
@@ -81,7 +86,16 @@
               "outputs": [
                 "models"
               ],
-              "env_vars": [],
+              "env_vars": [
+                {
+                  "env_var": "RUN_NUMBER",
+                  "value": "15"
+                },
+                {
+                  "env_var": "MLFLOW_TRACKING_URI",
+                  "value": "http://mlflow-tracking.mlflow.svc.cluster.local:80"
+                }
+              ],
               "kubernetes_pod_annotations": [],
               "kubernetes_pod_labels": [],
               "kubernetes_secrets": [],
