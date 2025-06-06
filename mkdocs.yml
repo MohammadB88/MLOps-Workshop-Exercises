@@ -119,5 +119,5 @@ nav:
     - demo-environment/red-hat-demo-environment.md
   - "Hands-on Labs":
     - workshop-overview.md
-    - mlops/wine-quality-classifier.md
-    - mlops/bike-demand-forecasting.md
+    - "Wine Quality Classifier": mlops/wine-quality-classifier.md
+    - "Bike Demand Forecasting": mlops/bike-demand-forecasting.md

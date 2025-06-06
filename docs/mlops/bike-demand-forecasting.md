@@ -1,6 +1,6 @@
-# Bike Demand Forecasting
+# Forecasting Bike-Sharing Demand and Monitoring Model Performance
 
-## 🚲 Introduction: Forecasting Bike-Sharing Demand and Monitoring Model Performance
+## 🚲 Introduction
 
 In urban environments, bike-sharing systems have emerged as a sustainable and efficient mode of transportation. Accurately predicting bike rental demand is crucial for optimizing operations, ensuring bike availability, and enhancing user satisfaction.
 
@@ -31,30 +31,37 @@ bike_demand_forecasting/
 
 ## Prerequisites
 
-## Steps
+### Environment
+You can use your own *JupyterLab* environment.
 
-## 📘 Hands-On Walkthrough: Step-by-Step Notebook Execution
+Otherwise, use the provided *JupyterLab* environment, which comes pre-configured and ready to use. Log in to this environment with *username* and *password* provided in during the workshop.
 
+### Code
+Clone the workshop repository into your environment using the following command in a terminal:
+```
+git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
+```
+
+Or use the functions provided in the environment, as shown in this image:
+
+![jupyterlab_git_clone1.png](../assets/images/jupyterlab_git_clone1.png)
+![jupyterlab_git_clone2.png](../assets/images/jupyterlab_git_clone2.png)
+
+
+## 📘 Hands-On Walkthrough
 To build a strong foundation in MLOps, participants will begin by executing each stage of the machine learning workflow manually. This hands-on approach helps solidify the concepts and understand how data and models progress through the pipeline.
 
-### 🔧 Instructions:
-1. Use the provided JupyterLab environment, which comes pre-configured and ready to use. No additional setup is required.
+### 🔧 Instructions
 
-2. Clone the workshop repository into your environment using the following command in a terminal:
-```
-git clone https://github.com/<your-org-or-username>/bike_demand_forecasting.git
-cd bike_demand_forecasting
-```
-
-3. Open and execute the notebooks sequentially from the notebooks/ directory:
+1. Open and execute the notebooks sequentially from the notebooks/ directory:
     - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
     - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
     - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
     - `04_drift_reports.ipynb` – Monitor data and model drift using Evidently.
 
-4. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
+2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
 
-5. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
+3. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
 
 This guided manual execution lays the groundwork for understanding the lifecycle of ML systems before integrating more advanced practices.
 

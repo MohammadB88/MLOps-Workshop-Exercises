@@ -61,3 +61,38 @@ TODO
   ![ansible rhel lab diagram](rhel_lab_diagram.png){ loading=lazy }
   <figcaption></figcaption>
 </figure> -->
+
+
+
+### From other sources:
+
+Machine learning models require extra consideration for monitoring models in production and retraining if the performance declines. 
+
+The engineering practice of MLOps leverages three contributing disciplines: machine learning, software 
+engineering (especially DevOps), and data engineering. The goal of MLOps is to bridge the gap between 
+development (Dev) and operations (Ops) and create a repeatable process for training, deploying, 
+monitoring, and updating machine learning models. 
+
+MLOps provides tools and processes so that collaborators can contribute their part to achieve a seamless flow from model request to deploying models to solve business problems. 
+
+Key components of the MLOps pipeline are: 
+• Data management 
+• Model development 
+• Model deployment 
+• Monitoring and optimization 
+• Collaboration and governance
+
+
+**HOW A USECASE FOR A MLOPS WORKSHOP SHOULD LOOKE LIKE:**
+
+An insurance company has data on their customers that includes customer information, policies, and 
+claims. The policies include a risk factor calculated using an age-old formula. They want to know if they 
+can improve on it by adding information such as accidents in the Chicago area.  
+The goal is not necessarily to provide a new model to replace the old model but to show how IBM watsonx 
+platform can facilitate MLOps.  
+The project covers five parts.  
+1. Preparing data: exploring the data, adding new data, preparing the data for training 
+2. Developing the model: developing the model via AutoAI, Jupyter notebook, SPSS flow 
+3. Deploying the model: via UI and Jupyter notebooks 
+4. Monitoring the model via OpenScale and AI Factsheets 
+5. Automating the MLOps lifecycle 
