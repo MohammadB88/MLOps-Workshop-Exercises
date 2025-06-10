@@ -1,0 +1,5 @@
+{"temp": 0.32, "atemp": 0.3485, "humidity": 1.0, "windspeed": 0.0, "hour": 1, "weekday": 5, "season": 1, "holiday": 0, "workingday": 1}
+{"temp": 0.46, "atemp": 0.4545, "humidity": 0.31, "windspeed": 0.3881, "hour": 16, "weekday": 3, "season": 1, "holiday": 0, "workingday": 1}
+{"temp": 0.36, "atemp": 0.3333, "humidity": 0.66, "windspeed": 0.2985, "hour": 12, "weekday": 0, "season": 1, "holiday": 0, "workingday": 0}
+{"temp": 0.4, "atemp": 0.4091, "humidity": 0.37, "windspeed": 0.3881, "hour": 9, "weekday": 1, "season": 1, "holiday": 0, "workingday": 1}
+{"temp": 0.14, "atemp": 0.1515, "humidity": 0.74, "windspeed": 0.1343, "hour": 8, "weekday": 5, "season": 1, "holiday": 0, "workingday": 1}

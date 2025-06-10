@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bike-model-api
+  labels:
+    app: bike-model-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bike-model-api
+  template:
+    metadata:
+      labels:
+        app: bike-model-api
+    spec:
+      containers:
+        - name: bike-model-container
+          image: image-registry.openshift-image-registry.svc:5000/bike-demand-model/bike-demand:v1
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MLFLOW_TRACKING_URI
+              value: "https://mlflow-mlflow.apps.cluster-x5r72.dynamic.redhatworkshops.io"
+            - name: MODEL_NAME
+              value: "BikeSharingModel"
+            - name: MODEL_VERSION
+              value: "1"  # Or leave it empty for latest Production version
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bike-model-api
+spec:
+  selector:
+    app: bike-model-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP
