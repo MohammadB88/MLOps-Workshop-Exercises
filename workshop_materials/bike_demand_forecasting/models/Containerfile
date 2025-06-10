@@ -1,5 +1,24 @@
+# ./models/Containerfile
 FROM python:3.11-slim
+
+# ── Install OS dependencies (optional but helpful) ───────────────────────
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential         \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── Set workdir and copy application code ────────────────────────────────
 WORKDIR /app
-COPY bike_model_v1.pkl app.py ./
-RUN pip install fastapi[all] joblib pandas
+COPY app.py ./
+
+# ── Install Python requirements ──────────────────────────────────────────
+# mlflow pulls in scikit-learn, pandas, etc.  --no-cache-dir keeps image small
+RUN pip install --no-cache-dir fastapi uvicorn[standard] mlflow pandas
+
+# ── Environment variables with sensible defaults (override at runtime) ──
+ENV MLFLOW_TRACKING_URI=""
+ENV MODEL_NAME=BikeSharingModel
+# Leave MODEL_VERSION blank to pick the latest Production version
+ENV MODEL_VERSION=""
+
+# ── Entrypoint ───────────────────────────────────────────────────────────
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
