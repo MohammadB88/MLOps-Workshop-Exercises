@@ -5,7 +5,7 @@ prompts/
 mlruns/
 
 # Trained Models 
-workshop_materials/bike_demand_forecasting/models/*
+# workshop_materials/bike_demand_forecasting/models/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
