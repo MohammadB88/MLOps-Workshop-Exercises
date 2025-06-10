@@ -1,9 +1,10 @@
 # Forecasting Bike-Sharing Demand and Monitoring Model Performance
 
+<!-- ![docs\assets\images\bike_sharing_logo.png](docs\assets\images\bike_sharing_logo.png) -->
 
 <figure markdown>
-  ![CC Logo](assets/images/bike_sharing_logo.png#only-light){ width="500" }
-  ![CC Logo](assets/images/bike_sharing_logo.png#only-dark){ width="500" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="500" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="500" }
   <figcaption></figcaption>
 </figure>
 
@@ -34,11 +35,12 @@ Understanding and mitigating this decay is crucial for maintaining reliable pred
 We see the considered features in the below image ([How to break a model in 20 days!](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production)):
 
 <figure markdown>
-  ![CC Logo](assets/images/bike_sharing_features.png#only-light){ width="500" }
-  ![CC Logo](assets/images/bike_sharing_features.png#only-dark){ width="500" }
+  ![bike sharing features](../assets/images/bike_sharing_features.png#only-light){ width="500" }
+  ![bike sharing features](../assets/images/bike_sharing_features.png#only-dark){ width="500" }
   <figcaption></figcaption>
 </figure>
 
+### Data and Considered Featurers
 Here is a list of features that we condsider when training the model:
 
 - hour - hourly  
@@ -60,6 +62,15 @@ Here is a list of features that we condsider when training the model:
 - holiday - whether the day is a holiday
 - workingday - whether the day is a working day (i.e., not a weekend or holiday)
 - count - total number of rentals (target variable)
+
+### Model: Random Forest Regressor 
+The **Random Forest Regressor** is an ensemble machine learning model that builds multiple decision trees and averages their predictions to improve accuracy and reduce overfitting. Each tree is trained on a random subset of the data and features, which introduces diversity and helps generalize better to unseen data. By aggregating the outputs of many weak learners (trees), the model provides robust and stable regression predictions.
+
+It offers a variety of hyperparameters that one can tune to adjust and potentially improve the model’s performance. 
+For this example, we only play with two of these hyperparameters:
+- ``n_estimators``:  Number of decision trees that the model builds (i.e 50, 100, 200, 300, 400)
+
+- ``max_depth``: Maximum depth of each tree (i.e 2, 5, 10)
 
 ## Directory Structure
 
