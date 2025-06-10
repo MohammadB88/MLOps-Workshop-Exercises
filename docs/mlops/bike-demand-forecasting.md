@@ -1,15 +1,65 @@
 # Forecasting Bike-Sharing Demand and Monitoring Model Performance
 
+
+<figure markdown>
+  ![CC Logo](assets/images/bike_sharing_logo.png#only-light){ width="500" }
+  ![CC Logo](assets/images/bike_sharing_logo.png#only-dark){ width="500" }
+  <figcaption></figcaption>
+</figure>
+
+
 ## 🚲 Introduction
 
 In urban environments, bike-sharing systems have emerged as a sustainable and efficient mode of transportation. Accurately predicting bike rental demand is crucial for optimizing operations, ensuring bike availability, and enhancing user satisfaction.
 
-This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand prediction. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
-Analytics Vidhya
+This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand forcasting. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
 
 Beyond model development, maintaining performance in a production environment is vital. Models can degrade over time due to changing data patterns, a phenomenon known as concept drift. To address this, we incorporate monitoring strategies inspired by [Evidently AI's tutorial on production model analytics](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production). This includes setting up regular performance checks and generating interactive reports to detect issues proactively.
 
 By following this guide, you'll gain insights into building a robust machine learning pipeline for bike-sharing demand prediction and implementing effective monitoring to ensure sustained model performance in real-world applications.
+
+## Overview of the Problem
+A company operates a bike-sharing platform and wants to understand and predict bike demand on an hourly basis. To support this, a dataset has been provided containing hourly records enriched with contextual features such as weather, season, and the day of the week.
+
+The goal is to analyze this dataset and develop a machine learning model that can forecast hourly demand for bikes. This problem simulates a real-world scenario where the company only has access to historical data from January and February. Using this limited data, we train a **Random Forest Regressor** to predict future demand.
+
+This setup reflects several practical challenges faced in deploying and maintaining models in production:
+
+- **Data availability and delay:** Usage data may be stored locally and only synced with a central database weekly or even monthly, making real-time monitoring and updates difficult.
+
+- **Gradual model decay:** As time progresses, patterns in user behavior or external conditions (e.g., weather, seasonality) may change. Since the model is trained only on winter data (January and February), its performance may gradually deteriorate as new, unseen seasonal patterns emerge. This phenomenon—where a model's predictive quality declines over time—is known as gradual model decay.
+ 
+Understanding and mitigating this decay is crucial for maintaining reliable predictions in production.
+
+We see the considered features in the below image ([How to break a model in 20 days!](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production)):
+
+<figure markdown>
+  ![CC Logo](assets/images/bike_sharing_features.png#only-light){ width="500" }
+  ![CC Logo](assets/images/bike_sharing_features.png#only-dark){ width="500" }
+  <figcaption></figcaption>
+</figure>
+
+Here is a list of features that we condsider when training the model:
+
+- hour - hourly  
+- weekday - day of the week
+- weather situation (weathersit) - 
+    - 1: Clear, Few clouds, Partly cloudy, Partly cloudy
+    - 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist
+    - 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds
+    - 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog 
+- temp - temperature in Celsius 
+- atemp - "feels like" temperature in Celsius
+- humidity - relative humidity
+- windspeed - wind speed
+- season -  
+    - 1 = spring
+    - 2 = summer
+    - 3 = fall
+    - 4 = winter 
+- holiday - whether the day is a holiday
+- workingday - whether the day is a working day (i.e., not a weekend or holiday)
+- count - total number of rentals (target variable)
 
 ## Directory Structure
 
@@ -20,11 +70,22 @@ bike_demand_forecasting/
 ├── data/
 │   ├── raw/
 │   ├── processed/
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_data_exploration.ipynb
-│   ├── 03_model_deployment.ipynb
-│   └── 04_drift_reports.ipynb
+│   └── test_model/
+├── 01_data_exploration.ipynb
+├── 02_model_training.ipynb
+├── 03_model_deployment.ipynb
+├── 04_model_monitoring.ipynb
+├── models/
+└── reports/
+bike_demand_forecasting_pipeline/
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── test_model/
+├── 01_data_exploration.ipynb
+├── 02_model_training.ipynb
+├── 03_model_deployment.ipynb
+├── 04_model_monitoring.ipynb
 ├── models/
 └── reports/
 ```
@@ -57,7 +118,7 @@ To build a strong foundation in MLOps, participants will begin by executing each
     - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
     - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
     - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
-    - `04_drift_reports.ipynb` – Monitor data and model drift using Evidently.
+    - `04_model_monitoring.ipynb` – Monitor data and model drift using Evidently.
 
 2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
 

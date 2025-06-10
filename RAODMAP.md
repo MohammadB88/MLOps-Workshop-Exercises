@@ -10,12 +10,12 @@ This roadmap outlines the planned features and improvements for the project.
 
 ## 🚧 In Progress
 
-- [ ] Add interactive project showcase
-- [ ] rewrite the instructions and move instructions for gui into its directory
-- [ ] Add instruction for model deployment with vllm (cpu & gpu) in its directory
-- [ ] Add instruction for deployment the milvus vector-database in its directory
-- [ ] Add instruction for model deployment with Nvidia NIM (only gpu) in its directory
-- [ ] Add instruction for VectorDB deployment with AstraDB (Cassandra) 
+- [ ] Add a CD pipeline to package the trained model, generate the image, and update the deployment
+    - [ ] Data Scientists indicate the model version and pipeline should take the model directly from the remote MLflow server
+    - [ ] first version could be that to define the model loading (ENV for model Version and MLflow-Server) in the Containerfile
+    - [ ] Create the Container-Image and the model_api_app to accept the mlflow and model version as ENV-Variable, then I do not have to build the image each time
+- [ ] 
+- [ ] 
 
 ## 🗓️ Upcoming
 
