@@ -3,8 +3,8 @@
 <!-- ![docs\assets\images\bike_sharing_logo.png](docs\assets\images\bike_sharing_logo.png) -->
 
 <figure markdown>
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="500" }
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="500" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="300" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="300" }
   <figcaption></figcaption>
 </figure>
 
@@ -32,6 +32,7 @@ This setup reflects several practical challenges faced in deploying and maintain
  
 Understanding and mitigating this decay is crucial for maintaining reliable predictions in production.
 
+### Data and Considered Featurers
 We see the considered features in the below image ([How to break a model in 20 days!](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production)):
 
 <figure markdown>
@@ -40,7 +41,6 @@ We see the considered features in the below image ([How to break a model in 20 d
   <figcaption></figcaption>
 </figure>
 
-### Data and Considered Featurers
 Here is a list of features that we condsider when training the model:
 
 - hour - hourly  
@@ -68,7 +68,8 @@ The **Random Forest Regressor** is an ensemble machine learning model that build
 
 It offers a variety of hyperparameters that one can tune to adjust and potentially improve the model’s performance. 
 For this example, we only play with two of these hyperparameters:
-- ``n_estimators``:  Number of decision trees that the model builds (i.e 50, 100, 200, 300, 400)
+
+- ``n_estimators``:  Number of decision trees that the model builds (i.e 50, 100, 200)
 
 - ``max_depth``: Maximum depth of each tree (i.e 2, 5, 10)
 
@@ -97,6 +98,7 @@ bike_demand_forecasting_pipeline/
 ├── 02_model_training.ipynb
 ├── 03_model_deployment.ipynb
 ├── 04_model_monitoring.ipynb
+├── bike-demand.pipeline
 ├── models/
 └── reports/
 ```
