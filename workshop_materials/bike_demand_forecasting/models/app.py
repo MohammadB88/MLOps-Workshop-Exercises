@@ -6,7 +6,7 @@ import mlflow
 from mlflow.pyfunc import PyFuncModel
 
 # ── 1. Read configuration from environment ──────────────────────────────
-MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI") # e.g. "https://mlflow-mlflow.apps.cluster-x5r72.…"
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI") # e.g. "https://mlflow_tracking_server.com"
 MODEL_NAME = os.getenv("MODEL_NAME") or "BikeSharingModel"
 MODEL_VERSION = os.getenv("MODEL_VERSION") # e.g. "5"  (optional)
 

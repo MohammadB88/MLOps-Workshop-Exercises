@@ -21,7 +21,7 @@ spec:
             - containerPort: 8000
           env:
             - name: MLFLOW_TRACKING_URI
-              value: "https://mlflow-mlflow.apps.cluster-x5r72.dynamic.redhatworkshops.io"
+              value: "hMLFLOW_REMOTE_TRACKING_SERVER"
             - name: MODEL_NAME
               value: "BikeSharingModel"
             - name: MODEL_VERSION
