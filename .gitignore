@@ -7,6 +7,9 @@ mlruns/
 # Trained Models 
 # workshop_materials/bike_demand_forecasting/models/*
 
+# Generated reports
+workshop_materials/bike_demand_forecasting/reports/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
