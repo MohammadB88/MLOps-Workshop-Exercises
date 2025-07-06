@@ -79,26 +79,26 @@ The bike_demand_forecasting project is organized into modular folders for clarit
 
 ```
 bike_demand_forecasting/
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── test_model/
 ├── 01_data_exploration.ipynb
 ├── 02_model_training.ipynb
 ├── 03_model_deployment.ipynb
 ├── 04_model_monitoring.ipynb
-├── models/
-└── reports/
-bike_demand_forecasting_pipeline/
 ├── data/
 │   ├── raw/
 │   ├── processed/
 │   └── test_model/
+├── models/
+└── reports/
+bike_demand_forecasting_pipeline/
 ├── 01_data_exploration.ipynb
 ├── 02_model_training.ipynb
 ├── 03_model_deployment.ipynb
 ├── 04_model_monitoring.ipynb
 ├── bike-demand.pipeline
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── test_model/
 ├── models/
 └── reports/
 ```
