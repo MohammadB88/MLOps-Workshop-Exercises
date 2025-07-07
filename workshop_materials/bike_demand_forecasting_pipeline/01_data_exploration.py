@@ -15,7 +15,7 @@ import seaborn as sns
 # It includes features such as temperature, humidity, wind speed, and weather conditions.
 # Define URLs and paths
 dataset_url = "https://archive.ics.uci.edu/static/public/275/bike+sharing+dataset.zip"
-data_dir = "../data"
+data_dir = "./data"
 raw_dir = os.path.join(data_dir, "raw")
 
 # Create directories if they don't exist
@@ -115,7 +115,7 @@ for i in range(12):
     
     monthly_data = df.loc[month_start:month_end]
     
-    filename = f"../data/processed/data_{month_start.strftime('%Y_%m')}.csv"
+    filename = f"{data_dir}/processed/data_{month_start.strftime('%Y_%m')}.csv"
     monthly_data.to_csv(filename)
     print(f"Saved {filename}")
 
