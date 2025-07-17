@@ -94,6 +94,7 @@ bike_demand_forecasting_pipeline/
 ├── 02_model_training.py
 ├── 03_model_deployment.py
 ├── 04_model_monitoring.py
+├── pipeline_bike_sharing.py
 ├── bike-demand.pipeline
 ├── data/
 │   ├── raw/
