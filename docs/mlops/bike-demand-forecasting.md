@@ -90,10 +90,10 @@ bike_demand_forecasting/
 ├── models/
 └── reports/
 bike_demand_forecasting_pipeline/
-├── 01_data_exploration.ipynb
-├── 02_model_training.ipynb
-├── 03_model_deployment.ipynb
-├── 04_model_monitoring.ipynb
+├── 01_data_exploration.py
+├── 02_model_training.py
+├── 03_model_deployment.py
+├── 04_model_monitoring.py
 ├── bike-demand.pipeline
 ├── data/
 │   ├── raw/
