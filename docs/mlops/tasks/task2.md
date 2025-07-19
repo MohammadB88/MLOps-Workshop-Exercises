@@ -1,3 +1,17 @@
 # Data Preparations for Model Training
 
 TODO
+
+### 🔧 Instructions
+
+1. Open and execute the notebooks sequentially from the notebooks/ directory:
+    - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
+    - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
+    - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
+    - `04_model_monitoring.ipynb` – Monitor data and model drift using Evidently.
+
+2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
+
+3. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
+
+This guided manual execution lays the groundwork for understanding the lifecycle of ML systems before integrating more advanced practices.

@@ -1,11 +1,9 @@
 # Clone the Repository & Load and Explore the Data
+In this task, we will clone the workshop repository and explore the dataset for bike sharing company.
 
-TODO
-
-### Code
 Clone the workshop repository into your environment using the following command in a terminal:
 ```
-git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
+Git_URL: SSH_URL OR HTTPS ??? https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
 ```
 
 Or use the functions provided in the environment, as shown in this image:
@@ -14,16 +12,13 @@ Or use the functions provided in the environment, as shown in this image:
 ![jupyterlab_git_clone2.png](../assets/images/jupyterlab_git_clone2.png)
 
 
-### 🔧 Instructions
+The Data for bike sharing company can be found under this link. 
 
-1. Open and execute the notebooks sequentially from the notebooks/ directory:
-    - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
-    - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
-    - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
-    - `04_model_monitoring.ipynb` – Monitor data and model drift using Evidently.
+Please copy and pase this link in the first Jupyter-Notebook (`01_data_exploration.ipynb`) in the right place.
+```
+DATASET_URL: https://archive.ics.uci.edu/static/public/275/bike+sharing+dataset.zip
+```
 
-2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
+Now, follow the markdown instructions and run each code cell to explore, clean, and preprocess the dataset.
+Finally, the cleaned dataset will be stored under the directory `data/processed`.
 
-3. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
-
-This guided manual execution lays the groundwork for understanding the lifecycle of ML systems before integrating more advanced practices.

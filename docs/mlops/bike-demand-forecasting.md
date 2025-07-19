@@ -123,7 +123,6 @@ To build a strong foundation in MLOps, participants will begin by executing each
 * [Task 7 - Model & Data Monitoring](tasks/task7.md)
 
 
-
 ### 🔧 Instructions
 
 1. Open and execute the notebooks sequentially from the notebooks/ directory:
