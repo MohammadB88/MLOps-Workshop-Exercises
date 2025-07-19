@@ -109,22 +109,20 @@ bike_demand_forecasting_pipeline/
 ### Environment
 You can use your own *JupyterLab* environment.
 
-Otherwise, use the provided *JupyterLab* environment, which comes pre-configured and ready to use. Log in to this environment with *username* and *password* provided in during the workshop.
+Otherwise, use the provided *JupyterLab* environment, which comes pre-configured and ready to use. Log in to this environment with *username* and *password* provided during the workshop.
 
-### Code
-Clone the workshop repository into your environment using the following command in a terminal:
-```
-git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
-```
-
-Or use the functions provided in the environment, as shown in this image:
-
-![jupyterlab_git_clone1.png](../assets/images/jupyterlab_git_clone1.png)
-![jupyterlab_git_clone2.png](../assets/images/jupyterlab_git_clone2.png)
-
-
-## 📘 Hands-On Walkthrough
+## 📘 Hands-On Sessions
 To build a strong foundation in MLOps, participants will begin by executing each stage of the machine learning workflow manually. This hands-on approach helps solidify the concepts and understand how data and models progress through the pipeline.
+
+* [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
+* [Task 2 - Data Preparations for Model Training](tasks/task2.md)
+* [Task 3 - Model Training & Experiment Tracking](tasks/task3.md)
+* [Task 4 - Review the Experiments & Select the Best Model](tasks/task4.md)
+* [Task 5 - Model Deploymet - Containerize the Endpoint-API](tasks/task5.md)
+* [Task 6 - Model Deploymet - Deploy on OpenShift Cluster](tasks/task6.md)
+* [Task 7 - Model & Data Monitoring](tasks/task7.md)
+
+
 
 ### 🔧 Instructions
 
