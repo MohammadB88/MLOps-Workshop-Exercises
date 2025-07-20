@@ -23,3 +23,5 @@ This allows you to experiment with different configurations.
 
 ### 3. MLflow UI - Compare Runs
 Go to your MLflow UI to compare runs and evaluate model performance based on metrics and parameter choices.
+
+We will see in the next step how to select the best model and register on the same MLflow server it.
