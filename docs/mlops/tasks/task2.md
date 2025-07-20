@@ -1,17 +1,38 @@
 # Data Preparations for Model Training
+In this task, we take the cleaned dataset from the last task and get it ready for model training.
+For that, please open the second notebook, `02_model_training.ipynb`, and follow the instructions below to complete this task.
 
-TODO
+### 1. Load the Processed Data
+Add the cleaned data for the first two month in the appropriate cell
+```bash
+data_2011_01.csv
+data_2011_02.csv
+```
 
-### 🔧 Instructions
+### 2. Set the Categorical Features
+We already have numerical features set. 
+You need only to set these categorical features:
+```bash
+['season', 'holiday', 'workingday', 'weathersit']
+```
 
-1. Open and execute the notebooks sequentially from the notebooks/ directory:
-    - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
-    - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
-    - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
-    - `04_model_monitoring.ipynb` – Monitor data and model drift using Evidently.
+### 3. Split the Data into Training and Test Sets
+Use ``train_test_split`` function from ``sklearn.model_selection`` module:
 
-2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
+Just add this line of code in the appropriate cell, without any changes.
+```bash
+train_test_split(X_input, y_input, test_size=0.3, random_state=42)
+```
 
-3. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
+### 4. Inspect the Split Data
+Check the shape of your training and test sets to confirm the split.
 
-This guided manual execution lays the groundwork for understanding the lifecycle of ML systems before integrating more advanced practices.
+```bash
+print(X_train.shape, X_test.shape)
+```
+
+(Optional) You can also print out the first 5 rows of both training and test data
+
+```bash
+print(X_train.head(), X_test.head()))
+```
