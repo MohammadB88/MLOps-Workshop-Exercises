@@ -1,6 +1,6 @@
-# Git Command CheatSheet
-The most important Git commands are listed here so that you can interact with the Git repository mentioned in the UseCases.
-This cheatsheet is not intended to be exhaustive, but merely serves as a reminder of the most important commands.
+# Git CheatSheet
+This chapter lists the most important and most frequently used Git commands. These commands can be used to interact with the Git repositories mentioned in the use cases.
+
 
 ## Basic Git Commands
 
@@ -18,3 +18,6 @@ This cheatsheet is not intended to be exhaustive, but merely serves as a reminde
 | `git checkout <branch>` | Switch to a branch |
 | `git checkout -b <branch>` | Create and switch to a new branch |
 | `git log` | Show commit logs |
+
+!!! note
+    This cheatsheet is not intended to be exhaustive, but merely serves as a reminder of the most important commands.
