@@ -120,8 +120,6 @@ def train_model(cleaned_dataset_path: InputPath('zip')):
     import os
     import zipfile
     import random
-    from itertools import product
-
     
     from sklearn.model_selection import train_test_split
     from sklearn.ensemble import RandomForestRegressor
@@ -165,54 +163,52 @@ def train_model(cleaned_dataset_path: InputPath('zip')):
     X_train, X_test, y_train, y_test = train_test_split(X_input, y_input, test_size=0.3, random_state=42)
 
     ##################################################################################################
+    # Define and train model
+    n_estimators = 100
+    max_depth=10
+    random_state = 42
+
+    # Train a Regression Model
+    model_randomforest = RandomForestRegressor(
+        n_estimators=n_estimators, 
+        random_state=random_state,
+        max_depth=max_depth
+        )
+    model_randomforest.fit(X_train, y_train)
+    
+    # Predict on test set
+    y_pred = model_randomforest.predict(X_test)
+    
+    # print(y_pred)
+    
+    ##################################################################################################
+    # Model Evaluation Performance
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
+    
+    print(f"RMSE for {n_estimators} number of estimators: {rmse:.2f}")
+    print(f"R² Score for {n_estimators} number of estimators: {r2:.2f}")
+
+    ##################################################################################################
     # Experiment Tracking with MLflow
     MLFLOW_TRACKING_URI = os.getenv("MLFLOW_REMOTE_TRACKING_SERVER")
     mlflow.set_tracking_uri(f"{MLFLOW_TRACKING_URI}")
     mlflow.set_experiment("bike_sharing_model")
     
-    param_grid = {
-    "n_estimators": [50, 100, 150, 200],
-    "max_depth": [5, 10, 15, 20],
-    }
+    random_num = random.randint(1000, 9999)  # generates a 4-digit random number
+    run_name = f"random_forest_baseline_{n_estimators}_{random_num}"
     
-    random_state = 42
-    for n_estimators, max_depth in product(param_grid["n_estimators"], param_grid["max_depth"]):
-            
-        # Train a Regression Model
-        model_randomforest = RandomForestRegressor(
-            n_estimators=n_estimators, 
-            max_depth=max_depth,
-            random_state=random_state
-            )
-        model_randomforest.fit(X_train, y_train)
-        
-        # Predict on test set
-        y_pred = model_randomforest.predict(X_test)
-            
-        ##################################################################################################
-        # Model Evaluation Performance
-        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-        r2 = r2_score(y_test, y_pred)
-        
-        print(f"RMSE for {n_estimators} number of estimators: {rmse:.2f}")
-        print(f"R² Score for {n_estimators} number of estimators: {r2:.2f}")
-        
-        random_num = random.randint(1000, 9999)  # generates a 4-digit random number
-        
-        run_name = f"RF_{n_estimators}_{max_depth}_{random_num}"
-        print(f"This Run Name is {run_name}")
+    print(f"MLflow run name based on the number of estimators: {run_name}")
+
+    with mlflow.start_run(run_name=run_name):
+        mlflow.log_param("model_type", "RandomForest")
+        mlflow.log_param("n_estimators", n_estimators)
     
-        with mlflow.start_run(run_name=run_name):
-            mlflow.log_param("model_type", "RandomForest")
-            mlflow.log_param("n_estimators", n_estimators)
-            mlflow.log_param("max_depth", max_depth)
-            mlflow.log_param("random_state", random_state)
-        
-            mlflow.log_metric("rmse", rmse)
-            mlflow.log_metric("r2", r2)
-        
-            mlflow.sklearn.log_model(model_randomforest, "model")
-            print("Model and metrics logged to MLflow.")
+        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("r2", r2)
+    
+        mlflow.sklearn.log_model(model_randomforest, "model")
+        print("Model and metrics logged to MLflow.")
 
 
 # ****************************************************************************************************
