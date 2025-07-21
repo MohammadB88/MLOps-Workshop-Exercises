@@ -117,6 +117,8 @@ nav:
   - "What is MLOps?":
     - mlops-overview.md
     - demo-environment/red-hat-demo-environment.md
+  - "Git CheatSheet":
+    - git-cheatsheet.md
   - "Hands-on Labs":
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md

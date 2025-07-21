@@ -1,0 +1,20 @@
+# Git Command CheatSheet
+The most important Git commands are listed here so that you can interact with the Git repository mentioned in the UseCases.
+This cheatsheet is not intended to be exhaustive, but merely serves as a reminder of the most important commands.
+
+## Basic Git Commands
+
+| Command | Description |
+|--------|-------------|
+| `git clone <repo>` | Clone an existing repository |
+| `git status` | Show the working directory status |
+| `git add <file>` | Add a file to the staging area |
+| `git add .` | Add all files to the staging area |
+| `git commit -m "message"` | Commit changes with a message |
+| `git push` | Push changes to the remote repository |
+| `git pull` | Fetch and merge changes from the remote repository |
+| `git branch` | List all branches |
+| `git branch <name>` | Create a new branch |
+| `git checkout <branch>` | Switch to a branch |
+| `git checkout -b <branch>` | Create and switch to a new branch |
+| `git log` | Show commit logs |
