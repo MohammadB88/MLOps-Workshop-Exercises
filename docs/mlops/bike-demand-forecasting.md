@@ -69,9 +69,9 @@ The **Random Forest Regressor** is an ensemble machine learning model that build
 It offers a variety of hyperparameters that one can tune to adjust and potentially improve the model’s performance. 
 For this example, we only play with two of these hyperparameters:
 
-- ``n_estimators``:  Number of decision trees that the model builds (i.e 50, 100, 200)
+- ``n_estimators``:  Number of decision trees that the model builds (i.e 50, 100, 150, 200)
 
-- ``max_depth``: Maximum depth of each tree (i.e 2, 5, 10)
+- ``max_depth``: Maximum depth of each tree (i.e 5, 10, 15, 20)
 
 ## Directory Structure
 
@@ -90,17 +90,7 @@ bike_demand_forecasting/
 ├── models/
 └── reports/
 bike_demand_forecasting_pipeline/
-├── 01_data_exploration.py
-├── 02_model_training.py
-├── 03_model_deployment.py
-├── 04_model_monitoring.py
 ├── pipeline_bike_sharing.py
-├── bike-demand.pipeline
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── test_model/
-├── models/
 └── reports/
 ```
 
@@ -114,6 +104,10 @@ Otherwise, use the provided *JupyterLab* environment, which comes pre-configured
 ## 📘 Hands-On Sessions
 To build a strong foundation in MLOps, participants will begin by executing each stage of the machine learning workflow manually. This hands-on approach helps solidify the concepts and understand how data and models progress through the pipeline.
 
+💡 **Note One:** Workshop materials for **tasks 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
+
+💡 **Note Two:** Workshop materials for **tasks 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
+
 * [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
 * [Task 2 - Data Preparations for Model Training](tasks/task2.md)
 * [Task 3 - Model Training & Experiment Tracking](tasks/task3.md)
@@ -121,80 +115,7 @@ To build a strong foundation in MLOps, participants will begin by executing each
 * [Task 5 - Model Deploymet - Containerize the Endpoint-API](tasks/task5.md)
 * [Task 6 - Model Deploymet - Deploy on OpenShift Cluster](tasks/task6.md)
 * [Task 7 - Model & Data Monitoring](tasks/task7.md)
+* [Task 8 - Automating the Workflow with ***Kubeflow Pipelines***](tasks/task8_kubeflow.md)
+* [Task 9 - Automating the Workflow with ***Elyra Pipelines***](tasks/task9_elyra.md)
 
 
-### 🔧 Instructions
-
-1. Open and execute the notebooks sequentially from the notebooks/ directory:
-    - `01_data_exploration.ipynb` – Explore, clean, and preprocess the dataset.
-    - `02_model_training.ipynb` – Train the machine learning model and track experiments with MLflow.
-    - `03_model_deployment.ipynb` – Package the trained model, expose it via a REST API, and deploy it in a containerized environment.
-    - `04_model_monitoring.ipynb` – Monitor data and model drift using Evidently.
-
-2. Follow the markdown instructions and run each code cell to observe the behavior and flow of data through the pipeline.
-
-3. Take note of the inputs and outputs of each notebook, as these will be important for connecting stages when we later build the full MLOps pipeline.
-
-This guided manual execution lays the groundwork for understanding the lifecycle of ML systems before integrating more advanced practices.
-
-## 🔄 Automating the Workflow with Elyra Pipelines
-After completing the manual execution of each notebook, the next step is to automate the workflow using Elyra's pipeline capabilities. Elyra allows you to visually compose, configure, and execute pipelines directly within JupyterLab, streamlining the machine learning lifecycle.
-
-### 🛠️ Instructions:
-
-#### 1. **Open Elyra Pipeline Editor:**
-  - In JupyterLab, click on the Launcher tab.
-  - Under the Elyra section, select Pipeline Editor to create a new pipeline.
-
-#### 2. **Configure the Pipeline Environment:**
-Before adding notebooks, ensure your Elyra environment is properly configured:
-
-  - Connect to S3 Storage: Ensure you have access to an S3-compatible object store (e.g., AWS S3, MinIO).
-  - Define Kubernetes Secrets: Use an existing Kubernetes secret that includes the following keys:
-     - `AWS_ACCESS_KEY_ID`
-     - `AWS_SECRET_ACCESS_KEY`
-     - `AWS_S3_BUCKET`
-     - `AWS_S3_ENDPOINT`
-  
-  - These secrets should be referenced in your runtime configuration to allow pipeline nodes to read/write from S3, as shown in these images:
-  
-    ![pipeline_secrets_1.png](../assets/images/pipeline_secrets_1.png)
-    ![pipeline_secrets_2.png](../assets/images/pipeline_secrets_2.png)
-
-  - Set a Default Runtime Configuration:
-     - Go to Elyra’s Pipeline Settings.
-     - Select or create a Runtime Configuration pointing to your Kubernetes-based execution environment (e.g., Kubeflow Pipelines, Apache Airflow, or local).
-     - Assign this configuration as default to streamline pipeline runs.
-
-#### 3. **Add Notebooks to the Pipeline:**
-  - From the file browser, drag and drop the following notebooks onto the pipeline canvas:
-     - `01_data_exploration.ipynb`
-     - `02_model_training.ipynb`
-     - `03_model_deployment.ipynb`
-     - `04_drift_reports.ipynb`
-
-#### 4. **Define Execution Order:**
-    - Connect the notebooks in the order listed above by drawing lines between them, establishing the execution sequence.
-
-#### 5. **Configure Node Properties:**
-  - For each notebook node, specify the following:
-    - Runtime Image: Select an appropriate Docker image that contains the necessary dependencies.
-    - File Dependencies: List any files required by the notebook.
-    - Output Files: Specify the files generated by the notebook that will be used in subsequent steps.
-    - Environment Variables: Set any environment variables needed for execution.
-
-#### 6. **Save the Pipeline:**
-  - Click on File > Save Pipeline and name your pipeline, for example, `bike_demand_forecasting.pipeline`.
-
-#### 7. **Run the Pipeline:**
-   - Click on the Run Pipeline button (▶️) in the pipeline editor toolbar.
-   - In the run configuration dialog:
-    - Pipeline Name: Enter a name for this run instance.
-    - Runtime Configuration: Choose the configuration you prepared in step 2.
- - Click Run to execute the pipeline.
-
-#### 8. **Monitor Execution:**
-   - Observe the execution progress in the Pipeline Editor and the JupyterLab console.
-   - Upon completion, verify the outputs in the designated directories (e.g., data/processed/, models/, reports/), including any artifacts written to S3.
-
-By automating the workflow with Elyra, you ensure consistency, reproducibility, and efficiency in your machine learning processes. This structured automation prepares the ground for continuous integration and deployment in real-world MLOps systems.

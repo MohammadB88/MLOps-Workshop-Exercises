@@ -1,16 +1,16 @@
-# Pipeline - Reading Data & Model Training, Tracking & Registering
-Using Kubeflow Pipelines, you'll automate the end-to-end workflow for reading data, training a model, tracking experiments, and registering the trained model. This ensures your ML process is reproducible and scalable, with automatic logging of parameters, metrics, and artifacts.
+# Model & Data Monitoring
+In this task, you'll implement basic monitoring to track your model’s performance and input data quality over time. This includes observing metrics such as prediction accuracy, data drift, and request volume to ensure the deployed model remains reliable and continues to perform well in a real-world environment.
 
-Once the model is successfully registered, it will be automatically deployed to the OpenShift cluster as a new version of the prediction API. This enables continuous delivery of improved models with minimal manual intervention, ensuring your production environment always runs the best-performing version.
 
-TODO
+The steps in this task will be caried out in the fourth notebook: `04_model_monitoring.ipynb`
 
-Set the Model Parameter n_estimator, ...
 
-RUN the pipeline
+load reference and current data
 
-Look up the MLflow GUI and see the second registered model
+set the 
 
-Edit the deployment to load the second registered model
+### 4. Set the Model Deployment Endpoint
+In the notebook, the ``MODEL_API_SERVICE`` should be replaced with the service url we created in step 2. This url can be found, when going to the ``Networking -> Service -> bike-model-api-svc``. It is shown under the ``Hostname`` and end with ``svc.cluster.local``.
 
-Just see the logs for the pod with which the new model is deployed.
+
+create reports for data and model drift using evidently
