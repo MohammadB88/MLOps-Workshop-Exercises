@@ -13,6 +13,15 @@ workshop_materials/bike_demand_forecasting/reports/*
 # Solution notebooks 
 workshop_materials/bike_demand_forecasting/solutions/*
 
+# Backup pipelines
+workshop_materials/bike_demand_forecasting_pipeline/backup_pipelines/*
+
+# Backup pythonfiles
+workshop_materials/bike_demand_forecasting_pipeline/backup_pythonfiles/*
+
+# Pipelines - Elyra
+workshop_materials/bike_demand_forecasting_pipeline/pipeline_elyra/* 
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

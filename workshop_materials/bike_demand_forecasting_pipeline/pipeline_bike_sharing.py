@@ -168,7 +168,7 @@ def train_model(cleaned_dataset_path: InputPath('zip')):
     # Experiment Tracking with MLflow
     MLFLOW_TRACKING_URI = os.getenv("MLFLOW_REMOTE_TRACKING_SERVER")
     mlflow.set_tracking_uri(f"{MLFLOW_TRACKING_URI}")
-    mlflow.set_experiment("bike_sharing_model")
+    mlflow.set_experiment("bike_sharing_model_pipeline")
     
     param_grid = {
     "n_estimators": [50, 100, 150, 200],
@@ -233,13 +233,13 @@ def register_model():
     # Set the MLflow tracking URI
     MLFLOW_TRACKING_URI = os.getenv("MLFLOW_REMOTE_TRACKING_SERVER")
     mlflow.set_tracking_uri(f"{MLFLOW_TRACKING_URI}")
-    mlflow.set_experiment("bike_sharing_model")
+    mlflow.set_experiment("bike_sharing_model_pipeline")
     
     # Retrieve and Review Experiment Runs to find the best model
     # Get the experiment by name
-    experiment = mlflow.get_experiment_by_name("bike_sharing_model")
+    experiment = mlflow.get_experiment_by_name("bike_sharing_model_pipeline")
     if experiment is None:
-        raise RuntimeError("Experiment 'bike_sharing_model' is not found")
+        raise RuntimeError("Experiment 'bike_sharing_model_pipeline' is not found")
     
     # Load all runs from the experiment
     client = mlflow.tracking.MlflowClient()
@@ -276,7 +276,7 @@ def register_model():
 
     # Register the model from the selected run
     model_uri = f"runs:/{best_run_id}/model"
-    registered_model  = mlflow.register_model(model_uri, f"BikeSharingModel")
+    registered_model  = mlflow.register_model(model_uri, f"BikeSharingModel_pipeline")
     
     print(f"Model registered: {registered_model .name} v{registered_model .version}")
 
