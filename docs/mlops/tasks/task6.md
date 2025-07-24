@@ -5,6 +5,20 @@ We will test the deployment by sending a batch inferencing request using the Tes
 
 The steps in this task will be caried out in the third notebook: `03_model_deployment.ipynb`
 
+#### 2.1 Deployment
+From the left pannel go to `Workloads -> Deployment` and create a new deployment. 
+💡 **Note:** Make sure that you set the currect values for the environment variables (e.g. `MLFLOW_TRACKING_URI`, `MODEL_NAME`, `MODEL_VERSION`) and replace the placeholders.
+
+You can go to `Workloads -> Pods -> Logs` and look into the logs to make sure that the model is correctly loaded and ready to accept requests.
+
+####  2.2 Service
+From the left pannel go to `Network -> Service` and create a new service. 
+Now, the model is reachable only from inside the cluster!
+
+####  2.3 Route
+From the left pannel go to `Network -> Route` and create a new route.
+We are exposing the model-endpoint to the external requests thorough this route.  
+
 ### 1. Create a Deployment Using the Built Image
 ```bash
 apiVersion: apps/v1

@@ -104,9 +104,11 @@ Otherwise, use the provided *JupyterLab* environment, which comes pre-configured
 ## 📘 Hands-On Sessions
 To build a strong foundation in MLOps, participants will begin by executing each stage of the machine learning workflow manually. This hands-on approach helps solidify the concepts and understand how data and models progress through the pipeline.
 
-💡 **Note One:** Workshop materials for **tasks 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
+💡 **Note One:** The link to the Training Environment and Credentials will be provided at the begenning of the workshop!
 
-💡 **Note Two:** Workshop materials for **tasks 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
+💡 **Note Two:** Workshop materials for **tasks 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
+
+💡 **Note Three:** Workshop materials for **tasks 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
 * [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
 * [Task 2 - Data Preparations for Model Training](tasks/task2.md)
