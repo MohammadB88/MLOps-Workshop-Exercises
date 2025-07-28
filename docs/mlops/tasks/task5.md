@@ -8,8 +8,10 @@ The steps in this task will be caried out in the third notebook: `"03_model_depl
 - Review the `Containerfile` (Dockerfile) to see how the application and model are packaged.
 - Take a note of the variables that should be set by deployment.
   
-### 2. Go the to the OpenShift Console
-Find your porject (e.g. `user1`) in the openshift console.
+### 2. Go the to the OpenShift Console (Administrator Perspektive)
+When logged in, go to the ``Administrator`` perspektive. You can find it by clicking on `Developer` at the top left corner. 
+
+Find your porject (e.g. `user1`) in the openshift console and click on it, so that the resources in this namespace will be shown. 
 
 ### 3. Create an ImageStream on OpenShift
 Go to `Buils -> ImageStream` to create an ImageStream on OpenShift to track and manage the container image built for your model API, allowing seamless integration with BuildConfig and deployments.
@@ -53,6 +55,10 @@ This config tells OpenShift how to build the container image from your source co
 
 Now click on **Action** on top right corner and select **Start Build**. 
 
-Now if you go to the **ImageStream** (``bike-sharing-imagestream``) you created in the last step, the built image is there.
+You can see the process of building the image in the respective builds-run under the tab `Builds`. 
+
+When the `Status` is `Complete`, it means that the image is created and stored in the `ImageStream`.
+
+Now if you go to the **ImageStream** (``bike-sharing-imagestream``) you created in the last step, the built image is to be seen under `Tags`.
 
 In the next task, we take this image and deploy it on the OpenShift Cluster. 
