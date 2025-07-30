@@ -121,7 +121,7 @@ nav:
   - "Git CheatSheet":
     - git-cheatsheet.md
   - "MLflow Installation":
-    - mlflow_installation.md
+    - mlflow-installation.md
   - "Hands-on Labs":
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md

@@ -3,7 +3,12 @@ In order to install mlflow on OpenShift using helm charts from bitnami, followin
 
 1. Open a terminal on the bastian host or direct connect to a ``"web terminal"`` client on the openshift.
 
-2. Add the bitnami charts as a repository:
+2. Create a namespace/project ``mlflow` in the cluster:
+```bash
+oc new-project mlflow 
+```
+
+3. Add the bitnami charts as a repository:
 ```bash
 helm repo add https://charts.bitnami.com/bitnami
 ```
@@ -14,12 +19,12 @@ helm repo list
 helm rpeo update
 ```
 
-2. Copy the values of the mlflow charts in a yaml file:
+4. Copy the values of the mlflow charts in a yaml file:
 ```bash
 helm show values bitnami/mlflow > mlflow_values.yaml
 ```
 
-2. Open the `mlflow_values.yaml` with editor (usually vim/vi):
+5. Open the `mlflow_values.yaml` with editor (usually vim/vi):
 ```bash
 vim mlflow_values.yaml
 ```
@@ -37,4 +42,10 @@ Disavle the authentification for tracking server:
 ```bash
 enabled: true -> enabled: false
 ```
+
+6. Install the MLflow using helm charts and these values:
+```bash
+helm install mlflow bitnami/mlflow --namespace mlflow --values mlflow_values.yaml
+```
+
 
