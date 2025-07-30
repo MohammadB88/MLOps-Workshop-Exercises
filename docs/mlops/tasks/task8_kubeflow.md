@@ -21,7 +21,8 @@ Update the python file (``pipeline_bike_sharing.py``) containing pipeline logic 
     ```
 
 - Set a dummy name or your firstname (it should be unique!)
-💡 **Note:** There is only one instance of ``MLFlow server`` for all the participants. So in order to avoid any confusions, please make sure that you put an unique name!
+💡 **Note One:** Letters should be all in lowercase 
+💡 **Note Two:** There is only one instance of ``MLFlow server`` for all the participants. So in order to avoid any confusions, please make sure that you put an unique name!
 
 You should replace the `YOUR_FIRSTNAME` with a dummy name or your firstname.
 

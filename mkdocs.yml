@@ -120,6 +120,8 @@ nav:
     - demo-environment/red-hat-demo-environment.md
   - "Git CheatSheet":
     - git-cheatsheet.md
+  - "MLflow Installation":
+    - mlflow_installation.md
   - "Hands-on Labs":
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md
