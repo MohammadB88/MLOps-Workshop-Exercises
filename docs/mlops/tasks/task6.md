@@ -49,7 +49,7 @@ spec:
               memory: "512Mi"
 ```
 
-💡 **Note One:** Please set the link to the image from the last task. It could also be found in the created imagestream.
+💡 **Note One:** Please set the link to the image from the last task. It could also be found in the created ``ImageStream``.
 
 💡 **Note Two:** Make sure that you set the currect values for the environment variables (e.g. `MLFLOW_TRACKING_URI`, `MODEL_NAME`, `MODEL_VERSION`) and replace the placeholders.
 
@@ -57,8 +57,8 @@ spec:
 
 `MLFLOW_TRACKING_URI` is the same server you have set in step 3 & 4.
 
-### 3. Expose the Endpoint using a Service
-Create a service to expose your API ( and a route if you want to expose it externally):
+### 3. Service: Expose the API Endpoint internally 
+Create a service to expose your API internally for applications on the same cluster:
 
 From the left pannel go to `Network -> Service` and create a new service. 
 ```bash
@@ -78,19 +78,34 @@ spec:
 
 Now, the model is reachable only from inside the cluster!
 
-<!-- ####  2.3 Route
+### 4. Route (Optional): Expose the API Endpoint externally
+Deploy this resource **ONLY and ONLY** if you want to make your model accessible outside the OpenShift cluster.
 From the left pannel go to `Network -> Route` and create a new route.
-We are exposing the model-endpoint to the external requests thorough this route.   -->
+```bash
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: bike-model-api-route
+spec:
+  port:
+    targetPort: 8000 
+  to:
+    kind: Service
+    name: bike-model-api-svc
+   tls:
+    termination: edge  # or passthrough, depending on your needs
+    insecureEdgeTerminationPolicy: Redirect  # Redirect HTTP to HTTPS
+```
 
-### 4. Prepare the Test Data
+### 5. Prepare the Test Data
 A sample test dataset (e.g., a few rows of processed features) is already created for you in CSV or JSON format that matches the model’s input schema: ``workshop_materials/bike_demand_forecasting/data/test_model``.
 
 Run the cells in the notebook to take this test dataset and create the inference request.
 
-### 5. Set the Model Deployment Endpoint
+### 6. Set the Model Deployment Endpoint
 In the notebook, the ``MODEL_API_SERVICE`` should be replaced with the service url we created in step 3. This url can be found, when going to the ``Networking -> Service -> bike-model-api-svc``. It is shown under the ``Hostname`` and end with ``svc.cluster.local``.
 
-### 6. Simple and Batch Inferencing
+### 7. Simple and Batch Inferencing
 As you follow the instruction in the notebook to send requests to test the model endpoint, you see that the prediction is returned for all the test data stored in the sample dataset.
 
 Finally, a script is provided to visualize the ``Actual vs Predicted Counts`` for sample inputs.

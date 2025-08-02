@@ -15,9 +15,20 @@ COPY app.py ./
 RUN pip install --no-cache-dir fastapi uvicorn[standard] mlflow pandas
 
 # ── Environment variables with sensible defaults (override at runtime) ──
+
+# ── MLflow Tracking URI ────────────────────────────────────────────────
+# This is the URI of the MLflow Tracking Server where the model is registered
+# e.g. "https://mlflow_tracking_server.com"
 ENV MLFLOW_TRACKING_URI=""
-ENV MODEL_NAME=BikeSharingModel
-# Leave MODEL_VERSION blank to pick the latest Production version
+
+# ── Model name ───────────────────────────────────────────── 
+# This is the name of the model registered in MLflow
+# e.g. "BikeSharingModel"
+ENV MODEL_NAME=""
+
+# ── Model version ────────────────────────────────────────────
+# This is the version of the model to load from MLflow.
+# e.g. "1"
 ENV MODEL_VERSION=""
 
 # ── Entrypoint ───────────────────────────────────────────────────────────
