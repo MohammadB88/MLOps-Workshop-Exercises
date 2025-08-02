@@ -92,7 +92,7 @@ spec:
   to:
     kind: Service
     name: bike-model-api-svc
-   tls:
+  tls:
     termination: edge  # or passthrough, depending on your needs
     insecureEdgeTerminationPolicy: Redirect  # Redirect HTTP to HTTPS
 ```
