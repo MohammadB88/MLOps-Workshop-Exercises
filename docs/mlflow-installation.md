@@ -10,7 +10,7 @@ oc new-project mlflow
 
 3. Add the bitnami charts as a repository:
 ```bash
-helm repo add https://charts.bitnami.com/bitnami
+helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
 you can check if the repository is correctly added:
@@ -31,16 +31,17 @@ vim mlflow_values.yaml
 
 edit two parts:
 
-The service type for tracking server is is `Loadbalancer`, which should be ClusterIP: 
+The service type for tracking server is is `LoadBalancer`, which should be ClusterIP (Search for ``"LoadBalancer"`` in the values file you just generated):
 ```bash
 LoadBalancer -> ClusterIP
 ```
 
 We will later add a route to access the UI of the mlflow tracking server.
 
-Disavle the authentification for tracking server:
+Disable the authentification for tracking server (Search for ``"username: user"`` in the values file you just generated):
 ```bash
 enabled: true -> enabled: false
+username: user
 ```
 
 6. Install the MLflow using helm charts and these values:
