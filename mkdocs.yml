@@ -126,5 +126,6 @@ nav:
   - "Hands-on Labs":
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md
+    - "1 - Environment": mlops/bike-sharing/environment.md 
     - "Bike Demand Forecasting": mlops/bike-demand-forecasting.md
-    - "1 - Environment": /mlops/bike-sharing/environment.md 
+    - "1 - Environment": mlops/bike-sharing/environment.md 
