@@ -1,4 +1,4 @@
-# Taks 1: Clone the Repository & Load and Explore the Data
+# Task 1: Clone the Repository & Load and Explore the Data
 In this task, we will clone the repository containing the workshop materials and explore the dataset for bike sharing company.
 
 ### 1. Fork the Repository
