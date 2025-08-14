@@ -75,10 +75,11 @@ markdown_extensions:
         - includes/abbreviations.md
       base_path:
         - .
-        - docs/ansible-core/snippets
-        - docs/automation-platform/snippets
-        - docs/projects/cloud-automation/snippets
-        - docs/projects/linux-automation/snippets
+        - docs/mlops/snippets
+        - docs/mlops/bike-sharing/snippets
+        # - docs/automation-platform/snippets
+        # - docs/projects/cloud-automation/snippets
+        # - docs/projects/linux-automation/snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -126,3 +127,4 @@ nav:
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md
     - "Bike Demand Forecasting": mlops/bike-demand-forecasting.md
+    - "1 - Environment": /mlops/bike-sharing/environment.md 

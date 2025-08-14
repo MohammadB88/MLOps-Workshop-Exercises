@@ -110,10 +110,10 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note Three:** Workshop materials for **tasks 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
-### [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
-### [Task 2 - Data Preparations for Model Training](tasks/task2.md)
-### [Task 3 - Model Training & Experiment Tracking](tasks/task3.md)
-### [Task 4 - Review the Experiments & Select the Best Model](tasks/task4.md)
+* [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
+* [Task 2 - Data Preparations for Model Training](tasks/task2.md)
+* [Task 3 - Model Training & Experiment Tracking](tasks/task3.md)
+* [Task 4 - Review the Experiments & Select the Best Model](tasks/task4.md)
 ### [Task 5 - Model Deploymet - Containerize the Endpoint-API](tasks/task5.md)
 ### [Task 6 - Model Deploymet - Deploy on OpenShift Cluster](tasks/task6.md)
 ### [Task 7 - Model & Data Monitoring](tasks/task7.md)
