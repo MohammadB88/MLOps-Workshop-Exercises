@@ -106,18 +106,18 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note One:** The link to the Training Environment and Credentials will be provided at the begenning of the workshop!
 
-💡 **Note Two:** Workshop materials for **tasks 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
+💡 **Note Two:** Workshop materials for **Exercises 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
 
-💡 **Note Three:** Workshop materials for **tasks 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
+💡 **Note Three:** Workshop materials for **Exercises 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
-* [Task 1 - Clone the repository & Load and explore the data](tasks/task1.md)
-* [Task 2 - Data Preparations for Model Training](tasks/task2.md)
-* [Task 3 - Model Training & Experiment Tracking](tasks/task3.md)
-* [Task 4 - Review the Experiments & Select the Best Model](tasks/task4.md)
-### [Task 5 - Model Deploymet - Containerize the Endpoint-API](tasks/task5.md)
-### [Task 6 - Model Deploymet - Deploy on OpenShift Cluster](tasks/task6.md)
-### [Task 7 - Model & Data Monitoring](tasks/task7.md)
-### [Task 8 - Automating the Workflow with ***Kubeflow Pipelines***](tasks/task8_kubeflow.md)
-### [Task 9 - Automating the Workflow with ***Elyra Pipelines***](tasks/task9_elyra.md)
+* [Exercise 1 - Clone the repository & Load and explore the data](Exercises/Exercise1.md)
+* [Exercise 2 - Data Preparations for Model Training](Exercises/Exercise2.md)
+* [Exercise 3 - Model Training & Experiment Tracking](Exercises/Exercise3.md)
+* [Exercise 4 - Review the Experiments & Select the Best Model](Exercises/Exercise4.md)
+* [Exercise 5 - Model Deploymet - Containerize the Endpoint-API](Exercises/Exercise5.md)
+* [Exercise 6 - Model Deploymet - Deploy on OpenShift Cluster](Exercises/Exercise6.md)
+* [Exercise 7 - Model & Data Monitoring](Exercises/Exercise7.md)
+* [Exercise 8 - Automating the Workflow with ***Kubeflow Pipelines***](Exercises/Exercise8_kubeflow.md)
+* [Exercise 9 - Automating the Workflow with ***Elyra Pipelines***](Exercises/Exercise9_elyra.md)
 
 
