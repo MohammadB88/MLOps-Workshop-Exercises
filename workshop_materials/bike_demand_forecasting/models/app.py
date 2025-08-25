@@ -29,6 +29,20 @@ app = FastAPI(title="Bike-Sharing Predictor",
               description=f"Served from {model_uri} at {MLFLOW_TRACKING_URI}",
               version="1.0.0")
 
+# Health check model
+class HealthCheck(BaseModel):
+    status: str = "OK"
+
+@app.get("/health", response_model=HealthCheck, status_code=status.HTTP_200_OK,
+         summary="Health check endpoint")
+def health_check():
+    return HealthCheck(status="OK")
+
+@app.get("/", include_in_schema=False, summary="Root welcome or redirect")
+def root():
+    # Option A: friendly message
+    return {"message": "Hello! Please try /docs to see the available endpoints."}
+
 @app.post("/predict")
 def predict(features: dict):
     """
