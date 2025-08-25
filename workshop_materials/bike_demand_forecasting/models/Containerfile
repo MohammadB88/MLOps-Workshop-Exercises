@@ -12,7 +12,7 @@ COPY app.py ./
 
 # ── Install Python requirements ──────────────────────────────────────────
 # mlflow pulls in scikit-learn, pandas, etc.  --no-cache-dir keeps image small
-RUN pip install --no-cache-dir fastapi uvicorn[standard] mlflow pandas
+RUN pip install --no-cache-dir fastapi uvicorn[standard] mlflow pandas pydantic
 
 # ── Environment variables with sensible defaults (override at runtime) ──
 

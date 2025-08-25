@@ -1,9 +1,10 @@
 # ./models/app.py
 import os
-from fastapi import FastAPI, HTTPException
 import pandas as pd
 import mlflow
 from mlflow.pyfunc import PyFuncModel
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel
 
 # ── 1. Read configuration from environment ──────────────────────────────
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI") # e.g. "https://mlflow_tracking_server.com"
