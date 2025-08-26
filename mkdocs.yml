@@ -127,7 +127,9 @@ nav:
     - workshop-overview.md
     - "Wine Quality Classifier": mlops/wine-quality-classifier.md
     - "Bike Demand Forecasting": mlops/bike-demand-forecasting.md
-    - "1 - Environment & Prerequisites": mlops/bike-sharing/environment_prerequisites.md 
-    - "2 - Load, Extract and Clean the Data": mlops/bike-sharing/load_extract_clean_data.md
-    - "3 - Prepare the Data for Training": mlops/bike-sharing/prepare_data_training.md
-    - "4 - ": mlops/bike-sharing/
+    - "1 - Environment & Prerequisites": mlops/bike-sharing/01_environment_prerequisites.md 
+    - "2 - Load, Extract and Clean the Data": mlops/bike-sharing/02_load_extract_clean_data.md
+    - "3 - Prepare the Data for Training": mlops/bike-sharing/03_prepare_data_training.md
+    - "4 - Model Training and Experiment Tracking": mlops/bike-sharing/04_mode_training_experiment_tracking.md
+    - "5 - Review the Experiments & Select the Best Model": mlops/bike-sharing/05_review_experiment_best_model.md
+    - "6 - ...": mlops/bike-sharing/

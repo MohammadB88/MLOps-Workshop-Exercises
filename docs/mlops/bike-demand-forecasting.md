@@ -110,14 +110,15 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note Three:** Workshop materials for **Exercises 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
-* [Exercise 1 - Clone the repository & Load and explore the data](Exercises/Exercise1.md)
-* [Exercise 2 - Data Preparations for Model Training](Exercises/Exercise2.md)
-* [Exercise 3 - Model Training & Experiment Tracking](Exercises/Exercise3.md)
-* [Exercise 4 - Review the Experiments & Select the Best Model](Exercises/Exercise4.md)
-* [Exercise 5 - Model Deploymet - Containerize the Endpoint-API](Exercises/Exercise5.md)
-* [Exercise 6 - Model Deploymet - Deploy on OpenShift Cluster](Exercises/Exercise6.md)
-* [Exercise 7 - Model & Data Monitoring](Exercises/Exercise7.md)
-* [Exercise 8 - Automating the Workflow with ***Kubeflow Pipelines***](Exercises/Exercise8_kubeflow.md)
-* [Exercise 9 - Automating the Workflow with ***Elyra Pipelines***](Exercises/Exercise9_elyra.md)
+* [Exercise 1 - Environment and Prerequisites](bike-sharing/01_environment_prerequisites.md)
+* [Exercise 2 - Clone the repository & Load and explore the data](bike-sharing/02_load_extract_clean_data.md)
+* [Exercise 3 - Data Preparations for Model Training](bike-sharing/03_prepare_data_training.md)
+* [Exercise 4 - Model Training & Experiment Tracking](bike-sharing/04_mode_training_experiment_tracking.md)
+* [Exercise 5 - Review the Experiments & Select the Best Model](bike-sharing/05_review_experiment_best_model.md)
+* [Exercise 6 - Model Deploymet - Containerize the Endpoint-API](bike-sharing/task5.md)
+* [Exercise 7 - Model Deploymet - Deploy on OpenShift Cluster](bike-sharing/task6.md)
+* [Exercise 8 - Model & Data Monitoring](bike-sharing/task7.md)
+* [Exercise 9 - Automating the Workflow with ***Kubeflow Pipelines***](bike-sharing/Exercise8_kubeflow.md)
+* [Exercise 10 - Automating the Workflow with ***Elyra Pipelines***](bike-sharing/Exercise9_elyra.md)
 
 

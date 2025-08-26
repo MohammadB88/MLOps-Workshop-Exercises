@@ -1,3 +1,15 @@
+# 4: Model Training & Experiment Tracking
+
+## Objective
+In this lab, we will:
+
+* Train some Models
+* Track the Experiments
+
+## Guide
+
+The steps in this exercise will be carried out in the `"03_model_training.ipynb"` notebook.
+
 # Model Training & Experiment Tracking
 In this task, you'll train a machine learning model using the prepared ``Train`` and ``Test`` datasets in the last task. You'll also use an experiment tracking tool (e.g., *MLflow*) to log and compare key metrics such as accuracy (e.g. *rmse* and *r2*), parameters (e.g. *n_estimators* and *max_depth*), and model artifacts. This helps you keep track of different training runs and make informed decisions based on their performance.
 

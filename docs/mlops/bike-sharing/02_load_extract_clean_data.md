@@ -1,4 +1,4 @@
-# 2 - Load, Extract, and Clean the Data
+# 2: Load, Extract, and Clean the Data
 
 ## Objective
 In this lab, we will:
