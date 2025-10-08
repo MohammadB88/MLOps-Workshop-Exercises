@@ -1,4 +1,4 @@
-# 8: Model & Data Monitoring
+# 9: Model & Data Monitoring
 
 ## Objective
 In this lab, we will:

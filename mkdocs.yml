@@ -133,4 +133,8 @@ nav:
     - "3 - Prepare the Data for Training": mlops/bike-sharing/03_prepare_data_training.md
     - "4 - Model Training and Experiment Tracking": mlops/bike-sharing/04_mode_training_experiment_tracking.md
     - "5 - Review the Experiments & Select the Best Model": mlops/bike-sharing/05_review_experiment_best_model.md
-    - "6 - ...": mlops/bike-sharing/
+    - "6 - Model Deploymet - Containerize the Endpoint-API": mlops/bike-sharing/06_containerize_model_endpoint.md
+    - "7 - Model Deploymet - Deploy on OpenShift Cluster": mlops/bike-sharing/07_model_deployment_openshift.md
+    - "8 - Model Deploymet - Testing Model Endpoint-API": mlops/bike-sharing/08_test_model_endpoint.md
+    - "9 - Model & Data Monitoring": mlops/bike-sharing/09_model_data_monitoring.md
+
