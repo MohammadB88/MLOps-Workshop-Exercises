@@ -1,3 +1,15 @@
+# 8: Model & Data Monitoring
+
+## Objective
+In this lab, we will:
+
+* ???
+ensuring your model is accessible and scalable in a production-like environment.
+
+## Guide
+
+### Step 1 -
+
 # Model & Data Monitoring
 In this task, you'll implement basic monitoring to track your model’s performance and input data quality over time. This includes observing metrics such as prediction accuracy, data drift, and request volume to ensure the deployed model remains reliable and continues to perform well in a real-world environment.
 

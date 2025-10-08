@@ -119,7 +119,7 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Now that we have an ``REST-API`` python application and a ``Containerfile``, we can build the container image for the model deployment.
 
-### Step 2 - Go the to the OpenShift Console (Administrator Perspektive)
+### Step 2 - Go to the OpenShift Console (Administrator Perspektive)
 When logged in, go to the ``Administrator`` perspektive. You can find it by clicking on `Developer` at the top left corner.
 
 Find your porject (e.g. `user1`) in the openshift console and click on it, so that the resources in this namespace will be shown. 
