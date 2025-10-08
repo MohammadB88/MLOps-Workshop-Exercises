@@ -15,9 +15,11 @@ In this lab, we will:
 
 ## Guide
 
-The steps in this exercise will be carried out in the `"01_data_exploration.ipynb"` notebook.
+### Step 1 - Find and Open the Jupyter Notebook 
 
-### Step 1 - Download the dataset into the environment 
+In directory ``"workshop_materials/bike_demand_forecasting"``, look for notebook `"01_data_exploration.ipynb"` and open it. 
+
+### Step 2 - Download the dataset into the environment 
 
 The Data for bike sharing company can be found under this link. 
 
@@ -29,3 +31,5 @@ You should set this URL at the beginning of the notebook for variable ``"DATASET
 
 Please follow the instructions inside the notebook and execute each code cell to explore, clean, and preprocess the dataset. The final cleaned dataset will be saved in the
 `data/processed` directory.
+
+✅ **When you are finished with the notebook, go to the next exercise** [Load, Extract, and Clean the Data](./03_prepare_data_training.md).

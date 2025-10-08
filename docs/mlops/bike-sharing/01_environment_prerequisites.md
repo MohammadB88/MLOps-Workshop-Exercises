@@ -1,9 +1,9 @@
 # 1: Environment and Prerequisites
 
 ## Objective
-In this lab:
+In this lab, we will:
 
-* we will make ourselves familiar with the environment
+* make ourselves familiar with the environment
 * clone the repository containing the workshop materials
 
 ## Guide
@@ -19,18 +19,23 @@ TODO
 
 ### Open the created workbench
 At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
+
 ![Clone Repo](images/clone_repo.png)
 
-Copy the URL of the forked repository
+Copy the URL of the forked repository:
+
 ![Clone Repo Github](images/clone_repo_github.png)
 
 and click on clone to download the code:
+
 ![Clone Repo - add url](images/clone_repo_url.png)
 
-Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials
+Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials.
 
-At this point, we are ready to go to the next exercise [Clone Repo - add url](./task2.md).
+✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./02_load_extract_clean_data.md).
 
+
+# ----------------------------------------
 ### Step 4 - Clone the Repository - SSH-URL
 
 ### Generate an SSH key
