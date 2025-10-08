@@ -115,7 +115,7 @@ To build a strong foundation in MLOps, participants will begin by executing each
 * [Exercise 3 - Data Preparations for Model Training](bike-sharing/03_prepare_data_training.md)
 * [Exercise 4 - Model Training & Experiment Tracking](bike-sharing/04_mode_training_experiment_tracking.md)
 * [Exercise 5 - Review the Experiments & Select the Best Model](bike-sharing/05_review_experiment_best_model.md)
-* [Exercise 6 - Model Deploymet - Containerize the Endpoint-API](bike-sharing/task5.md)
+* [Exercise 6 - Model Deploymet - Containerize the Endpoint-API](bike-sharing/06_containerize_model_endpoint.md)
 * [Exercise 7 - Model Deploymet - Deploy on OpenShift Cluster](bike-sharing/task6.md)
 * [Exercise 8 - Model & Data Monitoring](bike-sharing/task7.md)
 * [Exercise 9 - Automating the Workflow with ***Kubeflow Pipelines***](bike-sharing/Exercise8_kubeflow.md)

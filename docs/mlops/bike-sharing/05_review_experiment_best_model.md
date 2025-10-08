@@ -8,29 +8,27 @@ In this lab, we will:
 
 ## Guide
 
-The steps in this exercise will be carried out in the `"03_model_training.ipynb"` notebook.
+### Step 1 - Find and Open the Jupyter Notebook 
 
-# Review the Experiments & Select the Best Model
-In this task, you'll review your logged experiments on ``MLflow`` to compare model runs based on their performance metrics. By analyzing the results, you'll identify the best-performing model configuration and select it for further evaluation or deployment.
+Please open the notebook, `"04_model_registeration.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
 
-The steps in this task will be caried out in the second notebook: `"04_model_registeration.ipynb"`
 
-### step 1 - Set the MLflow Remote Tracking Server
+### Step 2 - Set the MLflow Remote Tracking Server
+
 💡 **Note:** **The link to the MLflow server will be provided during the workshop!**
-
 You should replace the `MLFLOW_REMOTE_TRACKING_SERVER` with this provided URL.
 
-### step 2 - Set a Dummy Name or your Firstname (It should be unique!)
+### Step 3 - Set a Dummy Name or your Firstname (It should be unique!)
 
-💡 **Note:** There is only one instance of ``MLFlow server`` for all the participants. So in order to avoid any confusions, please make sure that you put an unique name!
+💡 **Note:** There is only one instance of ``MLflow Server`` for all the participants. So in order to avoid any confusion, please make sure that you put an unique name!
 
 You should replace the `YOUR_FIRSTNAME` with a dummy name or your firstname.
 
-### Step 3 - Review the Experiments and their Results
+### Step 4 - Review the Experiments' Results
 At this step, you should just run the cell and review the output. 
-This is basically, what we saw on the MLflow UI at the end of the last step.
+Analyzing the results (i.e. comparing the metrics), you'll identify the best-performing model configuration and select it for further evaluation or deployment.
 
-### Step 4 - Select the Best-Performing experiment
-We select the run (``run-ID``) which has performed the best, when we prompted in the notebook.
+### Step 5 - Select the Best-Performing experiment
+When we prompted in the notebook, please select the run (``run-ID``) which has performed the best. 
 
-Please folow the instruction in the notebook to complete this task.
+✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deploymet - Containerize the Endpoint-API](./06_containerize_model_endpoint.md).
