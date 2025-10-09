@@ -1,9 +1,10 @@
 # ./models/app.py
 import os
-from fastapi import FastAPI, HTTPException
 import pandas as pd
 import mlflow
 from mlflow.pyfunc import PyFuncModel
+from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel
 
 # ── 1. Read configuration from environment ──────────────────────────────
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI") # e.g. "https://mlflow_tracking_server.com"
@@ -28,6 +29,20 @@ model: PyFuncModel = mlflow.pyfunc.load_model(model_uri)
 app = FastAPI(title="Bike-Sharing Predictor",
               description=f"Served from {model_uri} at {MLFLOW_TRACKING_URI}",
               version="1.0.0")
+
+# Health check model
+class HealthCheck(BaseModel):
+    status: str = "OK"
+
+@app.get("/health", response_model=HealthCheck, status_code=status.HTTP_200_OK,
+         summary="Health check endpoint")
+def health_check():
+    return HealthCheck(status="OK")
+
+@app.get("/", include_in_schema=False, summary="Root welcome or redirect")
+def root():
+    # Option A: friendly message
+    return {"message": "Hello! Please try /docs to see the available endpoints."}
 
 @app.post("/predict")
 def predict(features: dict):

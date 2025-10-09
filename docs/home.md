@@ -1,6 +1,5 @@
 # Welcome to the MLOps Workshop!
 
-
 MLOps (Machine Learning Operations) is a discipline that combines machine learning, software engineering, and DevOps practices to streamline the development, deployment, and maintenance of machine learning models in production. It focuses on automating and monitoring the entire ML lifecycle, from data preparation and model training to version control, testing, and scalable deployment. By fostering collaboration between data scientists, engineers, and IT teams, MLOps ensures models are reliable, reproducible, and capable of delivering business value in real-world environments.
 
 <figure markdown>
