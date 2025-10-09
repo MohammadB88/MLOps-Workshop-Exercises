@@ -115,7 +115,7 @@ extra_javascript:
 # Navigation definition
 nav:
   - "Home":
-    - home.md
+    - index.md
     - mlops-overview.md
     - workshop-overview.md
     - environment-requirement.md
