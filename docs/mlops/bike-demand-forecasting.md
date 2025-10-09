@@ -1,10 +1,10 @@
-# Forecasting Bike-Sharing Demand and Monitoring Model Performance
+# Bike-Sharing Demand Forecasting
 
 <!-- ![docs\assets\images\bike_sharing_logo.png](docs\assets\images\bike_sharing_logo.png) -->
 
 <figure markdown>
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="300" }
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="300" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="200" }
+  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="200" }
   <figcaption></figcaption>
 </figure>
 
@@ -80,9 +80,11 @@ The bike_demand_forecasting project is organized into modular folders for clarit
 ```
 bike_demand_forecasting/
 ├── 01_data_exploration.ipynb
-├── 02_model_training.ipynb
-├── 03_model_deployment.ipynb
-├── 04_model_monitoring.ipynb
+├── 02_data_preparation.ipynb
+├── 03_model_training.ipynb
+├── 04_model_registeration.ipynb
+├── 05_model_testing_endpoint.ipynb
+├── 06_model_monitoring.ipynb
 ├── data/
 │   ├── raw/
 │   ├── processed/
@@ -95,10 +97,10 @@ bike_demand_forecasting_pipeline/
 
 ## Prerequisites
 
-### Environment
+### Environment: OpenShift & Jupyter Notebook
 You can use your own *JupyterLab* environment.
 
-Otherwise, use the provided environment (e.g. OpenShift AI). 
+Otherwise, use the provided environment (e.g. on OpenShift AI). 
 Log in to this environment with *username* and *password* provided during the workshop.
 
 ## 📘 Hands-On Sessions
@@ -106,9 +108,9 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note One:** The link to the Training Environment and Credentials will be provided at the begenning of the workshop!
 
-💡 **Note Two:** Workshop materials for **Exercises 1 to 7** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
+💡 **Note Two:** Workshop materials for **Exercises 1 to 9** are stored under the path: ``"workshop_materials/bike_demand_forecasting"``
 
-💡 **Note Three:** Workshop materials for **Exercises 8** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
+💡 **Note Three:** Workshop materials for **Exercises 10** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
 * [Exercise 1 - Environment and Prerequisites](bike-sharing/01_environment_prerequisites.md)
 * [Exercise 2 - Clone the repository & Load and explore the data](bike-sharing/02_load_extract_clean_data.md)
@@ -119,7 +121,7 @@ To build a strong foundation in MLOps, participants will begin by executing each
 * [Exercise 7 - Model Deploymet - Deploy on OpenShift Cluster](bike-sharing/07_model_deployment_openshift.md)
 * [Exercise 8 - Model Deploymet - Testing Model Endpoint-API](bike-sharing/08_test_model_endpoint.md)
 * [Exercise 9 - Model & Data Monitoring](bike-sharing/09_model_data_monitoring.md)
-* [Exercise 9 - Automating the Workflow with ***Kubeflow Pipelines***](bike-sharing/Exercise8_kubeflow.md)
-* [Exercise 10 - Automating the Workflow with ***Elyra Pipelines***](bike-sharing/Exercise9_elyra.md)
+* [Exercise 10 - Automating the Workflow with ***Kubeflow Pipelines***](bike-sharing/Exercise8_kubeflow.md)
+* [Exercise 11 - Automating the Workflow with ***Elyra Pipelines***](bike-sharing/Exercise9_elyra.md)
 
 
