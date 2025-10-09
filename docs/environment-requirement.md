@@ -3,6 +3,6 @@
 TODO
 
 
-* [Git Cheatsheet](mlops/git-cheatsheet.md)
-* [MLflow Installation](mlops/mlflow-installation.md)
-* [RedHat Demo Environment](mlops/redhat-demo-environment.md)
+* [Git Cheatsheet](./git-cheatsheet.md)
+* [MLflow Installation](./mlflow-installation.md)
+* [RedHat Demo Environment](./redhat-demo-environment.md)
