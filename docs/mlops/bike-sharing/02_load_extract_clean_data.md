@@ -32,4 +32,4 @@ You should set this URL at the beginning of the notebook for variable ``"DATASET
 Please follow the instructions inside the notebook and execute each code cell to explore, clean, and preprocess the dataset. The final cleaned dataset will be saved in the
 `data/processed` directory.
 
-✅ **When you are finished with the notebook, go to the next exercise** [Load, Extract, and Clean the Data](./03_prepare_data_training.md).
+✅ **When you are finished with the notebook, go to the next exercise** [Prepare Data for Training](./03_prepare_data_training.md).

@@ -1,3 +1,6 @@
+# ignore environement
+.venv-mkdocs
+
 # Prompts written for ChatGPT
 prompts/
 

@@ -142,4 +142,5 @@ nav:
     - git-cheatsheet.md
     - mlflow-installation.md
     - redhat-demo-environment.md
+    - helm-installation.md
 
