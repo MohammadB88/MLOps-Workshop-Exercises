@@ -35,8 +35,11 @@ Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find th
 ✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./02_load_extract_clean_data.md).
 
 
-# ----------------------------------------
+# -----------------------------------------
+### In case you are going to clone the repo
+### from a terminal, use these instructions
 ### Step 4 - Clone the Repository - SSH-URL
+# -----------------------------------------
 
 ### Generate an SSH key
 Run the following command in your terminal:
