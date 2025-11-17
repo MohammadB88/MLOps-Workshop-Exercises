@@ -53,7 +53,7 @@ repository: bitnamil/mlflow -> bitnamilegacy/mlflow
 
 repository: bitnamil/os-shell -> bitnamilegacy/os-shell
 
-repository: bitnamilegacy/git -> bitnamilegacy/git
+repository: bitnami/git -> bitnamilegacy/git
 ```
 
 **Workaround for now:** In addition, we will disable the ``postgresql`` and `minio`:
