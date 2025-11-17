@@ -29,7 +29,7 @@ helm show values bitnami/mlflow > mlflow_values.yaml
 vim mlflow_values.yaml
 ```
 
-edit two parts:
+edit some parts:
 
 The service type for tracking server is is `LoadBalancer`, which should be ClusterIP (Search for ``"LoadBalancer"`` in the values file you just generated):
 ```bash
@@ -42,6 +42,28 @@ Disable the authentification for tracking server (Search for ``"username: user"`
 ```bash
 enabled: true -> enabled: false
 username: user
+```
+
+Due to change in bitnami policy for its images and charts, we need to pull the images from another repository.
+
+So these repositories should be changed to find the images in  `bitnamilegacy` instead of `bitnami`:
+
+```bash
+repository: bitnamil/mlflow -> bitnamilegacy/mlflow
+
+repository: bitnamil/os-shell -> bitnamilegacy/os-shell
+
+repository: bitnamilegacy/git -> bitnamilegacy/git
+```
+
+**Workaround for now:** In addition, we will disable the ``postgresql`` and `minio`:
+
+```bash
+postgresql:
+  enabled: false
+
+minio:
+  enabled: false
 ```
 
 6. Install the MLflow using helm charts and these values:
