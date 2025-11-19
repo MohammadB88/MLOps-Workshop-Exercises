@@ -30,6 +30,15 @@ app = FastAPI(title="Bike-Sharing Predictor",
               description=f"Served from {model_uri} at {MLFLOW_TRACKING_URI}",
               version="1.0.0")
 
+# Add CORS middleware right after creating the app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with your specific domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Health check model
 class HealthCheck(BaseModel):
     status: str = "OK"
