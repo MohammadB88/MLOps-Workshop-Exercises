@@ -20,12 +20,12 @@ Focus: Add structured learning materials and skill-leveled labs to make the work
 
 ### 1.1 Standard Repository Files
 
-- [ ] **LICENSE**
+- [x] **LICENSE**
   - Select appropriate license (MIT, Apache 2.0, or CC-BY-4.0)
   - Add license file
   - Update copyright notices
 
-- [ ] **SECURITY.md**
+- [x] **SECURITY.md**
   - Security policy
   - Vulnerability reporting process
   - Supported versions
