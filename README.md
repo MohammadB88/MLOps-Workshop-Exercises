@@ -39,8 +39,8 @@ This workshop teaches you how to bring the models from your laptop to a cloud na
 - 🎯 **Production-first approach** - No toy examples, real deployment scenarios
 - 🛠️ **Industry-standard tools** - MLflow, Docker, Kubernetes, Evidently
 - 📈 **Progressive learning** - Beginner to Advanced in structured steps
-- 🏢 **Enterprise-ready** - Learn patterns used by top tech companies
-- 🤝 **Open & Free** - Community-driven, always accessible
+<!-- - 🏢 **Enterprise-ready** - Learn patterns used by top tech companies
+- 🤝 **Open & Free** - Community-driven, always accessible -->
 
 ---
 
@@ -49,11 +49,11 @@ This workshop teaches you how to bring the models from your laptop to a cloud na
 This workshop bridges the gap between machine learning development and production deployment. You'll gain practical experience with:
 
 - **Experiment Tracking & Model Management** - Track experiments, version models, and manage the ML lifecycle
-- **Data Version Control** - Handle large datasets and ensure reproducibility with DVC
+<!-- - **Data Version Control** - Handle large datasets and ensure reproducibility with DVC -->
 - **Containerization & Orchestration** - Package models with Docker and deploy on Kubernetes/OpenShift
 - **CI/CD for ML** - Automate testing, training, and deployment pipelines
 - **Production Monitoring** - Detect data drift, monitor model performance, and trigger retraining
-- **MLOps Best Practices** - Apply industry-standard patterns for scalable ML systems
+<!-- - **MLOps Best Practices** - Apply industry-standard patterns for scalable ML systems -->
 
 ---
 
@@ -64,8 +64,8 @@ This workshop is designed for:
 - **Data Scientists** transitioning to production ML systems
 - **ML Engineers** looking to formalize MLOps practices
 - **DevOps Engineers** expanding into ML operations
-- **Software Engineers** working with ML teams
-- **Students & Researchers** interested in production ML
+<!-- - **Software Engineers** working with ML teams
+- **Students & Researchers** interested in production ML -->
 
 ### Prerequisites
 
@@ -87,13 +87,14 @@ The workshop is organized into **three progressive skill levels**, each with foc
 **Learning Materials:**
 - MLOps fundamentals and lifecycle
 - Experiment tracking concepts
-- Introduction to data versioning
+- ???
+<!-- - Introduction to data versioning -->
 
 **Labs:**
 1. **Wine Quality Classifier** - Train and track a simple ML model with MLflow
-2. **Data Versioning with DVC** - Version control for datasets and reproducibility
+<!-- 2. **Data Versioning with DVC** - Version control for datasets and reproducibility -->
 
-**Time Commitment:** 4-6 hours
+<!-- **Time Commitment:** ???4-6 hours -->
 
 ---
 
@@ -109,7 +110,7 @@ The workshop is organized into **three progressive skill levels**, each with foc
 3. **Bike Demand Forecasting Pipeline** - End-to-end pipeline with experiment tracking
 4. **Model Deployment with Kubernetes** - Containerize and deploy models on K8s/OpenShift
 
-**Time Commitment:** 8-10 hours
+<!-- **Time Commitment:** 8-10 hours -->
 
 ---
 
@@ -125,7 +126,7 @@ The workshop is organized into **three progressive skill levels**, each with foc
 5. **CI/CD Pipeline for ML** - Automate testing, training, and deployment with GitHub Actions
 6. **Model Monitoring & Drift Detection** - Monitor models with Evidently, Prometheus, and Grafana
 
-**Time Commitment:** 10-12 hours
+<!-- **Time Commitment:** 10-12 hours -->
 
 ---
 
@@ -139,9 +140,9 @@ This workshop uses industry-standard tools:
 | **Data Versioning** | DVC (Data Version Control) |
 | **Containerization** | Docker |
 | **Orchestration** | Kubernetes, OpenShift |
-| **CI/CD** | GitHub Actions |
+| **CI/CD** | ???GitHub Actions |
 | **Monitoring** | Evidently, Prometheus, Grafana |
-| **Model Serving** | FastAPI / Flask |
+| **Model Serving** | ???FastAPI / Flask |
 | **Languages** | Python, YAML |
 
 ---
@@ -155,7 +156,8 @@ git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
 cd MLOps-Workshop-Exercises
 ```
 
-### 2. Set Up Your Environment
+### 2. Set Up Your Environment???
+<!-- MAYBE just REFER to the Environment Section -->
 
 ```bash
 # Create virtual environment
@@ -187,7 +189,7 @@ Visit our [GitHub Pages site](https://mohammadb88.github.io/MLOps-Workshop-Exerc
 | [Environment Setup](docs/environment-requirement/) | Installation and configuration guides |
 | [Roadmap](ROADMAP.md) | Future plans and improvements |
 
----
+<!-- ---
 
 ## 🎓 Learning Path
 
@@ -201,9 +203,9 @@ We recommend following this learning path:
 5. Learn CI/CD & Monitoring → 6. Complete Advanced Labs
                     ↓
          7. Build Your Own MLOps Project!
-```
+``` -->
 
-**Estimated Total Time:** 25-30 hours for complete workshop
+<!-- **Estimated Total Time:** 25-30 hours for complete workshop -->
 
 ---
 
