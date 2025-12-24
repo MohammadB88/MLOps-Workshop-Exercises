@@ -2,7 +2,7 @@
 
 Focus: Add structured learning materials and skill-leveled labs to make the workshop accessible to all experience levels.
 
-***Imporatant Notice: This roadmap is still under custruction!***
+***Important Notice: This roadmap is still under construction!***
 
 --- 
 

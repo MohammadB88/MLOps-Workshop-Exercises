@@ -237,7 +237,7 @@ pip install -r requirements.txt
 Navigate to the [learning materials](docs/learning-materials/) and begin with the fundamentals, then proceed to [Lab 1: Wine Quality Classifier](labs/beginner/01-wine-quality-basic/). -->
 <!-- 
 ### 4.  -->
-**To access the full documentation with interactive navigation, visit our :**  [GitHub Pages site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) 
+**To access the full documentation with interactive navigation, visit :**  [Main Page for MLOps Workshop](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) 
 
 <!-- for the complete workshop with interactive navigation. -->
 
