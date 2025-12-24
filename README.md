@@ -22,10 +22,10 @@ This comprehensive, hands-on workshop teaches you the essential practices, tools
 Learn to deploy, monitor, and maintain production ML systems through hands-on labs.
 
 **The hard truth:** Building ML models is just small portion of the work. The rest is 
-getting them to production and keeping them there. ADD PAPER about HIDDEN ... []()
+getting them to production and keeping them there. TODO: ADD PAPER about HIDDEN ... []()
 
 Research shows that most ML projects struggle to reach production. 
-[Gartner](GARTNER STUDIES) found that only 53% of AI projects make it from prototype to production, 
+TODO: [Gartner](GARTNER STUDIES) found that only 53% of AI projects make it from prototype to production, 
 while 77% of businesses cite "business adoption" as a major challenge. The gap 
 between ML development and production deployment remains one of the biggest 
 challenges in modern AI.
@@ -44,7 +44,7 @@ This workshop teaches you how to bring the models from your laptop to a cloud na
 
 ---
 
-## 🎯 What You'll Learn
+## 🎯 What You'll Learn?
 
 This workshop bridges the gap between machine learning development and production deployment. You'll gain practical experience with:
 
@@ -77,17 +77,17 @@ This workshop is designed for:
 
 ---
 
-## 📊 Repository Structure (New)
+## 📊 Repository Structure
 
 ```
 MLOps-Workshop-Exercises/
 ├── README.md                          # Enhanced with introduction
 ├── ROADMAP.md                         # This file
-├── CODE_OF_CONDUCT.md                 # Community standards
-├── CONTRIBUTING.md                    # Contribution guidelines
+├── CODE_OF_CONDUCT.md                 # TODO: Community standards 
+├── CONTRIBUTING.md                    # TODO: Contribution guidelines
 ├── LICENSE                            # Project license
 ├── SECURITY.md                        # Security policy
-├── mkdocs.yml                        # GitHub Pages main yaml file
+├── mkdocs.yml                         # GitHub Pages main yaml file
 ├── docs/
 │   ├── learning-materials/           # Theory and concepts
 │   │   ├── 01-mlops-fundamentals.md
@@ -147,15 +147,16 @@ The workshop is organized into **three progressive skill levels**, each with foc
 
 ### 🟢 Beginner Level
 *Start here if you're new to MLOps*
-
+<!-- 
 **Learning Materials:**
 - MLOps fundamentals and lifecycle
 - Experiment tracking concepts
 - ???
-<!-- - Introduction to data versioning -->
+- Introduction to data versioning -->
 
 **Labs:**
 1. **Wine Quality Classifier** - Train and track a simple ML model with MLflow
+2. **Bike Sharing Forecast** - TODO
 <!-- 2. **Data Versioning with DVC** - Version control for datasets and reproducibility -->
 
 <!-- **Time Commitment:** ???4-6 hours -->
@@ -165,14 +166,14 @@ The workshop is organized into **three progressive skill levels**, each with foc
 ### 🟡 Intermediate Level
 *Build production-ready ML pipelines*
 
-**Learning Materials:**
+<!-- **Learning Materials:**
 - Model deployment strategies
 - Containerization for ML
-- REST API design for models
+- REST API design for models -->
 
 **Labs:**
-3. **Bike Demand Forecasting Pipeline** - End-to-end pipeline with experiment tracking
-4. **Model Deployment with Kubernetes** - Containerize and deploy models on K8s/OpenShift
+1. **Bike Demand Forecasting Pipeline** - TODO: End-to-end pipeline with experiment tracking
+2. **TODO** - TODO
 
 <!-- **Time Commitment:** 8-10 hours -->
 
@@ -180,15 +181,14 @@ The workshop is organized into **three progressive skill levels**, each with foc
 
 ### 🔴 Advanced Level
 *Implement enterprise MLOps practices*
-
+<!-- 
 **Learning Materials:**
 - CI/CD for machine learning
 - Model monitoring and drift detection
-- Production best practices
+- Production best practices -->
 
 **Labs:**
-5. **CI/CD Pipeline for ML** - Automate testing, training, and deployment with GitHub Actions
-6. **Model Monitoring & Drift Detection** - Monitor models with Evidently, Prometheus, and Grafana
+1. **TODO** - TODO
 
 <!-- **Time Commitment:** 10-12 hours -->
 
@@ -201,7 +201,7 @@ This workshop uses industry-standard tools:
 | Category | Tools |
 |----------|-------|
 | **Experiment Tracking** | MLflow |
-| **Data Versioning** | DVC (Data Version Control) |
+| **Data Versioning** | ???DVC (Data Version Control) |
 | **Containerization** | Docker |
 | **Orchestration** | Kubernetes, OpenShift |
 | **CI/CD** | ???GitHub Actions |
@@ -211,38 +211,39 @@ This workshop uses industry-standard tools:
 
 ---
 
-## 🏃 Quick Start
+## 🏃 Starting Point OR Where to Start?
 
-### 1. Clone the Repository
+<!-- ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
 cd MLOps-Workshop-Exercises
-```
+``` -->
 
-### 2. Set Up Your Environment???
+<!-- ### 2. Set Up Your Environment??? -->
 <!-- MAYBE just REFER to the Environment Section -->
 
-```bash
+<!-- ```bash
 # Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
-```
+``` -->
 
-### 3. Start with Beginner Labs
+<!-- ### 3. Start with Beginner Labs
 
-Navigate to the [learning materials](docs/learning-materials/) and begin with the fundamentals, then proceed to [Lab 1: Wine Quality Classifier](labs/beginner/01-wine-quality-basic/).
+Navigate to the [learning materials](docs/learning-materials/) and begin with the fundamentals, then proceed to [Lab 1: Wine Quality Classifier](labs/beginner/01-wine-quality-basic/). -->
+<!-- 
+### 4.  -->
+**To access the full documentation with interactive navigation, visit our :**  [GitHub Pages site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) 
 
-### 4. Access the Full Documentation
-
-Visit our [GitHub Pages site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) for the complete workshop with interactive navigation.
+<!-- for the complete workshop with interactive navigation. -->
 
 ---
 
-## 📖 Documentation
+## 📖 Documentation 
 
 | Resource | Description |
 |----------|-------------|

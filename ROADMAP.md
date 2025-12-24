@@ -260,9 +260,9 @@ Create under: `labs/advanced/`
 ### Repository Foundation
 - [ ] Create CODE_OF_CONDUCT.md
 - [ ] Create CONTRIBUTING.md
-- [ ] Add LICENSE file
-- [ ] Create SECURITY.md
-- [ ] Rewrite README.md with compelling introduction
+- [x] Add LICENSE file
+- [x] Create SECURITY.md
+- [x] Rewrite README.md with compelling introduction
 - [ ] Add badges to README
 - [ ] Create GitHub issue templates
 - [ ] Set up GitHub Discussions
@@ -284,19 +284,19 @@ Create under: `labs/advanced/`
   - [ ] Add solution notebook
   - [ ] Write README with objectives
   - [ ] Test lab end-to-end
-- [ ] Develop Lab 2: Data Versioning with DVC
+- [ ] Develop Lab 2: Bike Demand Forecast
   - [ ] Create tutorial guide
   - [ ] Prepare sample datasets
   - [ ] Write DVC command reference
   - [ ] Test lab end-to-end
 
 ### Intermediate Labs
-- [ ] Develop Lab 3: Bike Demand Pipeline
+- [ ] Develop Lab 1: Bike Demand Forecast Pipeline
   - [ ] Create multi-step notebooks
   - [ ] Set up MLflow examples
   - [ ] Write pipeline documentation
   - [ ] Test complete pipeline
-- [ ] Develop Lab 4: Deployment with K8s
+- [ ] Develop Lab 2: Deployment with K8s
   - [ ] Create API code
   - [ ] Write Dockerfile
   - [ ] Create K8s manifests
@@ -304,13 +304,13 @@ Create under: `labs/advanced/`
   - [ ] Test deployment process
 
 ### Advanced Labs
-- [ ] Develop Lab 5: CI/CD Pipeline
+- [ ] Develop Lab 1: CI/CD Pipeline
   - [ ] Create GitHub Actions workflows
   - [ ] Write test suite
   - [ ] Create automation scripts
   - [ ] Document workflow
   - [ ] Test automation
-- [ ] Develop Lab 6: Monitoring & Drift
+- [ ] Develop Lab 2: Monitoring & Drift
   - [ ] Set up Evidently examples
   - [ ] Create monitoring dashboards
   - [ ] Write alerting rules
@@ -333,5 +333,5 @@ Create under: `labs/advanced/`
   - [ ] Beginner
   - [ ] Intermediate
   - [ ] Advanced  
-- [ ] Implement API-endpoints from other model providers like watsonx.ai, NVIDIA NIM, ...
+- [ ] Implement LLM API-endpoints from other model providers like watsonx.ai, NVIDIA NIM, ...
 
