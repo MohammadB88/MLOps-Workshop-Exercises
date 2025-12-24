@@ -7,7 +7,7 @@ The Workshop can be found at this link: https://mohammadb88.github.io/MLOps-Work
 **There is a Roadmap for this project:** [Roadmap](./ROADMAP.md) -->
 
 <!-- # MLOps Workshop - From Development to Production -->
-# Production MLOps Workshop: From Jupyter to Kubernetes
+<!-- # Production MLOps Workshop: From Jupyter to Kubernetes -->
 # Production MLOps Workshop: From Laptop to Cloud Native
 
 [![GitHub Pages](https://img.shields.io/badge/docs-github_pages-blue)](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
@@ -74,6 +74,70 @@ This workshop is designed for:
 - **Git basics** (clone, commit, push/pull)
 - **Docker fundamentals** (containers, images) - helpful but not required
 - **Kubernetes basics** - helpful but not required
+
+---
+
+## 📊 Repository Structure (New)
+
+```
+MLOps-Workshop-Exercises/
+├── README.md                          # Enhanced with introduction
+├── ROADMAP.md                         # This file
+├── CODE_OF_CONDUCT.md                 # Community standards
+├── CONTRIBUTING.md                    # Contribution guidelines
+├── LICENSE                            # Project license
+├── SECURITY.md                        # Security policy
+├── mkdocs.yml                        # GitHub Pages main yaml file
+├── docs/
+│   ├── learning-materials/           # Theory and concepts
+│   │   ├── 01-mlops-fundamentals.md
+│   │   ├── 02-ml-lifecycle.md
+│   │   ├── 03-experiment-tracking.md
+│   │   ├── 04-model-deployment.md
+│   │   ├── 05-monitoring-maintenance.md
+│   │   ├── 06-data-versioning.md
+│   │   ├── 07-cicd-for-ml.md
+│   │   └── 08-llmops-intro.md
+│   ├── environment-requirement/      # Setup guides (existing)
+│   └── assets/                       # Images and resources
+├── labs/                             # ??? Labs or Workshop Materials
+│   ├── beginner/
+│   │   ├── 01_wine_quality_TODO/
+│   │   │   ├── ?notebook.ipynb
+│   │   │   ├── ?solution.ipynb
+│   │   │   └── ?data/
+│   │   └── 02_bike_demand_forecasting/
+│   │   │   ├── ?notebook.ipynb
+│   │   │   ├── ?solution.ipynb
+│   │   │   ├── tutorial.md
+│   │   │   └── sample-data/
+│   ├── intermediate/
+│   │   ├── 01_bike_demand_forecasting_pipeline/
+│   │   │   ├── README.md
+│   │   │   ├── 01-data-prep.ipynb
+│   │   │   ├── 02-training.ipynb
+│   │   │   ├── 03-evaluation.ipynb
+│   │   │   └── mlflow-setup.md
+│   │   └── 02_CICD_pipeline_TODO/
+│   │       ├── README.md
+│   │       ├── api/
+│   │       ├── Dockerfile
+│   │       ├── k8s/
+│   │       └── tests/
+│   └── advanced/
+│       ├── 01_TODO_cicd-ml-pipeline/
+│       │   ├── README.md
+│       │   ├── .github/workflows/
+│       │   ├── tests/
+│       │   └── scripts/
+│       └── 02_TODO_monitoring-drift-detection/
+│           ├── README.md
+│           ├── monitoring-setup.ipynb
+│           ├── evidently-config/
+│           └── dashboards/
+├── workshop_materials/               # Existing materials
+└── sample-mkdocs/                    # MkDocs setup (existing)
+```
 
 ---
 
