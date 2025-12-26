@@ -6,5 +6,5 @@ In this page we will go thorough a simple example of implementing MLOps concept 
 
 You will complete the following exercises today:
 
-* [Wine Quality Classifier](mlops/wine-quality-classifier.md)
-* [Bike Demand Forecasting](mlops/bike-demand-forecasting.md)
+* [Wine Quality Classifier](labs-docs/wine-quality-classifier.md)
+* [Bike Demand Forecasting](labs-docs/bike-demand-forecasting.md)

@@ -7,8 +7,8 @@ In this workshop, we focus on operationalizing the entire machine learning lifec
 By bridging the gap between data scientists, ML engineers, and IT/DevOps teams, MLOps enables reproducible experiments, stable deployments, and ongoing improvement of ML solutions in real-world production environments.
 
 <figure markdown>
-  ![CC Logo](assets/images/mlops-workshop-logo.jpeg#only-light){ width="350" }
-  ![CC Logo](assets/images/mlops-workshop-logo.jpeg#only-dark){ width="350" }
+  ![MLOps Workshop Logo](assets/images/mlops-workshop-logo.png#only-light){ width="350" }
+  ![MLOps Workshop Logo](assets/images/mlops-workshop-logo.png#only-dark){ width="350" }
   <figcaption></figcaption>
 </figure>
 
@@ -34,13 +34,14 @@ You will learn all about MLOps concepts, tools and principles:
 
 Upon completing this lab, you will be equipped to apply MLOps principles and tools to bring machine learning models from your laptop to a cloud native environment.
 
-## Lab Overview
-TODO
+## Lab Overview - TODO
 - Beginner:
     * Wine Classifier
     * Bike Sharing
-
-
+- Intermediate:
+    * Pipeline for training and deployment
+- Advanced:
+    * LLMOps
 
 
 ## From other sources:
