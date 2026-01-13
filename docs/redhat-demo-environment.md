@@ -1,4 +1,4 @@
-# RedHat Demo Environment
+# RedHat Demo Environment - ToDo
 
 Every Workshop attendant has his own demo environment.
 

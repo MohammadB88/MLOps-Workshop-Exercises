@@ -1,8 +1,8 @@
 # Wine Quality Classifier
 
 <figure markdown>
-  ![wine quality logo](../assets/images/wine_quality_classiffier.png#only-light){ width="200" }
-  ![wine qualita logo](../assets/images/wine_quality_classiffier.png#only-dark){ width="200" }
+  ![wine quality logo](../assets/images/wine_quality_classiffier.png#only-light){ width="400" }
+  ![wine qualita logo](../assets/images/wine_quality_classiffier.png#only-dark){ width="400" }
   <figcaption></figcaption>
 </figure>
 
