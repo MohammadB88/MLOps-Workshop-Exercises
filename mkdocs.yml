@@ -1,6 +1,6 @@
 # MkDocs configuration file
 site_name: MLOps Workshop
-copyright: Copyright &copy; Mohammad Bahmani 2025
+copyright: Copyright & copy; Mohammad Bahmani 2026
 
 theme:
   name: material
@@ -76,6 +76,7 @@ markdown_extensions:
       base_path:
         - .
         - docs/mlops/snippets
+        - docs/mlops/bike-sharing
         - docs/mlops/bike-sharing/snippets
         # - docs/automation-platform/snippets
         # - docs/projects/cloud-automation/snippets
