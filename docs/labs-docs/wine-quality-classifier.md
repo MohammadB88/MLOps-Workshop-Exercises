@@ -1,5 +1,12 @@
 # Wine Quality Classifier
 
+<figure markdown>
+  ![wine quality logo](../assets/images/wine_quality_classiffier.png#only-light){ width="200" }
+  ![wine qualita logo](../assets/images/wine_quality_classiffier.png#only-dark){ width="200" }
+  <figcaption></figcaption>
+</figure>
+
+
 ## Objective
 In this exercise there are 4 steps from data to deployed model onto the openshift cluster.
 For each of these steps, a Jupyter Notebook is prepared.

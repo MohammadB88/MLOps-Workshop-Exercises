@@ -10,4 +10,4 @@ What is MLOps and why and which tools and workflows.
 <!-- TODO - Should I create a dir and pack all the reading materials in that dir. Does it make sense? -->
 
 * [Introduction](docs/theory/introduction.md)
-* [tbd](mlops/docs/theory/???.md)
+* [tbd](docs/theory/???.md)
