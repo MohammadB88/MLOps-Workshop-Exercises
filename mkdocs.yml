@@ -76,6 +76,7 @@ markdown_extensions:
       base_path:
         - .
         - docs/labs-docs/snippets
+        - docs/labs-docs/bike-sharing
         - docs/labs-docs/bike-sharing/snippets
         # - docs/automation-platform/snippets
         # - docs/projects/cloud-automation/snippets
