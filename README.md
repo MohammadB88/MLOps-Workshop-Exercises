@@ -59,7 +59,7 @@ This workshop bridges the gap between machine learning development and productio
 
 ## 🚀 Who Is This For?
 
-This workshop is designed for:
+This workshop is designed for :
 
 - **Data Scientists** transitioning to production ML systems
 - **ML Engineers** looking to formalize MLOps practices
