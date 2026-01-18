@@ -154,7 +154,7 @@ spec:
   source:
     type: Git
     git:
-      uri: 'FORKED_REPO'
+      uri: 'https://github.com/MohammadB88/MLOps-Workshop-Exercises.git'
     contextDir: workshop_materials/bike_demand_forecasting/models
   strategy:
     type: Docker
