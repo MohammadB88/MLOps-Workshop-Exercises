@@ -4,4 +4,4 @@ This repository contains all exercise descriptions for my MLOps Workshop, utiliz
 
 The Workshop can be found at this link: https://mohammadb88.github.io/MLOps-Workshop-Exercises/
 
-**There is a Roadmap for this project: ** [Roadmap](./ROADMAP.md)
+**There is a Roadmap for this project:** [Roadmap](./ROADMAP.md)
