@@ -50,24 +50,29 @@ helm show values "${HELM_CHART}" > "${VALUES_FILE}"
 echo "[4/6] Modifying ${VALUES_FILE}..."
 
 # Change service type from LoadBalancer to ClusterIP
+echo "hange service type from LoadBalancer to ClusterIP"
 sed -i 's/type: LoadBalancer/type: ClusterIP/g' "${VALUES_FILE}"
 
 
 # Disable authentication for MLflow tracking server only
+echo "Disable authentication for MLflow tracking server only"
 sed -i '/tracking:/,/auth:/,/enabled:/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 
 # # Disable authentication
 # sed -i 's/enabled: true/enabled: false/g' "${VALUES_FILE}"
 
 # Replace image repositories with bitnamilegacy
+echo "Replace image repositories with bitnamilegacy"
 sed -i 's|bitnami/mlflow|bitnamilegacy/mlflow|g' "${VALUES_FILE}"
 sed -i 's|bitnami/os-shell|bitnamilegacy/os-shell|g' "${VALUES_FILE}"
 sed -i 's|bitnami/git|bitnamilegacy/git|g' "${VALUES_FILE}"
 
 # Disable PostgreSQL
+echo "Disable PostgreSQL"
 sed -i '/^postgresql:/,/^[^ ]/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 
 # Disable MinIO
+echo "Disable MinIO"
 sed -i '/^minio:/,/^[^ ]/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 
 
