@@ -18,7 +18,7 @@ echo "=========================================="
 ############################################
 # 1. Create OpenShift project / namespace
 ############################################
-echo "[1/6] Creating OpenShift project '${NAMESPACE}' (if not exists)..."
+echo "[1/7] Creating OpenShift project '${NAMESPACE}' (if not exists)..."
 if ! oc get project "${NAMESPACE}" &>/dev/null; then
   oc new-project "${NAMESPACE}"
 else
@@ -28,7 +28,7 @@ fi
 ############################################
 # 2. Add Bitnami Helm repository
 ############################################
-echo "[2/6] Adding Bitnami Helm repository..."
+echo "[2/7] Adding Bitnami Helm repository..."
 if ! helm repo list | grep -q "^bitnami"; then
   helm repo add bitnami https://charts.bitnami.com/bitnami
 else
@@ -41,25 +41,26 @@ helm repo update
 ############################################
 # 3. Export default MLflow values
 ############################################
-echo "[3/6] Exporting default MLflow Helm values..."
+echo "[3/7] Exporting default MLflow Helm values..."
 helm show values "${HELM_CHART}" > "${VALUES_FILE}"
 
 ############################################
 # 4. Patch values.yaml
 ############################################
-echo "[4/6] Modifying ${VALUES_FILE}..."
+echo "[4/7] Modifying ${VALUES_FILE}..."
 
 # Change service type from LoadBalancer to ClusterIP
-echo "hange service type from LoadBalancer to ClusterIP"
+echo "Change service type from LoadBalancer to ClusterIP"
 sed -i 's/type: LoadBalancer/type: ClusterIP/g' "${VALUES_FILE}"
 
 
 # Disable authentication for MLflow tracking server only
 echo "Disable authentication for MLflow tracking server only"
-sed -i '/tracking:/,/auth:/,/enabled:/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
+sed -i '/^tracking:/,/^[^ ]/ {
+  /auth:/,/^[^ ]/ s/enabled: true/enabled: false/
+}' "${VALUES_FILE}"
 
-# # Disable authentication
-# sed -i 's/enabled: true/enabled: false/g' "${VALUES_FILE}"
+# sed -i '/tracking:/,/auth:/,/enabled:/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 
 # Replace image repositories with bitnamilegacy
 echo "Replace image repositories with bitnamilegacy"
@@ -75,30 +76,33 @@ sed -i '/^postgresql:/,/^[^ ]/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 echo "Disable MinIO"
 sed -i '/^minio:/,/^[^ ]/ s/enabled: true/enabled: false/' "${VALUES_FILE}"
 
-
-# # Disable PostgreSQL
-# cat <<EOF >> "${VALUES_FILE}"
-
-# # Workaround: Disable PostgreSQL
-# postgresql:
-#   enabled: false
-
-# # Workaround: Disable MinIO
-# minio:
-#   enabled: false
-# EOF
-
 ############################################
 # 5. Install MLflow
 ############################################
-echo "[5/6] Installing MLflow via Helm..."
-helm install "${HELM_RELEASE}" "${HELM_CHART}" \
-  --namespace "${NAMESPACE}" \
-  --values "${VALUES_FILE}"
+echo "[5/7] Installing MLflow via Helm..."
+if helm status "${HELM_RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
+  echo "MLflow Helm release '${HELM_RELEASE}' already exists in namespace '${NAMESPACE}'."
+  echo "Skipping installation."
+else
+  echo "MLflow Helm release not found. Installing..."
+  helm install "${HELM_RELEASE}" "${HELM_CHART}" \
+    --namespace "${NAMESPACE}" \
+    --values "${VALUES_FILE}"
+fi
 
 ############################################
-# 6. Done
+# 6. MLflow installation completed
 ############################################
-echo "[6/6] MLflow installation completed successfully."
+echo "[6/7] MLflow installation completed successfully."
 echo "You can now create an OpenShift Route to expose the MLflow UI."
 echo "=========================================="
+
+############################################
+# 7. Deploy OpenShift Route for MLflow UI
+############################################
+echo "[7/7] Deploying MLflow OpenShift Route..."
+
+oc apply -n "${NAMESPACE}" -f mlflow_route.yaml
+
+echo "MLflow Route deployed successfully."
+                                               
