@@ -1,4 +1,4 @@
-# 9: Model & Data Monitoring
+# 8: Model & Data Monitoring
 
 ## Objective
 In this lab, we will:
@@ -16,7 +16,7 @@ Please open the notebook, `"06_model_monitoring.ipynb"` in the same directory ``
 
 
 ### Step 2 - Find Service URL for Model API on the OpenShift Console
-Find your porject (e.g. `user1`) in the openshift console.
+Find your project (e.g. `user1`) in the openshift console.
 💡 **Note:** Please make sure that you are in your given project.
 
 This service url can be found under ``Networking -> Service -> bike-model-api-svc``. 
@@ -29,7 +29,7 @@ In this task, we need to set the path to the cleaned dataset (`data/processed`) 
 ``Reference data`` is the data the the model is trained on. 
 ``Current data`` is the unseen data to the model, which can be used to show the model performance over time. 
 
-For refenrece data, you should set the first two month in the appropriate cell:
+For reference data, you should set the first two month in the appropriate cell:
 ```bash
 data_2011_01.csv
 data_2011_02.csv

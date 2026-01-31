@@ -1,4 +1,4 @@
-# 4: Model Training & Experiment Tracking
+# 3: Model Training & Experiment Tracking
 
 ## Objective
 In this lab, we will:
@@ -41,9 +41,9 @@ This allows you to experiment with different configurations.
 ### Step 6 - MLflow UI - Compare Runs in your specific Experiment
 Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model performance based on metrics and parameters.
 
-💡 **Note:** Other participants are also storing their experiemnts on the same instance. So please make sure that you are in the correct experiment.
+💡 **Note:** Other participants are also storing their experiments on the same instance. So please make sure that you are in the correct experiment.
 
-✅ **We will see in the next exercise** [Review the Experiments & Select the Best Model](./05_review_experiment_best_model.md), **how to select the best model and register that model on the same ``MLflow server``.**
+✅ **We will see in the next exercise** [Review the Experiments & Select the Best Model](./04_review_experiment_best_model.md), **how to select the best model and register that model on the same ``MLflow server``.**
 
 
 

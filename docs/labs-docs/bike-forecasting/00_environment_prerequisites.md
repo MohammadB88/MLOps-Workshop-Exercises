@@ -1,4 +1,4 @@
-# 1: Environment and Prerequisites
+# 0: Environment and Prerequisites
 
 ## Objective
 In this lab, we will:
@@ -63,7 +63,7 @@ and use `git` to download the code:
 git clone git@github.com:your-username/your-forked-repo.git
 ```
 
-✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./02_load_extract_clean_data.md).
+✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./01_load_extract_clean_data.md).
 
 
 

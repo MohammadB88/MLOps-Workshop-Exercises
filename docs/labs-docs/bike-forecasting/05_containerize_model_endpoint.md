@@ -1,4 +1,4 @@
-# 6: Model Deploymet - Containerize the Endpoint-API
+# 5: Model Deployment - Containerize the Endpoint-API
 
 ## Objective
 In this lab, we will:
@@ -69,7 +69,7 @@ def predict(features: dict):
     """
     try:
         df = pd.DataFrame([features])
-        prediction = float(model.predict(df)[0])  # ensure JSON-serialisable
+        prediction = float(model.predict(df)[0])  # ensure JSON-serializable
         return {"prediction": prediction}
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
@@ -119,15 +119,15 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Now that we have an ``REST-API`` python application and a ``Containerfile``, we can build the container image for the model deployment.
 
-### Step 2 - Go to the OpenShift Console (Administrator Perspektive)
-When logged in, go to the ``Administrator`` perspektive. You can find it by clicking on `Developer` at the top left corner.
+### Step 2 - Go to the OpenShift Console (Administrator Perspective)
+When logged in, go to the ``Administrator`` perspective. You can find it by clicking on `Developer` at the top left corner.
 
-Find your porject (e.g. `user1`) in the openshift console and click on it, so that the resources in this namespace will be shown. 
+Find your project (e.g. `user1`) in the openshift console and click on it, so that the resources in this namespace will be shown. 
 
 ### Step 3 - Create an ImageStream on OpenShift
-ImageStream on OpenShift is a container registery like ``hub.docker.com`` or `quay.io`, on which one can store and share images.
+ImageStream on OpenShift is a container registry like ``hub.docker.com`` or `quay.io`, on which one can store and share images.
 
-Go to `Buils -> ImageStream` to create an ImageStream on OpenShift to track and manage the container image built for your model API, allowing seamless integration with ``BuildConfig`` and deployments.
+Go to `Builds -> ImageStream` to create an ImageStream on OpenShift to track and manage the container image built for your model API, allowing seamless integration with ``BuildConfig`` and deployments.
 
 ```bash
 kind: ImageStream
@@ -139,11 +139,9 @@ metadata:
 ### 4. Create a BuildConfig on OpenShift
 `BuildConfig` on OpenShift offers a way to build container images from Containerfiles and application sources that are stored on any git platform (i.e. `Github`). Since our code resides on Github, we use this method to build the image and will store it in the `ImageStream` created in the last step.
 
-You can find this resource under `Buils -> BuildConfig`.
+You can find this resource under `Builds -> BuildConfig`.
 
-Click on create builconfig and go to the `yaml` view. You sould use these lines in the buildcondig page. 
-
-💡 **Note:** **Copy the link to the forked repository and replace the `FORKED_REPO` before starting the build**.
+Click on create builconfig and go to the `yaml` view. You should use these lines in the buildcondig page. 
 
 ```bash
 apiVersion: build.openshift.io/v1
@@ -179,4 +177,4 @@ When the `Status` is `Complete`, it means that the image is created and stored i
 
 Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built image is to be seen under `Tags`.
 
-✅ **Next exercise** [Model Deploymet - Deploy on OpenShift Cluster](./07_model_deployment_openshift.md) **is about model deployment on the OpenShift Cluster.** 
+✅ **Next exercise** [Model Deploymet - Deploy on OpenShift Cluster](./06_model_deployment_openshift.md) **is about model deployment on the OpenShift Cluster.** 
