@@ -1,4 +1,4 @@
-# 1: Environment and Prerequisites
+# 0: Environment and Prerequisites
 
 ## Objective
 In this lab, we will:
@@ -32,7 +32,7 @@ and click on clone to download the code:
 
 Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials.
 
-✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./02_load_extract_clean_data.md).
+✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./01_load_extract_clean_data.md).
 
 
 # ----------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-# 7: Model Deploymet - Deploy on OpenShift Cluster
+# 6: Model Deployment - Deploy on OpenShift Cluster
 
 ## Objective
 In this lab, we will:
@@ -11,15 +11,15 @@ ensuring the model is accessible and scalable in a production-like environment.
 ## Guide
 
 ### Step 1 - Go to the OpenShift Console
-Find your porject (e.g. `user1`) in the openshift console.
+Find your project (e.g. `user1`) in the openshift console.
 💡 **Note:** Please make sure that you are in your given project.
 
 ### Step 2 - Create a Deployment Using the Built Image
-From the left pannel go to `Workloads -> Deployment` and create a new deployment. 
+From the left panel go to `Workloads -> Deployment` and create a new deployment. 
 
 💡 **Note One:** Please set the link to the image from the last task. It could also be found in the created ``ImageStream``.
 
-💡 **Note Two:** Make sure that you set the currect values for the environment variables (e.g. `MLFLOW_TRACKING_URI`, `MODEL_NAME`, `MODEL_VERSION`) and replace the placeholders.
+💡 **Note Two:** Make sure that you set the correct values for the environment variables (e.g. `MLFLOW_TRACKING_URI`, `MODEL_NAME`, `MODEL_VERSION`) and replace the placeholders.
 
 💡 **Note Three:** ``MODEL_VERSION`` is already set to ``1``, but if you have more that 1 version and you want to deploy that, please change the value for variable ``MODEL_VERSION`` accordingly.
 
@@ -66,7 +66,7 @@ spec:
 ### Step 3 - Service: Expose the API Endpoint internally 
 Create a service to expose your API internally for applications on the same cluster:
 
-From the left pannel go to `Network -> Service` and create a new service. 
+From the left panel go to `Network -> Service` and create a new service. 
 ```bash
 apiVersion: v1
 kind: Service
@@ -87,7 +87,7 @@ Now, the model is reachable only from inside the cluster!
 ### Step 4 - Route (Optional): Expose the API Endpoint externally
 Deploy this resource **ONLY and ONLY** if you want to make your model accessible outside the OpenShift cluster.
 
-From the left pannel go to `Network -> Route` and create a new route.
+From the left panel go to `Network -> Route` and create a new route.
 
 ```bash
 apiVersion: route.openshift.io/v1
@@ -105,5 +105,5 @@ spec:
     insecureEdgeTerminationPolicy: Redirect  # Redirect HTTP to HTTPS
 ```
 
-✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deploymet - Testing Model Endpoint-API](./08_test_model_endpoint.md).
+✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deployment - Testing Model Endpoint-API](./07_test_model_endpoint.md).
 

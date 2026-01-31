@@ -1,4 +1,4 @@
-# 3: Prepare Data for Training
+# 2: Prepare Data for Training
 
 ## Objective
 In this lab, we will:
@@ -55,4 +55,4 @@ print(X_train.shape, X_test.shape)
 print(X_train.head(), X_test.head())
 ```
 
-✅ **We use these ``Train`` and ``Test`` datasets to train a machine learning model in the next exercise** [Model Training & Experiment Tracking](./04_mode_training_experiment_tracking.md).
+✅ **We use these ``Train`` and ``Test`` datasets to train a machine learning model in the next exercise** [Model Training & Experiment Tracking](./03_mode_training_experiment_tracking.md).
