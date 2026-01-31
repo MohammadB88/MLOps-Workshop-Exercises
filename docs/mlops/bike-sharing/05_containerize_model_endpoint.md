@@ -143,7 +143,6 @@ You can find this resource under `Builds -> BuildConfig`.
 
 Click on create buildconfig and go to the `yaml` view. You should use these lines in the buildcondig page. 
 
-💡 **Note:** **Copy the link to the forked repository and replace the `FORKED_REPO` before starting the build**.
 
 ```bash
 apiVersion: build.openshift.io/v1
