@@ -31,4 +31,8 @@ Analyzing the results (i.e. comparing the metrics), you'll identify the best-per
 ### Step 5 - Select the Best-Performing experiment
 When we prompted in the notebook, please select the run (``run-ID``) which has performed the best. 
 
+<<<<<<< HEAD:docs/labs-docs/bike-forecasting/04_review_experiment_best_model.md
 ✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deploymet - Containerize the Endpoint-API](./05_containerize_model_endpoint.md).
+=======
+✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deployment - Containerize the Endpoint-API](./05_containerize_model_endpoint.md).
+>>>>>>> main:docs/mlops/bike-sharing/04_review_experiment_best_model.md
