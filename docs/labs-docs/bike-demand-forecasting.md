@@ -14,6 +14,7 @@
 In urban environments, bike-sharing systems have emerged as a sustainable and efficient mode of transportation. Accurately predicting bike rental demand is crucial for optimizing operations, ensuring bike availability, and enhancing user satisfaction.
 
 This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand forecasting. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
+This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand forecasting. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
 
 Beyond model development, maintaining performance in a production environment is vital. Models can degrade over time due to changing data patterns, a phenomenon known as concept drift. To address this, we incorporate monitoring strategies inspired by [Evidently AI's tutorial on production model analytics](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production). This includes setting up regular performance checks and generating interactive reports to detect issues proactively.
 
@@ -32,7 +33,7 @@ This setup reflects several practical challenges faced in deploying and maintain
  
 Understanding and mitigating this decay is crucial for maintaining reliable predictions in production.
 
-### Data and Considered Featurers
+### Data and Considered Features
 We see the considered features in the below image ([How to break a model in 20 days!](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production)):
 
 <figure markdown>
@@ -41,6 +42,7 @@ We see the considered features in the below image ([How to break a model in 20 d
   <figcaption></figcaption>
 </figure>
 
+Here is a list of features that we consider when training the model:
 Here is a list of features that we consider when training the model:
 
 - hour - hourly  
@@ -82,6 +84,7 @@ bike_forecasting/
 ├── 01_data_exploration.ipynb
 ├── 02_data_preparation.ipynb
 ├── 03_model_training.ipynb
+├── 04_model_registration.ipynb
 ├── 04_model_registration.ipynb
 ├── 05_model_testing_endpoint.ipynb
 ├── 06_model_monitoring.ipynb

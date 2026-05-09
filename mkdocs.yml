@@ -1,6 +1,6 @@
 # MkDocs configuration file
 site_name: MLOps Workshop
-copyright: Copyright &copy; Mohammad Bahmani 2026
+copyright: Copyright & copy; Mohammad Bahmani 2026
 
 theme:
   name: material
