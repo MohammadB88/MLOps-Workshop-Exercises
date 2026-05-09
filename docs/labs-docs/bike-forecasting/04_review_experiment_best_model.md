@@ -1,4 +1,4 @@
-# 5: Review the Experiments & Select the Best Model
+# 4: Review the Experiments & Select the Best Model
 
 ## Objective
 In this lab, we will:
@@ -10,7 +10,7 @@ In this lab, we will:
 
 ### Step 1 - Find and Open the Jupyter Notebook 
 
-Please open the notebook, `"04_model_registeration.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
+Please open the notebook, `"04_model_registration.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
 
 
 ### Step 2 - Set the MLflow Remote Tracking Server
@@ -31,4 +31,4 @@ Analyzing the results (i.e. comparing the metrics), you'll identify the best-per
 ### Step 5 - Select the Best-Performing experiment
 When we prompted in the notebook, please select the run (``run-ID``) which has performed the best. 
 
-✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deploymet - Containerize the Endpoint-API](./06_containerize_model_endpoint.md).
+✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deploymet - Containerize the Endpoint-API](./05_containerize_model_endpoint.md).
