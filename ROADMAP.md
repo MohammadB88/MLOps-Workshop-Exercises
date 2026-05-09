@@ -2,7 +2,7 @@
 
 Focus: Add structured learning materials and skill-leveled labs to make the workshop accessible to all experience levels.
 
-***Important Notice: This roadmap is still under Construction!***
+***Important Notice: This roadmap is still under construction!***
 
 --- 
 
@@ -255,77 +255,14 @@ Create under: `labs/advanced/`
 
 ---
 
-## 📊 Repository Structure (New)
-
-```
-MLOps-Workshop-Exercises/
-├── README.md                          # Enhanced with introduction
-├── ROADMAP.md                         # This file
-├── CODE_OF_CONDUCT.md                # Community standards
-├── CONTRIBUTING.md                    # Contribution guidelines
-├── LICENSE                            # Project license
-├── SECURITY.md                        # Security policy
-├── docs/
-│   ├── learning-materials/           # Theory and concepts
-│   │   ├── 01-mlops-fundamentals.md
-│   │   ├── 02-ml-lifecycle.md
-│   │   ├── 03-experiment-tracking.md
-│   │   ├── 04-model-deployment.md
-│   │   ├── 05-monitoring-maintenance.md
-│   │   ├── 06-data-versioning.md
-│   │   ├── 07-cicd-for-ml.md
-│   │   └── 08-llmops-intro.md
-│   ├── environment-requirement/      # Setup guides (existing)
-│   └── assets/                       # Images and resources
-├── labs/
-│   ├── beginner/
-│   │   ├── 01-wine-quality-basic/
-│   │   │   ├── README.md
-│   │   │   ├── notebook.ipynb
-│   │   │   ├── solution.ipynb
-│   │   │   └── data/
-│   │   └── 02-data-versioning-dvc/
-│   │       ├── README.md
-│   │       ├── tutorial.md
-│   │       └── sample-data/
-│   ├── intermediate/
-│   │   ├── 03-bike-demand-pipeline/
-│   │   │   ├── README.md
-│   │   │   ├── 01-data-prep.ipynb
-│   │   │   ├── 02-training.ipynb
-│   │   │   ├── 03-evaluation.ipynb
-│   │   │   └── mlflow-setup.md
-│   │   └── 04-model-deployment-k8s/
-│   │       ├── README.md
-│   │       ├── api/
-│   │       ├── Dockerfile
-│   │       ├── k8s/
-│   │       └── tests/
-│   └── advanced/
-│       ├── 05-cicd-ml-pipeline/
-│       │   ├── README.md
-│       │   ├── .github/workflows/
-│       │   ├── tests/
-│       │   └── scripts/
-│       └── 06-monitoring-drift-detection/
-│           ├── README.md
-│           ├── monitoring-setup.ipynb
-│           ├── evidently-config/
-│           └── dashboards/
-├── workshop_materials/               # Existing materials
-└── sample-mkdocs/                    # MkDocs setup (existing)
-```
-
----
-
 ## ✅ Implementation Checklist
 
 ### Repository Foundation
 - [ ] Create CODE_OF_CONDUCT.md
 - [ ] Create CONTRIBUTING.md
-- [ ] Add LICENSE file
-- [ ] Create SECURITY.md
-- [ ] Rewrite README.md with compelling introduction
+- [x] Add LICENSE file
+- [x] Create SECURITY.md
+- [x] Rewrite README.md with compelling introduction
 - [ ] Add badges to README
 - [ ] Create GitHub issue templates
 - [ ] Set up GitHub Discussions
@@ -347,19 +284,19 @@ MLOps-Workshop-Exercises/
   - [ ] Add solution notebook
   - [ ] Write README with objectives
   - [ ] Test lab end-to-end
-- [ ] Develop Lab 2: Data Versioning with DVC
+- [ ] Develop Lab 2: Bike Demand Forecast
   - [ ] Create tutorial guide
   - [ ] Prepare sample datasets
   - [ ] Write DVC command reference
   - [ ] Test lab end-to-end
 
 ### Intermediate Labs
-- [ ] Develop Lab 3: Bike Demand Pipeline
+- [ ] Develop Lab 1: Bike Demand Forecast Pipeline
   - [ ] Create multi-step notebooks
   - [ ] Set up MLflow examples
   - [ ] Write pipeline documentation
   - [ ] Test complete pipeline
-- [ ] Develop Lab 4: Deployment with K8s
+- [ ] Develop Lab 2: Deployment with K8s
   - [ ] Create API code
   - [ ] Write Dockerfile
   - [ ] Create K8s manifests
@@ -367,13 +304,13 @@ MLOps-Workshop-Exercises/
   - [ ] Test deployment process
 
 ### Advanced Labs
-- [ ] Develop Lab 5: CI/CD Pipeline
+- [ ] Develop Lab 1: CI/CD Pipeline
   - [ ] Create GitHub Actions workflows
   - [ ] Write test suite
   - [ ] Create automation scripts
   - [ ] Document workflow
   - [ ] Test automation
-- [ ] Develop Lab 6: Monitoring & Drift
+- [ ] Develop Lab 2: Monitoring & Drift
   - [ ] Set up Evidently examples
   - [ ] Create monitoring dashboards
   - [ ] Write alerting rules
@@ -396,5 +333,5 @@ MLOps-Workshop-Exercises/
   - [ ] Beginner
   - [ ] Intermediate
   - [ ] Advanced  
-- [ ] Implement API-endpoints from other model providers like watsonx.ai, NVIDIA NIM, ...
+- [ ] Implement LLM API-endpoints from other model providers like watsonx.ai, NVIDIA NIM, ...
 

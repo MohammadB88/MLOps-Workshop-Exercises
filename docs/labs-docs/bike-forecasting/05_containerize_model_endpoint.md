@@ -141,8 +141,7 @@ metadata:
 
 You can find this resource under `Builds -> BuildConfig`.
 
-Click on create buildconfig and go to the `yaml` view. You should use these lines in the buildcondig page. 
-
+Click on create builconfig and go to the `yaml` view. You should use these lines in the buildcondig page. 
 
 ```bash
 apiVersion: build.openshift.io/v1
@@ -178,4 +177,4 @@ When the `Status` is `Complete`, it means that the image is created and stored i
 
 Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built image is to be seen under `Tags`.
 
-✅ **Next exercise** [Model Deployment - Deploy on OpenShift Cluster](./06_model_deployment_openshift.md) **is about model deployment on the OpenShift Cluster.** 
+✅ **Next exercise** [Model Deploymet - Deploy on OpenShift Cluster](./06_model_deployment_openshift.md) **is about model deployment on the OpenShift Cluster.** 

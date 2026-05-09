@@ -14,6 +14,7 @@
 In urban environments, bike-sharing systems have emerged as a sustainable and efficient mode of transportation. Accurately predicting bike rental demand is crucial for optimizing operations, ensuring bike availability, and enhancing user satisfaction.
 
 This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand forecasting. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
+This documentation presents a comprehensive approach to developing and deploying a machine learning model for bike-sharing demand forecasting. Drawing inspiration from [Analytics Vidhya's end-to-end case study](https://www.analyticsvidhya.com/blog/2023/05/end-to-end-case-study-bike-sharing-demand-prediction/), we delve into data preprocessing, feature engineering, model training, and evaluation. 
 
 Beyond model development, maintaining performance in a production environment is vital. Models can degrade over time due to changing data patterns, a phenomenon known as concept drift. To address this, we incorporate monitoring strategies inspired by [Evidently AI's tutorial on production model analytics](https://www.evidentlyai.com/blog/tutorial-1-model-analytics-in-production). This includes setting up regular performance checks and generating interactive reports to detect issues proactively.
 
@@ -41,6 +42,7 @@ We see the considered features in the below image ([How to break a model in 20 d
   <figcaption></figcaption>
 </figure>
 
+Here is a list of features that we consider when training the model:
 Here is a list of features that we consider when training the model:
 
 - hour - hourly  
@@ -78,10 +80,11 @@ For this example, we only play with two of these hyperparameters:
 The bike_demand_forecasting project is organized into modular folders for clarity and workflow. It includes raw and processed datasets under data/, Jupyter notebooks for each MLOps stage in notebooks/, trained models in models/, and generated analysis or drift reports in reports/—supporting a full ML lifecycle.
 
 ```
-bike_demand_forecasting/
+bike_forecasting/
 ├── 01_data_exploration.ipynb
 ├── 02_data_preparation.ipynb
 ├── 03_model_training.ipynb
+├── 04_model_registration.ipynb
 ├── 04_model_registration.ipynb
 ├── 05_model_testing_endpoint.ipynb
 ├── 06_model_monitoring.ipynb
@@ -112,16 +115,16 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note Three:** Workshop materials for **Exercises 10** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
-* [Exercise 0 - Environment and Prerequisites](bike-sharing/00_environment_prerequisites.md)
-* [Exercise 1 - Clone the repository & Load and explore the data](bike-sharing/01_load_extract_clean_data.md)
-* [Exercise 2 - Data Preparations for Model Training](bike-sharing/02_prepare_data_training.md)
-* [Exercise 3 - Model Training & Experiment Tracking](bike-sharing/03_mode_training_experiment_tracking.md)
-* [Exercise 4 - Review the Experiments & Select the Best Model](bike-sharing/04_review_experiment_best_model.md)
-* [Exercise 5 - Model Deploymet - Containerize the Endpoint-API](bike-sharing/05_containerize_model_endpoint.md)
-* [Exercise 6 - Model Deploymet - Deploy on OpenShift Cluster](bike-sharing/06_model_deployment_openshift.md)
-* [Exercise 7 - Model Deploymet - Testing Model Endpoint-API](bike-sharing/07_test_model_endpoint.md)
-* [Exercise 8 - Model & Data Monitoring](bike-sharing/08_model_data_monitoring.md)
-* [Exercise 9 - Automating the Workflow with ***Kubeflow Pipelines***](bike-sharing/Exercise8_kubeflow.md)
-* [Exercise 10 - Automating the Workflow with ***Elyra Pipelines***](bike-sharing/Exercise9_elyra.md)
+* [Exercise 0 - Environment and Prerequisites](bike-forecasting/00_environment_prerequisites.md)
+* [Exercise 1 - Clone the repository & Load and explore the data](bike-forecasting/01_load_extract_clean_data.md)
+* [Exercise 2 - Data Preparations for Model Training](bike-forecasting/02_prepare_data_training.md)
+* [Exercise 3 - Model Training & Experiment Tracking](bike-forecasting/03_mode_training_experiment_tracking.md)
+* [Exercise 4 - Review the Experiments & Select the Best Model](bike-forecasting/04_review_experiment_best_model.md)
+* [Exercise 5 - Model Deployment - Containerize the Endpoint-API](bike-forecasting/05_containerize_model_endpoint.md)
+* [Exercise 6 - Model Deployment - Deploy on OpenShift Cluster](bike-forecasting/06_model_deployment_openshift.md)
+* [Exercise 7 - Model Deployment - Testing Model Endpoint-API](bike-forecasting/07_test_model_endpoint.md)
+* [Exercise 8 - Model & Data Monitoring](bike-forecasting/08_model_data_monitoring.md)
+<!-- * [Exercise 10 - Automating the Workflow with ***Kubeflow Pipelines***](bike-forecasting/Exercise8_kubeflow.md)
+* [Exercise 11 - Automating the Workflow with ***Elyra Pipelines***](bike-forecasting/Exercise9_elyra.md) -->
 
 

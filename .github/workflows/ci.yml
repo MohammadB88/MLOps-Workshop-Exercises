@@ -3,7 +3,7 @@ name: Run linter and deploy
 on:
   push:
     branches:
-      - main
+      - facelift
 
 permissions:
   contents: write

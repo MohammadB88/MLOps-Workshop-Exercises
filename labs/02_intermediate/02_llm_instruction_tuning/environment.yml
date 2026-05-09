@@ -1,0 +1,21 @@
+name: llm-instruction-tuning
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - torch>=2.0.0
+    - transformers>=4.30.0
+    - peft>=0.5.0
+    - bitsandbytes>=0.41.0
+    - datasets>=2.10.0
+    - evaluate>=0.4.0
+    - mlflow>=2.8.0
+    - vllm>=0.3.0
+    - fastapi>=0.95.0
+    - uvicorn>=0.22.0
+    - kubernetes>=27.0.0
+    - python-dotenv>=1.0.0
