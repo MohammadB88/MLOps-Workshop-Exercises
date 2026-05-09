@@ -34,14 +34,15 @@ You will learn all about MLOps concepts, tools and principles:
 
 Upon completing this lab, you will be equipped to apply MLOps principles and tools to bring machine learning models from your laptop to a cloud native environment.
 
-## Lab Overview - TODO
-- Beginner:
-    * Wine Classifier
-    * Bike Sharing
-- Intermediate:
-    * Pipeline for training and deployment
-- Advanced:
-    * LLMOps
+## Lab Overview
+- **Beginner:**
+    * Wine Quality Classifier
+    * Bike Demand Forecasting
+- **Intermediate:**
+    * End-to-end pipelines with Kubeflow
+    * LLM Instruction Tuning (LLMOps)
+- **Advanced:**
+    * CI/CD and monitoring (planned)
 
 
 ## From other sources:
