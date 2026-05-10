@@ -115,15 +115,15 @@ To build a strong foundation in MLOps, participants will begin by executing each
 
 💡 **Note Three:** Workshop materials for **Exercises 10** are stored under the path: ``"workshop_materials/bike_demand_forecasting_pipeline"``
 
-* [Exercise 0 - Environment and Prerequisites](01_beginner/02_bike-forecasting/00_environment_prerequisites.md)
-* [Exercise 1 - Clone the repository & Load and explore the data](01_beginner/02_bike-forecasting/01_load_extract_clean_data.md)
-* [Exercise 2 - Data Preparations for Model Training](01_beginner/02_bike-forecasting/02_prepare_data_training.md)
-* [Exercise 3 - Model Training & Experiment Tracking](01_beginner/02_bike-forecasting/03_mode_training_experiment_tracking.md)
-* [Exercise 4 - Review the Experiments & Select the Best Model](01_beginner/02_bike-forecasting/04_review_experiment_best_model.md)
-* [Exercise 5 - Model Deployment - Containerize the Endpoint-API](01_beginner/02_bike-forecasting/05_containerize_model_endpoint.md)
-* [Exercise 6 - Model Deployment - Deploy on OpenShift Cluster](01_beginner/02_bike-forecasting/06_model_deployment_openshift.md)
-* [Exercise 7 - Model Deployment - Testing Model Endpoint-API](01_beginner/02_bike-forecasting/07_test_model_endpoint.md)
-* [Exercise 8 - Model & Data Monitoring](01_beginner/02_bike-forecasting/08_model_data_monitoring.md)
+* [Exercise 0 - Environment and Prerequisites](01_beginner/bike-forecasting/00_environment_prerequisites.md)
+* [Exercise 1 - Clone the repository & Load and explore the data](01_beginner/bike-forecasting/01_load_extract_clean_data.md)
+* [Exercise 2 - Data Preparations for Model Training](01_beginner/bike-forecasting/02_prepare_data_training.md)
+* [Exercise 3 - Model Training & Experiment Tracking](01_beginner/bike-forecasting/03_mode_training_experiment_tracking.md)
+* [Exercise 4 - Review the Experiments & Select the Best Model](01_beginner/bike-forecasting/04_review_experiment_best_model.md)
+* [Exercise 5 - Model Deployment - Containerize the Endpoint-API](01_beginner/bike-forecasting/05_containerize_model_endpoint.md)
+* [Exercise 6 - Model Deployment - Deploy on OpenShift Cluster](01_beginner/bike-forecasting/06_model_deployment_openshift.md)
+* [Exercise 7 - Model Deployment - Testing Model Endpoint-API](01_beginner/bike-forecasting/07_test_model_endpoint.md)
+* [Exercise 8 - Model & Data Monitoring](01_beginner/bike-forecasting/08_model_data_monitoring.md)
 <!-- * [Exercise 10 - Automating the Workflow with ***Kubeflow Pipelines***](bike-forecasting/Exercise8_kubeflow.md)
 * [Exercise 11 - Automating the Workflow with ***Elyra Pipelines***](bike-forecasting/Exercise9_elyra.md) -->
 
