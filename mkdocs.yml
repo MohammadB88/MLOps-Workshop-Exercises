@@ -130,6 +130,11 @@ nav:
     - "9 - Model & Data Monitoring": labs-docs/bike-forecasting/09_model_data_monitoring.md
     - "LLM Instruction Tuning": labs-docs/02_intermediate/llm-instruction-tuning.md
     - "1 - Setup & Exploration": labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md
+    - "2 - Data Preparation": labs-docs/02_intermediate/llm-instruction-tuning/02_data_preparation.md
+    - "3 - LoRA Tuning": labs-docs/02_intermediate/llm-instruction-tuning/03_lora_tuning.md
+    - "4 - Evaluation": labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md
+    - "5 - Versioning & Packaging": labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md
+    - "6 - Deployment & Serving": labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md
    
   - "Environment & Prerequisites":
     - environment-requirement.md
