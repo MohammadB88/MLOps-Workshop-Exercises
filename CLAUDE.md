@@ -117,7 +117,11 @@ MLOps-Workshop-Exercises/
 │           │   ├── train_lora.py
 │           │   ├── evaluate.py
 │           │   ├── build_and_push.sh
+│           │   ├── mlflow_register.py
 │           │   └── test_client.py
+│           ├── k8s/                   # Kubernetes deployment manifests
+│           │   ├── deployment.yaml
+│           │   └── service.yaml
 │           ├── data/                  # Processed datasets (gitignored)
 │           ├── models/                # Model outputs (gitignored)
 │           ├── requirements.txt       # Python dependencies
@@ -289,10 +293,26 @@ The LLM instruction tuning exercise follows this flow:
 
 1. **Setup & Exploration** (`01_setup_exploration.ipynb`): Launch OpenShift AI notebook, explore base model (TinyLlama/Phi-2), understand resource constraints
 2. **Data Preparation** (`02_data_preparation.ipynb`): Load and format instruction dataset, tokenize, create train/validation splits
-3. **LoRA Tuning** (`03_lora_tuning.ipynb`): Configure parameter-efficient fine-tuning with LoRA/QLoRA, train with MLflow tracking
-4. **Evaluation** (`04_evaluation.ipynb`): Evaluate model performance with perplexity and qualitative assessment, compare experiments in MLflow
-5. **Versioning & Packaging** (`05_versioning_packaging.ipynb`): Register model in MLflow, create Docker container with vLLM serving
+3. **LoRA Tuning** (`03_lora_tuning.ipynb`): Configure parameter-efficient fine-tuning with LoRA/QLoRA, train with MLflow tracking, save adapter to `./lora_adapter/`
+4. **Evaluation** (`04_evaluation.ipynb`): Evaluate model performance with perplexity and qualitative assessment, compare experiments in MLflow via `MlflowClient().search_experiments()`
+5. **Versioning & Packaging** (`05_versioning_packaging.ipynb`): Load adapter from `./lora_adapter/`, log model weights to MLflow via `mlflow.pytorch.log_model()`, register in Model Registry, merge weights and save to `../models/merged_model` (lab root), create Docker container with vLLM serving
 6. **Deployment & Serving** (`06_deployment_serving.ipynb`): Deploy to OpenShift/Kubernetes, configure resource limits, test endpoint
+
+**Model Persistence Chain (notebook-to-notebook handoff):**
+
+```
+03 (train)  ──save──>  ./lora_adapter/          (local disk, PEFT adapter)
+                │
+04 (eval)   ──load──>  ./lora_adapter/          ✓ loads from local disk
+                │
+05 (package) ─load──>  ./lora_adapter/          ✓ loads from local disk
+                │──log──>  MLflow (pytorch.log_model)  ✓ weights logged to artifacts
+                │──save──>  ../models/merged_model     ✓ aligned with Dockerfile
+                │
+Dockerfile   ──copy──>  models/merged_model     ✓ expects same path
+                │
+06 (deploy)  ──test──>  http://localhost:8000    ✓ tests deployed endpoint
+```
 
 ### Deployment Architecture
 
@@ -332,3 +352,19 @@ The repository uses GitHub Actions for CI/CD (`.github/workflows/ci.yml`). The w
 - Participant names are used to namespace experiments and models to avoid conflicts
 - The pipeline uses the `quay.io/modh/runtime-images:runtime-datascience-ubi9-python-3.11-20250703` base image
 - The repository is currently on the `facelift` branch with restructured documentation and lab organization
+
+## LLMOps Model Persistence
+
+The model handoff between notebooks follows this chain:
+
+1. **Notebook 03** saves the LoRA adapter to **local disk** (`./lora_adapter/`) — NOT to MLflow (only metrics are logged during training)
+2. **Notebook 04** loads from `./lora_adapter/` (local disk)
+3. **Notebook 05** loads from `./lora_adapter/` (local disk), then logs weights to MLflow via `mlflow.pytorch.log_model()`, merges, and saves to `../models/merged_model`
+4. **Dockerfile** uses `COPY models/ /app/models/` — expects `models/merged_model` relative to lab root
+
+The merged model is saved to `../models/merged_model` (relative to `notebooks/`) = `models/merged_model` (relative to lab root). This path is consumed by the Dockerfile's `COPY models/ /app/models/` instruction.
+
+## MLflow API Notes
+
+- Use `MlflowClient().search_experiments()` instead of `mlflow.list_experiments()` (removed from top-level API in newer MLflow versions)
+- `mlflow.pytorch.log_model()` is used to persist model weights to MLflow artifact store; Hugging Face's `report_to="mlflow"` only logs metrics, not weights
