@@ -116,25 +116,25 @@ nav:
     - mlops-overview.md
    
   - "Hands-on Labs":
-    - workshop-overview.md
-    - "Wine Quality Classifier": labs-docs/wine-quality-classifier.md
-    - "Bike Demand Forecasting": labs-docs/bike-demand-forecasting.md
-    - "1 - Environment & Prerequisites": labs-docs/bike-forecasting/00_environment_prerequisites.md
-    - "2 - Load, Extract and Clean the Data": labs-docs/bike-forecasting/01_load_extract_clean_data.md
-    - "3 - Prepare the Data for Training": labs-docs/bike-forecasting/02_prepare_data_training.md
-    - "4 - Model Training and Experiment Tracking": labs-docs/bike-forecasting/03_mode_training_experiment_tracking.md
-    - "5 - Review the Experiments & Select the Best Model": labs-docs/bike-forecasting/04_review_experiment_best_model.md
-    - "6 - Model Deploymet - Containerize the Endpoint-API": labs-docs/bike-forecasting/05_containerize_model_endpoint.md
-    - "7 - Model Deploymet - Deploy on OpenShift Cluster": labs-docs/bike-forecasting/06_model_deployment_openshift.md
-    - "8 - Model Deploymet - Testing Model Endpoint-API": labs-docs/bike-forecasting/07_test_model_endpoint.md
-    - "9 - Model & Data Monitoring": labs-docs/bike-forecasting/08_model_data_monitoring.md
-    - "LLM Instruction Tuning": labs-docs/02_intermediate/llm-instruction-tuning.md
-    - "1 - Setup & Exploration": labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md
-    - "2 - Data Preparation": labs-docs/02_intermediate/llm-instruction-tuning/02_data_preparation.md
-    - "3 - LoRA Tuning": labs-docs/02_intermediate/llm-instruction-tuning/03_lora_tuning.md
-    - "4 - Evaluation": labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md
-    - "5 - Versioning & Packaging": labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md
-    - "6 - Deployment & Serving": labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md
+     - workshop-overview.md
+     - "Wine Quality Classifier": labs-docs/wine-quality-classifier.md
+     - "Bike Demand Forecasting": labs-docs/bike-demand-forecasting.md
+     - "1 - Environment & Prerequisites": labs-docs/01_beginner/02_bike-forecasting/00_environment_prerequisites.md
+     - "2 - Load, Extract and Clean the Data": labs-docs/01_beginner/02_bike-forecasting/01_load_extract_clean_data.md
+     - "3 - Prepare the Data for Training": labs-docs/01_beginner/02_bike-forecasting/02_prepare_data_training.md
+     - "4 - Model Training and Experiment Tracking": labs-docs/01_beginner/02_bike-forecasting/03_mode_training_experiment_tracking.md
+     - "5 - Review the Experiments & Select the Best Model": labs-docs/01_beginner/02_bike-forecasting/04_review_experiment_best_model.md
+     - "6 - Model Deploymet - Containerize the Endpoint-API": labs-docs/01_beginner/02_bike-forecasting/05_containerize_model_endpoint.md
+     - "7 - Model Deploymet - Deploy on OpenShift Cluster": labs-docs/01_beginner/02_bike-forecasting/06_model_deployment_openshift.md
+     - "8 - Model Deploymet - Testing Model Endpoint-API": labs-docs/01_beginner/02_bike-forecasting/07_test_model_endpoint.md
+     - "9 - Model & Data Monitoring": labs-docs/01_beginner/02_bike-forecasting/08_model_data_monitoring.md
+     - "LLM Instruction Tuning": labs-docs/02_intermediate/llm-instruction-tuning.md
+     - "1 - Setup & Exploration": labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md
+     - "2 - Data Preparation": labs-docs/02_intermediate/llm-instruction-tuning/02_data_preparation.md
+     - "3 - LoRA Tuning": labs-docs/02_intermediate/llm-instruction-tuning/03_lora_tuning.md
+     - "4 - Evaluation": labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md
+     - "5 - Versioning & Packaging": labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md
+     - "6 - Deployment & Serving": labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md
    
   - "Environment & Prerequisites":
     - environment-requirement.md
