@@ -180,6 +180,5 @@ Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built i
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](04_review_experiment_best_model.md){ .md-button }
-[Next →](06_model_deployment_openshift.md){ .md-button }
+[← Previous](04_review_experiment_best_model.md){ .md-button } [Next →](06_model_deployment_openshift.md){ .md-button }
 </div>

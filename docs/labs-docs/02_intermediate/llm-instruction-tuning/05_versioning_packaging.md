@@ -140,6 +140,5 @@ You learned how to:
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](04_evaluation.md){ .md-button }
-[Next →](06_deployment_serving.md){ .md-button }
+[← Previous](04_evaluation.md){ .md-button } [Next →](06_deployment_serving.md){ .md-button }
 </div>

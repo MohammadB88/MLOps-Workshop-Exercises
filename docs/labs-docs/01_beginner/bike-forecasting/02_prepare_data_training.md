@@ -58,6 +58,5 @@ print(X_train.head(), X_test.head())
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](01_load_extract_clean_data.md){ .md-button }
-[Next →](03_mode_training_experiment_tracking.md){ .md-button }
+[← Previous](01_load_extract_clean_data.md){ .md-button } [Next →](03_mode_training_experiment_tracking.md){ .md-button }
 </div>

@@ -46,6 +46,5 @@ Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model perfor
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](02_prepare_data_training.md){ .md-button }
-[Next →](04_review_experiment_best_model.md){ .md-button }
+[← Previous](02_prepare_data_training.md){ .md-button } [Next →](04_review_experiment_best_model.md){ .md-button }
 </div>

@@ -39,6 +39,5 @@ Finally, a script is provided to visualize the ``Actual vs Predicted Counts`` fo
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](06_model_deployment_openshift.md){ .md-button }
-[Next →](08_model_data_monitoring.md){ .md-button }
+[← Previous](06_model_deployment_openshift.md){ .md-button } [Next →](08_model_data_monitoring.md){ .md-button }
 </div>

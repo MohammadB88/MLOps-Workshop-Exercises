@@ -35,6 +35,5 @@ Please follow the instructions inside the notebook and execute each code cell to
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](00_environment_prerequisites.md){ .md-button }
-[Next →](02_prepare_data_training.md){ .md-button }
+[← Previous](00_environment_prerequisites.md){ .md-button } [Next →](02_prepare_data_training.md){ .md-button }
 </div>

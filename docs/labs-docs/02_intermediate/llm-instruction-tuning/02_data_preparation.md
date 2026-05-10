@@ -172,6 +172,5 @@ In this exercise, you learned how to:
 ---
 
 <div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](01_setup_exploration.md){ .md-button }
-[Next →](03_lora_tuning.md){ .md-button }
+[← Previous](01_setup_exploration.md){ .md-button } [Next →](03_lora_tuning.md){ .md-button }
 </div>
