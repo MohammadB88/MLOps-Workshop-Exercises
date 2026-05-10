@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-instruction-tuning-deployment
+  labels:
+    app: llm-instruction-tuning
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm-instruction-tuning
+  template:
+    metadata:
+      labels:
+        app: llm-instruction-tuning
+    spec:
+      containers:
+      - name: llm-server
+        image: IMAGE_PLACEHOLDER:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MODEL_NAME
+          value: "TinyLlama-1.1B-Chat-v1.0"
+        resources:
+          requests:
+            memory: "8Gi"
+            cpu: "2"
+          limits:
+            memory: "16Gi"
+            cpu: "4"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 120
+          periodSeconds: 20

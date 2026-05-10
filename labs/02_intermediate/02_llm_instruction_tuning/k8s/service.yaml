@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: llm-instruction-tuning-service
+  labels:
+    app: llm-instruction-tuning
+spec:
+  selector:
+    app: llm-instruction-tuning
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP
