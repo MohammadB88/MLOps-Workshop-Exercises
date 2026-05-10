@@ -107,7 +107,8 @@ spec:
 
 ---
 
-<div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](05_containerize_model_endpoint.md){ .md-button } [Next →](07_test_model_endpoint.md){ .md-button }
+<div style="display: flex; justify-content: space-between;">
+<a href="../05_containerize_model_endpoint/" class="md-button">← Previous</a>
+<a href="../07_test_model_endpoint/" class="md-button">Next →</a>
 </div>
 

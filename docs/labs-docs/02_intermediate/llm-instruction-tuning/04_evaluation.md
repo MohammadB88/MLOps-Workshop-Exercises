@@ -100,6 +100,7 @@ You learned how to:
 
 ---
 
-<div markdown="1" style="display: flex; justify-content: space-between;">
-[← Previous](03_lora_tuning.md){ .md-button } [Next →](05_versioning_packaging.md){ .md-button }
+<div style="display: flex; justify-content: space-between;">
+<a href="../03_lora_tuning/" class="md-button">← Previous</a>
+<a href="../05_versioning_packaging/" class="md-button">Next →</a>
 </div>

@@ -318,6 +318,6 @@ These skills are essential for production LLM deployments, where reliability, sc
 
 ---
 
-<div markdown="1" style="display: flex; justify-content: flex-start;">
-[← Previous](05_versioning_packaging.md){ .md-button }
+<div style="display: flex; justify-content: flex-start;">
+<a href="../05_versioning_packaging/" class="md-button">← Previous</a>
 </div>

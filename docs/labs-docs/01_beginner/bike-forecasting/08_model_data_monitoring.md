@@ -60,7 +60,7 @@ In this exercise, you learned how to:
 
 ---
 
-<div markdown="1" style="display: flex; justify-content: flex-start;">
-[← Previous](07_test_model_endpoint.md){ .md-button }
+<div style="display: flex; justify-content: flex-start;">
+<a href="../07_test_model_endpoint/" class="md-button">← Previous</a>
 </div>
 

@@ -65,6 +65,6 @@ git clone git@github.com:your-username/your-forked-repo.git
 
 ---
 
-<div markdown="1" style="display: flex; justify-content: flex-end;">
-[Next →](01_load_extract_clean_data.md){ .md-button }
+<div style="display: flex; justify-content: flex-end;">
+<a href="../01_load_extract_clean_data/" class="md-button">Next →</a>
 </div>
