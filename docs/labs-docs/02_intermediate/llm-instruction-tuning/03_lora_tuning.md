@@ -102,3 +102,8 @@ You learned how to:
 - Apply LoRA for parameter-efficient fine-tuning
 - Train with MLflow tracking
 - Save LoRA adapters for deployment
+
+---
+
+[← Previous](02_data_preparation.md){ .md-button }
+[Next →](04_evaluation.md){ .md-button }

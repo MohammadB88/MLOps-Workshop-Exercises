@@ -79,12 +79,13 @@ print(fine_tuned_response)
 import mlflow
 
 # List experiments
-experiments = mlflow.list_experiments()
+from mlflow.tracking import MlflowClient
+client = MlflowClient()
+experiments = client.search_experiments()
 for exp in experiments:
     print(f"{exp.name}: {exp.experiment_id}")
 
 # Compare runs
-client = mlflow.tracking.MlflowClient()
 runs = client.search_runs(experiment_ids=["<experiment_id>"])
 for run in runs:
     print(f"Run {run.info.run_id}: Loss = {run.data.metrics.get('train_loss')}")
@@ -96,3 +97,8 @@ You learned how to:
 - Calculate perplexity for evaluation
 - Perform qualitative comparisons
 - Use MLflow for experiment comparison
+
+---
+
+[← Previous](03_lora_tuning.md){ .md-button }
+[Next →](05_versioning_packaging.md){ .md-button }

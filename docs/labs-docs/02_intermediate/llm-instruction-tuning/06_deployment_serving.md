@@ -316,9 +316,6 @@ In this exercise, you learned how to:
 
 These skills are essential for production LLM deployments, where reliability, scalability, and efficient resource utilization are paramount.
 
-## Next Steps
+---
 
-- Experiment with different resource configurations to optimize cost/performance
-- Try implementing autoscaling based on metrics like request latency or queue depth
-- Explore advanced serving techniques like model quantization or continuous batching
-- Set up monitoring dashboards for your LLM serving metrics
+[← Previous](05_versioning_packaging.md){ .md-button }

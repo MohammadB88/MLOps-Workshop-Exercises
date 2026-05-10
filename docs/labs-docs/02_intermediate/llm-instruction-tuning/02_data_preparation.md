@@ -169,6 +169,7 @@ In this exercise, you learned how to:
 5. Create train/validation splits
 6. Save processed datasets
 
-## Next Steps
+---
 
-In the next exercise, you will use this prepared dataset to fine-tune your LLM using LoRA.
+[← Previous](01_setup_exploration.md){ .md-button }
+[Next →](03_lora_tuning.md){ .md-button }

@@ -137,6 +137,7 @@ You learned how to:
 - Create build scripts for containerization
 - Package models for deployment
 
-## Next Steps
+---
 
-In the final exercise, you will deploy your packaged model to OpenShift/Kubernetes.
+[← Previous](04_evaluation.md){ .md-button }
+[Next →](06_deployment_serving.md){ .md-button }
