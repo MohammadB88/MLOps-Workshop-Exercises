@@ -57,7 +57,7 @@ print(X_train.head(), X_test.head())
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-    <a href="01_load_extract_clean_data.md" class="md-button">← Previous</a>
-    <a href="03_mode_training_experiment_tracking.md" class="md-button">Next →</a>
+<div markdown="1" style="display: flex; justify-content: space-between;">
+[← Previous](01_load_extract_clean_data.md){ .md-button }
+[Next →](03_mode_training_experiment_tracking.md){ .md-button }
 </div>

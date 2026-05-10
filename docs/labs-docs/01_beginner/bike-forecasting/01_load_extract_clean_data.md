@@ -34,7 +34,7 @@ Please follow the instructions inside the notebook and execute each code cell to
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-    <a href="00_environment_prerequisites.md" class="md-button">← Previous</a>
-    <a href="02_prepare_data_training.md" class="md-button">Next →</a>
+<div markdown="1" style="display: flex; justify-content: space-between;">
+[← Previous](00_environment_prerequisites.md){ .md-button }
+[Next →](02_prepare_data_training.md){ .md-button }
 </div>

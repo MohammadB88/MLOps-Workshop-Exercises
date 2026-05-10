@@ -139,7 +139,7 @@ You learned how to:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-    <a href="04_evaluation.md" class="md-button">← Previous</a>
-    <a href="06_deployment_serving.md" class="md-button">Next →</a>
+<div markdown="1" style="display: flex; justify-content: space-between;">
+[← Previous](04_evaluation.md){ .md-button }
+[Next →](06_deployment_serving.md){ .md-button }
 </div>

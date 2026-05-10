@@ -179,7 +179,7 @@ Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built i
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-    <a href="04_review_experiment_best_model.md" class="md-button">← Previous</a>
-    <a href="06_model_deployment_openshift.md" class="md-button">Next →</a>
+<div markdown="1" style="display: flex; justify-content: space-between;">
+[← Previous](04_review_experiment_best_model.md){ .md-button }
+[Next →](06_model_deployment_openshift.md){ .md-button }
 </div>
