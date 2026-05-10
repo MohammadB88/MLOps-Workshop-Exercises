@@ -43,15 +43,9 @@ Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model perfor
 
 💡 **Note:** Other participants are also storing their experiments on the same instance. So please make sure that you are in the correct experiment.
 
-✅ **We will see in the next exercise** [Review the Experiments & Select the Best Model](./04_review_experiment_best_model.md), **how to select the best model and register that model on the same ``MLflow server``.**
+---
 
-
-
-<!-- # Model Training & Experiment Tracking
-You'll also use an experiment tracking tool (e.g., *MLflow*) to log and compare key metrics such as accuracy (e.g. *rmse* and *r2*), parameters (e.g. *n_estimators* and *max_depth*), and model artifacts. This helps you keep track of different training runs and make informed decisions based on their performance.
-
-💡 **Note:** Usually, the appropriate model is selected by data scientists based on the specific problem and characteristics of the data. For the **bike sharing forecasting** problem, we will use the ``"RandomForestRegressor"`` model and ``rmse`` and ``r2`` as deciding metrices. -->
-
-
-
-
+<div style="display: flex; justify-content: space-between;">
+    <a href="02_prepare_data_training.md" class="md-button">← Previous</a>
+    <a href="04_review_experiment_best_model.md" class="md-button">Next →</a>
+</div>

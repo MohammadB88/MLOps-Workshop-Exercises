@@ -124,9 +124,9 @@ nav:
      - "3 - Prepare the Data for Training": labs-docs/01_beginner/bike-forecasting/02_prepare_data_training.md
      - "4 - Model Training and Experiment Tracking": labs-docs/01_beginner/bike-forecasting/03_mode_training_experiment_tracking.md
      - "5 - Review the Experiments & Select the Best Model": labs-docs/01_beginner/bike-forecasting/04_review_experiment_best_model.md
-     - "6 - Model Deploymet - Containerize the Endpoint-API": labs-docs/01_beginner/bike-forecasting/05_containerize_model_endpoint.md
-     - "7 - Model Deploymet - Deploy on OpenShift Cluster": labs-docs/01_beginner/bike-forecasting/06_model_deployment_openshift.md
-     - "8 - Model Deploymet - Testing Model Endpoint-API": labs-docs/01_beginner/bike-forecasting/07_test_model_endpoint.md
+     - "6 - Model Deployment - Containerize the Endpoint-API": labs-docs/01_beginner/bike-forecasting/05_containerize_model_endpoint.md
+     - "7 - Model Deployment - Deploy on OpenShift Cluster": labs-docs/01_beginner/bike-forecasting/06_model_deployment_openshift.md
+     - "8 - Model Deployment - Testing Model Endpoint-API": labs-docs/01_beginner/bike-forecasting/07_test_model_endpoint.md
      - "9 - Model & Data Monitoring": labs-docs/01_beginner/bike-forecasting/08_model_data_monitoring.md
      - "LLM Instruction Tuning": labs-docs/02_intermediate/llm-instruction-tuning.md
      - "1 - Setup & Exploration": labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md

@@ -105,5 +105,7 @@ You learned how to:
 
 ---
 
-[← Previous](02_data_preparation.md){ .md-button }
-[Next →](04_evaluation.md){ .md-button }
+<div style="display: flex; justify-content: space-between;">
+    <a href="02_data_preparation.md" class="md-button">← Previous</a>
+    <a href="04_evaluation.md" class="md-button">Next →</a>
+</div>

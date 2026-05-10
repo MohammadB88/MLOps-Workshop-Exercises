@@ -177,4 +177,9 @@ When the `Status` is `Complete`, it means that the image is created and stored i
 
 Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built image is to be seen under `Tags`.
 
-✅ **Next exercise** [Model Deploymet - Deploy on OpenShift Cluster](./06_model_deployment_openshift.md) **is about model deployment on the OpenShift Cluster.** 
+---
+
+<div style="display: flex; justify-content: space-between;">
+    <a href="04_review_experiment_best_model.md" class="md-button">← Previous</a>
+    <a href="06_model_deployment_openshift.md" class="md-button">Next →</a>
+</div>

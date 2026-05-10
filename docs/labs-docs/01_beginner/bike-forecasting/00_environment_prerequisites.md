@@ -63,7 +63,8 @@ and use `git` to download the code:
 git clone git@github.com:your-username/your-forked-repo.git
 ```
 
-✅ **At this point, we are ready to go to the next exercise** [Load, Extract, and Clean the Data](./01_load_extract_clean_data.md).
+---
 
-
-
+<div style="display: flex; justify-content: flex-end;">
+    <a href="01_load_extract_clean_data.md" class="md-button">Next →</a>
+</div>

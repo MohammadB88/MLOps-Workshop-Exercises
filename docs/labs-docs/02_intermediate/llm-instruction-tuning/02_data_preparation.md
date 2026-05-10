@@ -171,5 +171,7 @@ In this exercise, you learned how to:
 
 ---
 
-[← Previous](01_setup_exploration.md){ .md-button }
-[Next →](03_lora_tuning.md){ .md-button }
+<div style="display: flex; justify-content: space-between;">
+    <a href="01_setup_exploration.md" class="md-button">← Previous</a>
+    <a href="03_lora_tuning.md" class="md-button">Next →</a>
+</div>

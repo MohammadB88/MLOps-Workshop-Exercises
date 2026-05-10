@@ -117,4 +117,6 @@ In this exercise, you:
 
 ---
 
-[Next →](02_data_preparation.md){ .md-button }
+<div style="display: flex; justify-content: flex-end;">
+    <a href="02_data_preparation.md" class="md-button">Next →</a>
+</div>

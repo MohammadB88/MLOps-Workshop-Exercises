@@ -55,4 +55,9 @@ print(X_train.shape, X_test.shape)
 print(X_train.head(), X_test.head())
 ```
 
-✅ **We use these ``Train`` and ``Test`` datasets to train a machine learning model in the next exercise** [Model Training & Experiment Tracking](./03_mode_training_experiment_tracking.md).
+---
+
+<div style="display: flex; justify-content: space-between;">
+    <a href="01_load_extract_clean_data.md" class="md-button">← Previous</a>
+    <a href="03_mode_training_experiment_tracking.md" class="md-button">Next →</a>
+</div>

@@ -50,3 +50,17 @@ These will get the predictions on both the reference and current datasets and ad
 In order to generate different monitoring reports, we use ``Evidently`` as tool. 
 As you execute the cells, observe how ``Evidently`` generate insights about the model and data, like data drift, model performance over time, and input data quality—all rendered interactively. I added a line to save this reports in ``html`` format under the directory ``reports/data_2011...``.
 
+## Summary
+
+In this exercise, you learned how to:
+- Set up model monitoring with Evidently
+- Create reference and current datasets for comparison
+- Generate drift reports to detect data and model drift
+- Interpret monitoring results for production ML systems
+
+---
+
+<div style="display: flex; justify-content: flex-start;">
+    <a href="07_test_model_endpoint.md" class="md-button">← Previous</a>
+</div>
+

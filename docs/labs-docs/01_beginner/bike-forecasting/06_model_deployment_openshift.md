@@ -105,5 +105,10 @@ spec:
     insecureEdgeTerminationPolicy: Redirect  # Redirect HTTP to HTTPS
 ```
 
-✅ **Now with a model to deploy, we see how to prepare the deployment files and dependencies in a container, in the next exercise** [Model Deployment - Testing Model Endpoint-API](./07_test_model_endpoint.md).
+---
+
+<div style="display: flex; justify-content: space-between;">
+    <a href="05_containerize_model_endpoint.md" class="md-button">← Previous</a>
+    <a href="07_test_model_endpoint.md" class="md-button">Next →</a>
+</div>
 

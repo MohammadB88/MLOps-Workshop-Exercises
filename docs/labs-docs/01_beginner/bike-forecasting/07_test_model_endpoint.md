@@ -35,6 +35,10 @@ As you follow the instruction in the notebook, single and batch requests are sen
 The prediction is returned for all the test data and the comparison with the actual target values is shown.
 
 Finally, a script is provided to visualize the ``Actual vs Predicted Counts`` for sample inputs.
-r
 
-✅ **Next, we will see how the model performance can degrade over time due to data drift and model drift:** [Model & Data Monitoring](./08_model_data_monitoring.md).
+---
+
+<div style="display: flex; justify-content: space-between;">
+    <a href="06_model_deployment_openshift.md" class="md-button">← Previous</a>
+    <a href="08_model_data_monitoring.md" class="md-button">Next →</a>
+</div>
