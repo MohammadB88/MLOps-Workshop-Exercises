@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "ml-pipeline-workflow": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/machine-learning-ops/skills/ml-pipeline-workflow/SKILL.md",
+      "computedHash": "f72d6581a0d4422211378315b58096b6782976f29247be787abbe44f5f49e97c"
+    },
+    "mlops-engineer": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "skillPath": "skills/mlops-engineer/SKILL.md",
+      "computedHash": "a095eb5b5bd592cb2a6323399ff594f383a3662a9a1ddfa1af05cfed1403c5d2"
+    }
+  }
+}
