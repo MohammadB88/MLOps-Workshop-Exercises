@@ -16,7 +16,7 @@ MLOps-Workshop-Exercises/
 ├── labs/
 │   ├── 01_beginner/02_bike_demand_forecasting/  # 6 notebooks
 │   └── 02_intermediate/
-│       ├── 01_bike_demand_forecasting_pipeline/  # Kubeflow pipeline
+│       ├── bike_demand_forecasting_pipeline/  # Kubeflow pipeline
 │       └── 02_llm_instruction_tuning/            # LLMOps exercise
 │           ├── notebooks/              # 6 Jupyter notebooks
 │           ├── scripts/                # Helper scripts
@@ -113,6 +113,10 @@ Kubeflow pipeline (`pipeline_bike_sharing.py`):
 3. `train_model`: Train with hyperparameter tuning, log to MLflow
 4. `register_model`: Register best model in MLflow
 
+*Planned enhancements:*
+5. `serve_model`: Download registered model and create FastAPI serving endpoint
+6. `monitor_model`: Perform data drift and model monitoring with Evidently
+
 Environment variables:
 - `DATASET_URL`: Dataset download URL
 - `MLFLOW_REMOTE_TRACKING_SERVER`: MLflow tracking server URL
@@ -129,3 +133,44 @@ Environment variables:
 
 - Use `MlflowClient().search_experiments()` instead of `mlflow.list_experiments()` (removed in newer versions)
 - `mlflow.pytorch.log_model()` persists model weights; Hugging Face's `report_to="mlflow"` only logs metrics
+
+## Planned Refinements for Intermediate Bike Demand Forecasting Lab
+
+The intermediate bike demand forecasting lab (`labs/02_intermediate/bike_demand_forecasting_pipeline/`) is planned to be enhanced with the following improvements to provide a more comprehensive MLOps experience:
+
+### 1. Add Model Serving Component
+- Create a new component that downloads the registered model from MLflow
+- Implement a FastAPI application for serving predictions with input validation
+- Add health check endpoints and proper error handling
+
+### 2. Add Model Monitoring Component
+- Integrate Evidently for model monitoring and drift detection
+- Generate data drift, target drift, and data quality reports
+- Save HTML reports and log monitoring metrics to MLflow
+
+### 3. Add Containerization and Deployment Files
+- Create Containerfile/Dockerfile for building the model serving image
+- Add Kubernetes manifests for deployment (Deployment, Service, Route/Ingress)
+- Include instructions for deploying to OpenShift/Kubernetes
+
+### 4. Improve Pipeline Robustness
+- Enhance existing components with better error handling and input validation
+- Add comprehensive logging and data validation checks
+- Implement configuration through environment variables or pipeline parameters
+- Add model validation before registration (minimum performance thresholds)
+
+### 5. Add Comprehensive Documentation
+- Create detailed documentation explaining the pipeline architecture
+- Provide guidance on running and customizing the pipeline
+- Include expected outputs, artifacts, and troubleshooting tips
+- Connect concepts to the beginner lab for progressive learning
+
+### 6. Implement Proper Artifact Management
+- Ensure components use KFP's artifact handling correctly
+- Add metadata to artifacts where appropriate
+- Implement proper cleanup of temporary files
+
+### 7. Add Testing and Validation
+- Include unit tests for individual components
+- Add data validation checks at each pipeline stage
+- Implement model validation before registration
