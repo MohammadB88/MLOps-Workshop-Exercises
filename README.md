@@ -1,13 +1,3 @@
-<!-- # MLOps-Workshop-Exercises
-
-This repository contains all exercise descriptions for my MLOps Workshop, utilizing the Red Hat demo environment. The exercises are build with MkDocs and published to Githun pages. 
-
-The Workshop can be found at this link: https://mohammadb88.github.io/MLOps-Workshop-Exercises/
-
-**There is a Roadmap for this project:** [Roadmap](./ROADMAP.md) -->
-
-<!-- # MLOps Workshop - From Development to Production -->
-<!-- # Production MLOps Workshop: From Jupyter to Kubernetes -->
 # Production MLOps Workshop: From Laptop to Cloud Native
 
 [![GitHub Pages](https://img.shields.io/badge/docs-github_pages-blue)](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
@@ -21,26 +11,21 @@ This comprehensive, hands-on workshop teaches you the essential practices, tools
 
 Learn to deploy, monitor, and maintain production ML systems through hands-on labs.
 
-**The hard truth:** Building ML models is just small portion of the work. The rest is 
-getting them to production and keeping them there. TODO: ADD PAPER about HIDDEN ... []()
+**The hard truth:** Building ML models is just a small portion of the work. The rest is getting them to production and keeping them there.
 
-Research shows that most ML projects struggle to reach production. 
-TODO: [Gartner](GARTNER STUDIES) found that only 53% of AI projects make it from prototype to production, 
-while 77% of businesses cite "business adoption" as a major challenge. The gap 
-between ML development and production deployment remains one of the biggest 
-challenges in modern AI.
+Research shows that most ML projects struggle to reach production. Only 53% of AI projects make it from prototype to production, while 77% of businesses cite "business adoption" as a major challenge. The gap between ML development and production deployment remains one of the biggest challenges in modern AI.
 
-This workshop teaches you how to bring the models from your laptop to a cloud native environment. In other words,  everything you need to be production-ready - experiment tracking, containerization, Kubernetes deployment, CI/CD automation, drift detection, and monitoring.
+This workshop teaches you how to bring models from your laptop to a cloud-native environment. You'll learn everything needed to be production-ready - experiment tracking, containerization, Kubernetes deployment, pipeline automation, drift detection, and monitoring.
 
 ---
 
 **What makes this different?**
 
-- 🎯 **Production-first approach** - No toy examples, real deployment scenarios
-- 🛠️ **Industry-standard tools** - MLflow, Docker, Kubernetes, Evidently
-- 📈 **Progressive learning** - Beginner to Advanced in structured steps
-<!-- - 🏢 **Enterprise-ready** - Learn patterns used by top tech companies
-- 🤝 **Open & Free** - Community-driven, always accessible -->
+- 🎯 **Production-first approach** - Real deployment scenarios on OpenShift/Kubernetes
+- 🛠️ **Industry-standard tools** - MLflow, Kubeflow, Evidently, FastAPI, vLLM
+- 📈 **Progressive learning** - Beginner to Intermediate in structured steps
+- 🤖 **LLMOps included** - Modern LLM fine-tuning and deployment practices
+- 🏢 **Enterprise-ready** - Designed for Red Hat OpenShift AI environment
 
 ---
 
@@ -48,12 +33,12 @@ This workshop teaches you how to bring the models from your laptop to a cloud na
 
 This workshop bridges the gap between machine learning development and production deployment. You'll gain practical experience with:
 
-- **Experiment Tracking & Model Management** - Track experiments, version models, and manage the ML lifecycle
-<!-- - **Data Version Control** - Handle large datasets and ensure reproducibility with DVC -->
-- **Containerization & Orchestration** - Package models with Docker and deploy on Kubernetes/OpenShift
-- **CI/CD for ML** - Automate testing, training, and deployment pipelines
-- **Production Monitoring** - Detect data drift, monitor model performance, and trigger retraining
-<!-- - **MLOps Best Practices** - Apply industry-standard patterns for scalable ML systems -->
+- **Experiment Tracking & Model Management** - Track experiments, version models, and manage the ML lifecycle with MLflow
+- **Containerization & Orchestration** - Package models with Docker/Containerfile and deploy on Kubernetes/OpenShift
+- **Pipeline Automation** - Build end-to-end ML pipelines with Kubeflow Pipelines
+- **Production Monitoring** - Detect data drift and monitor model performance with Evidently AI
+- **Model Serving** - Deploy models as REST APIs with FastAPI and vLLM
+- **LLMOps Fundamentals** - Fine-tune LLMs with LoRA/QLoRA, version, and deploy to production
 
 ---
 
@@ -74,6 +59,7 @@ This workshop is designed for :
 - **Git basics** (clone, commit, push/pull)
 - **Docker fundamentals** (containers, images) - helpful but not required
 - **Kubernetes basics** - helpful but not required
+- **Jupyter Notebook experience** - for working with lab notebooks
 
 ---
 
@@ -81,116 +67,84 @@ This workshop is designed for :
 
 ```
 MLOps-Workshop-Exercises/
-├── README.md                          # Enhanced with introduction
-├── ROADMAP.md                         # This file
-├── CODE_OF_CONDUCT.md                 # TODO: Community standards 
-├── CONTRIBUTING.md                    # TODO: Contribution guidelines
-├── LICENSE                            # Project license
+├── README.md                          # This file
+├── ROADMAP.md                         # Project roadmap
+├── LICENSE                            # MIT License
 ├── SECURITY.md                        # Security policy
-├── mkdocs.yml                         # GitHub Pages main yaml file
+├── mkdocs.yml                         # MkDocs configuration
+├── requirements.txt                   # Python dependencies
+├── CLAUDE.md                          # AI assistant instructions
 ├── docs/
-│   ├── learning-materials/           # Theory and concepts
-│   │   ├── 01-mlops-fundamentals.md
-│   │   ├── 02-ml-lifecycle.md
-│   │   ├── 03-experiment-tracking.md
-│   │   ├── 04-model-deployment.md
-│   │   ├── 05-monitoring-maintenance.md
-│   │   ├── 06-data-versioning.md
-│   │   ├── 07-cicd-for-ml.md
-│   │   └── 08-llmops-intro.md
-│   ├── environment-requirement/      # Setup guides (existing)
-│   └── assets/                       # Images and resources
-├── labs/                             # ??? Labs or Workshop Materials
-│   ├── beginner/
-│   │   ├── 01_wine_quality_TODO/
-│   │   │   ├── ?notebook.ipynb
-│   │   │   ├── ?solution.ipynb
-│   │   │   └── ?data/
+│   ├── index.md                       # Documentation homepage
+│   ├── labs-docs/                     # Lab guides
+│   │   ├── bike-demand-forecasting.md
+│   │   ├── bike-forecasting/          # Step-by-step guides
+│   │   ├── llm-instruction-tuning.md
+│   │   └── llm-instruction-tuning/    # LLMOps step-by-step guides
+│   ├── environment-requirement.md     # Environment setup
+│   ├── git-cheatsheet.md              # Git reference
+│   ├── helm-installation.md           # Helm installation guide
+│   └── assets/                        # Images, CSS, JS
+├── labs/
+│   ├── 01_beginner/
 │   │   └── 02_bike_demand_forecasting/
-│   │   │   ├── ?notebook.ipynb
-│   │   │   ├── ?solution.ipynb
-│   │   │   ├── tutorial.md
-│   │   │   └── sample-data/
-│   ├── intermediate/
-│   │   ├── 01_bike_demand_forecasting_pipeline/
-│   │   │   ├── README.md
-│   │   │   ├── 01-data-prep.ipynb
-│   │   │   ├── 02-training.ipynb
-│   │   │   ├── 03-evaluation.ipynb
-│   │   │   └── mlflow-setup.md
-│   │   └── 02_CICD_pipeline_TODO/
-│   │       ├── README.md
-│   │       ├── api/
-│   │       ├── Dockerfile
-│   │       ├── k8s/
-│   │       └── tests/
-│   └── advanced/
-│       ├── 01_TODO_cicd-ml-pipeline/
-│       │   ├── README.md
-│       │   ├── .github/workflows/
-│       │   ├── tests/
-│       │   └── scripts/
-│       └── 02_TODO_monitoring-drift-detection/
-│           ├── README.md
-│           ├── monitoring-setup.ipynb
-│           ├── evidently-config/
-│           └── dashboards/
-├── workshop_materials/               # Existing materials
-└── sample-mkdocs/                    # MkDocs setup (existing)
+│   │       ├── notebooks/              # 6 Jupyter notebooks
+│   │       ├── models/                 # FastAPI app, Containerfile
+│   │       ├── data/                   # Gitignored
+│   │       └── requirements.txt
+│   └── 02_intermediate/
+│       ├── 01_bike_demand_forecasting_pipeline/
+│       │   ├── pipeline_bike_sharing.py  # Kubeflow pipeline
+│       │   └── requirements.txt
+│       └── 02_llm_instruction_tuning/
+│           ├── notebooks/              # 6 Jupyter notebooks
+│           ├── scripts/                # Helper scripts
+│           ├── k8s/                    # Kubernetes manifests
+│           ├── data/                   # Gitignored
+│           ├── models/                 # Gitignored
+│           ├── Dockerfile
+│           └── requirements.txt
+└── environment_preparations/           # Setup scripts and configs
 ```
 
 ---
 
 ## 📚 Workshop Structure
 
-The workshop is organized into **three progressive skill levels**, each with focused learning materials and hands-on labs:
+The workshop is organized into **two progressive skill levels**, each with focused learning materials and hands-on labs:
 
 ### 🟢 Beginner Level
 *Start here if you're new to MLOps*
-<!-- 
-**Learning Materials:**
-- MLOps fundamentals and lifecycle
-- Experiment tracking concepts
-- ???
-- Introduction to data versioning -->
 
-**Labs:**
-1. **Wine Quality Classifier** - Train and track a simple ML model with MLflow
-2. **Bike Sharing Forecast** - TODO
-<!-- 2. **Data Versioning with DVC** - Version control for datasets and reproducibility -->
+**Lab: Bike Demand Forecasting**
+- **01 Data Exploration** - Load and explore UCI bike sharing dataset
+- **02 Data Preparation** - Clean, preprocess, and split data
+- **03 Model Training** - Train Random Forest with hyperparameter tuning
+- **04 Model Registration** - Register best model in MLflow
+- **05 Model Testing** - Test registered model via REST API
+- **06 Model Monitoring** - Set up Evidently for drift detection
 
-<!-- **Time Commitment:** ???4-6 hours -->
+**Time Commitment:** 4-6 hours
 
 ---
 
 ### 🟡 Intermediate Level
 *Build production-ready ML pipelines*
 
-<!-- **Learning Materials:**
-- Model deployment strategies
-- Containerization for ML
-- REST API design for models -->
+**Lab 1: Bike Demand Forecasting Pipeline**
+- End-to-end Kubeflow pipeline with MLflow tracking
+- Automated data processing and model training
+- Hyperparameter optimization and model registration
 
-**Labs:**
-1. **Bike Demand Forecasting Pipeline** - TODO: End-to-end pipeline with experiment tracking
-2. **TODO** - TODO
+**Lab 2: LLMOps Instruction Tuning**
+- **01 Setup & Exploration** - Load base model (TinyLlama/Phi-2)
+- **02 Data Preparation** - Format instruction dataset, tokenize
+- **03 LoRA Tuning** - Train with LoRA/QLoRA, MLflow tracking
+- **04 Evaluation** - Perplexity, qualitative assessment
+- **05 Versioning & Packaging** - Register in MLflow, merge weights, containerize
+- **06 Deployment & Serving** - Deploy to OpenShift/Kubernetes with vLLM
 
-<!-- **Time Commitment:** 8-10 hours -->
-
----
-
-### 🔴 Advanced Level
-*Implement enterprise MLOps practices*
-<!-- 
-**Learning Materials:**
-- CI/CD for machine learning
-- Model monitoring and drift detection
-- Production best practices -->
-
-**Labs:**
-1. **TODO** - TODO
-
-<!-- **Time Commitment:** 10-12 hours -->
+**Time Commitment:** 8-12 hours
 
 ---
 
@@ -201,57 +155,62 @@ This workshop uses industry-standard tools:
 | Category | Tools |
 |----------|-------|
 | **Experiment Tracking** | MLflow |
-| **Data Versioning** | ???DVC (Data Version Control) |
-| **Containerization** | Docker |
-| **Orchestration** | Kubernetes, OpenShift |
-| **CI/CD** | ???GitHub Actions |
-| **Monitoring** | Evidently, Prometheus, Grafana |
-| **Model Serving** | ???FastAPI / Flask |
+| **Containerization** | Docker, Containerfile |
+| **Orchestration** | Kubernetes, OpenShift, Kubeflow Pipelines |
+| **Monitoring** | Evidently AI |
+| **Model Serving** | FastAPI, vLLM |
+| **ML Frameworks** | scikit-learn, Hugging Face Transformers |
+| **LLM Training** | PEFT (LoRA/QLoRA), bitsandbytes |
+| **Documentation** | MkDocs Material Theme |
 | **Languages** | Python, YAML |
 
 ---
 
-## 🏃 Starting Point OR Where to Start?
+## 🏃 Getting Started
 
-<!-- ### 1. Clone the Repository
+**To access the full documentation with interactive navigation, visit:** [MLOps Workshop](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
+
+### Quick Start
 
 ```bash
+# Clone the repository
 git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
 cd MLOps-Workshop-Exercises
-``` -->
 
-<!-- ### 2. Set Up Your Environment??? -->
-<!-- MAYBE just REFER to the Environment Section -->
-
-<!-- ```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+# Install documentation dependencies
 pip install -r requirements.txt
-``` -->
 
-<!-- ### 3. Start with Beginner Labs
+# Serve documentation locally
+mkdocs serve
+```
 
-Navigate to the [learning materials](docs/learning-materials/) and begin with the fundamentals, then proceed to [Lab 1: Wine Quality Classifier](labs/beginner/01-wine-quality-basic/). -->
-<!-- 
-### 4.  -->
-**To access the full documentation with interactive navigation, visit :**  [Main Page for MLOps Workshop](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) 
+### Running the Labs
 
-<!-- for the complete workshop with interactive navigation. -->
+**Beginner Lab (Bike Demand Forecasting):**
+```bash
+cd labs/01_beginner/02_bike_demand_forecasting
+pip install -r requirements.txt
+jupyter lab
+```
+
+**Intermediate Lab (LLM Instruction Tuning):**
+```bash
+cd labs/02_intermediate/02_llm_instruction_tuning
+pip install -r requirements.txt
+jupyter lab
+```
 
 ---
 
-## 📖 Documentation 
+## 📖 Documentation
 
 | Resource | Description |
 |----------|-------------|
-| [Learning Materials](docs/learning-materials/) | Theory, concepts, and best practices |
-| [Beginner Labs](labs/beginner/) | Foundational MLOps skills |
-| [Intermediate Labs](labs/intermediate/) | Production pipelines and deployment |
-| [Advanced Labs](labs/advanced/) | CI/CD and monitoring |
-| [Environment Setup](docs/environment-requirement/) | Installation and configuration guides |
+| [Workshop Site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) | Full interactive documentation |
+| [Bike Forecasting Guide](docs/labs-docs/bike-demand-forecasting.md) | Beginner lab overview |
+| [LLM Instruction Tuning](docs/labs-docs/llm-instruction-tuning.md) | Intermediate LLMOps lab |
+| [Environment Setup](docs/environment-requirement.md) | Installation and configuration |
+| [Git Cheatsheet](docs/git-cheatsheet.md) | Git reference guide |
 | [Roadmap](ROADMAP.md) | Future plans and improvements |
 
 <!-- ---
@@ -276,41 +235,17 @@ We recommend following this learning path:
 
 ## 🌟 Key Features
 
-✅ **Hands-On Learning** - Every concept is reinforced with practical exercises  
-✅ **Production-Focused** - Real-world tools and deployment scenarios  
-✅ **Progressive Difficulty** - Structured path from basics to advanced  
-✅ **Open Source** - Free to use, modify, and contribute  
-✅ **Industry Tools** - Learn the same tools used by top tech companies  
-✅ **Comprehensive Documentation** - Clear guides and troubleshooting tips  
+✅ **Hands-On Learning** - Every concept is reinforced with practical exercises
 
-<!-- ---
+✅ **Production-Focused** - Real-world tools and deployment scenarios
 
-## 🤝 Contributing
+✅ **Progressive Difficulty** - Structured path from basics to advanced
 
-We welcome contributions! Whether you want to:
+✅ **Open Source** - Free to use, modify, and contribute
 
-- Fix a bug or typo
-- Improve documentation
-- Add a new lab or example
-- Share your MLOps experience
+✅ **Industry Tools** - Learn the same tools used by top tech companies
 
-Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
-
-### Ways to Contribute
-
-- 🐛 **Report bugs** - Open an issue with details
-- 💡 **Suggest features** - Share your ideas for improvements
-- 📝 **Improve docs** - Help make content clearer
-- 🧪 **Add labs** - Create new exercises and examples
-- ⭐ **Star the repo** - Show your support! -->
-
-<!-- ---
-
-## 📣 Community
-
-- **GitHub Discussions:** Ask questions, share experiences, get help
-- **Issues:** Report bugs or request features
-- **Pull Requests:** Contribute improvements -->
+✅ **Comprehensive Documentation** - Clear guides and troubleshooting tips
 
 ---
 
@@ -324,11 +259,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This workshop leverages the excellent work from:
 
-<!-- - [MLflow](https://mlflow.org/) - Experiment tracking and model registry
-- [DVC](https://dvc.org/) - Data version control
-- [Evidently AI](https://www.evidentlyai.com/) - Model monitoring
+- [MLflow](https://mlflow.org/) - Experiment tracking and model registry
+- [Kubeflow](https://www.kubeflow.org/) - Pipeline orchestration
+- [Evidently AI](https://www.evidentlyai.com/) - Model monitoring and drift detection
+- [Hugging Face](https://huggingface.co/) - Transformers and PEFT libraries
+- [vLLM](https://vllm.ai/) - Optimized LLM serving
 - [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift) - Kubernetes platform
-- The open-source MLOps community -->
+- The open-source MLOps community
 
 Special thanks to all [contributors](https://github.com/MohammadB88/MLOps-Workshop-Exercises/graphs/contributors) who have helped improve this workshop!
 
@@ -342,18 +279,10 @@ Special thanks to all [contributors](https://github.com/MohammadB88/MLOps-Worksh
 
 For questions or issues, please [open an issue](https://github.com/MohammadB88/MLOps-Workshop-Exercises/issues) on GitHub.
 
-<!-- ---
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=MohammadB88/MLOps-Workshop-Exercises&type=Date)](https://star-history.com/#MohammadB88/MLOps-Workshop-Exercises&Date) -->
-
 ---
 
 <div align="center">
 
 **Ready to master MLOps?** [Start Learning →](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
-
-<!-- Made with ❤️ by the MLOps community -->
 
 </div>
