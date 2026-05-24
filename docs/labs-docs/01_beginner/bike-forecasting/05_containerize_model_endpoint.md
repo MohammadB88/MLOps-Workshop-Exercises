@@ -1,4 +1,4 @@
-# 5: Model Deployment - Containerize the Endpoint-API
+# Exercise 5: Model Deployment - Containerize the Endpoint-API
 
 ## Objective
 In this lab, we will:
@@ -7,6 +7,14 @@ In this lab, we will:
 * containerize the service (e.g. with Docker, Podman, BuildConfig on OpenShift)
 
 enabling easy deployment to cloud or on-prem environments and making the model accessible for real-time predictions via HTTP/S requests.
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Containerization enables consistent deployment across environments.
+
+## Prerequisites
+
+- Completed Exercise 4
+- Best model registered in MLflow
 
 ## Guide
 
@@ -176,6 +184,14 @@ You can see the process of building the image in the respective builds-run under
 When the `Status` is `Complete`, it means that the image is created and stored in the `ImageStream` you created in the last step.
 
 Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built image is to be seen under `Tags`.
+
+## Summary
+
+In this exercise, you:
+1. Reviewed the FastAPI REST API application for model serving
+2. Reviewed the Containerfile for building the model image
+3. Created an ImageStream on OpenShift
+4. Created a BuildConfig and built the container image
 
 ---
 

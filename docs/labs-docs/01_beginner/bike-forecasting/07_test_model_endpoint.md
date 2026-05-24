@@ -1,4 +1,4 @@
-# 7: Model Deployment - Testing Model Endpoint-API
+# Exercise 7: Model Deployment - Testing Model Endpoint-API
 
 ## Objective
 In this lab, we will:
@@ -6,6 +6,14 @@ In this lab, we will:
 * test the model endpoint-API by sending single and batch inference requests
 
 ensuring the model can send back predictions based on the REST-API requests.
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Testing endpoints ensures the deployed model serves predictions correctly.
+
+## Prerequisites
+
+- Completed Exercise 6
+- Model deployed on OpenShift
 
 ## Guide
 
@@ -35,6 +43,14 @@ As you follow the instruction in the notebook, single and batch requests are sen
 The prediction is returned for all the test data and the comparison with the actual target values is shown.
 
 Finally, a script is provided to visualize the ``Actual vs Predicted Counts`` for sample inputs.
+
+## Summary
+
+In this exercise, you:
+1. Located the model API service URL on OpenShift
+2. Set the model deployment endpoint in the notebook
+3. Sent single and batch inference requests to the API
+4. Visualized actual vs predicted values
 
 ---
 

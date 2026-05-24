@@ -1,4 +1,4 @@
-# 1: Load, Extract, and Clean the Data
+# Exercise 1: Load, Extract, and Clean the Data
 
 ## Objective
 In this lab, we will:
@@ -12,6 +12,13 @@ In this lab, we will:
 3. **Conduct Exploratory Data Analysis (EDA)**: 
 4. **Save the Processed Data**:  -->
 
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Data exploration and validation are critical first steps before any model training.
+
+## Prerequisites
+
+- Completed Exercise 0
+- Repository cloned and opened
 
 ## Guide
 
@@ -31,6 +38,14 @@ You should set this URL at the beginning of the notebook for variable ``"DATASET
 
 Please follow the instructions inside the notebook and execute each code cell to explore, clean, and preprocess the dataset. The final cleaned dataset will be saved in the
 `data/processed` directory.
+
+## Summary
+
+In this exercise, you:
+1. Downloaded and extracted the Bike Sharing Dataset
+2. Cleaned and preprocessed the data for analysis
+3. Performed exploratory data analysis with visualizations
+4. Saved the cleaned dataset for model training
 
 ---
 

@@ -15,3 +15,13 @@ You will complete the following exercises, based on the difficulty of the worksh
 ### Intermediate Level
 
 * [LLM Instruction Tuning](labs-docs/02_intermediate/llm-instruction-tuning.md)
+
+```mermaid
+graph LR
+    A[Beginner: Bike Demand Forecasting] --> B[Intermediate: LLM Instruction Tuning]
+    A --> C[Intermediate: Kubeflow Pipeline]
+    B --> D[Advanced: ML Security & Compliance]
+    C --> E[Advanced: Kubeflow Advanced]
+    D --> F[Production ML]
+    E --> F
+```

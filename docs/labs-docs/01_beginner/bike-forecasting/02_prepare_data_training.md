@@ -1,4 +1,4 @@
-# 2: Prepare Data for Training
+# Exercise 2: Prepare Data for Training
 
 ## Objective
 In this lab, we will:
@@ -6,6 +6,14 @@ In this lab, we will:
 * Load the Processed Dataset
 * Define Features and Target Variable
 * Prepare the Data for Model Training
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Proper data preparation ensures consistent, reliable inputs for model training.
+
+## Prerequisites
+
+- Completed Exercise 1
+- Cleaned dataset saved in data/processed
 
 ## Guide
 
@@ -54,6 +62,14 @@ print(X_train.shape, X_test.shape)
 ```bash
 print(X_train.head(), X_test.head())
 ```
+
+## Summary
+
+In this exercise, you:
+1. Loaded the cleaned dataset from the previous exercise
+2. Defined features and target variable for training
+3. Split the data into training and test datasets
+4. Verified the split data shapes
 
 ---
 

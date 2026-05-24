@@ -1,10 +1,18 @@
-# 4: Review the Experiments & Select the Best Model
+# Exercise 4: Review the Experiments & Select the Best Model
 
 ## Objective
 In this lab, we will:
 
 * Review the performance of different models and runs
 * Select the Model with the best performance
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Model selection based on metrics is essential for deploying the best performing model.
+
+## Prerequisites
+
+- Completed Exercise 3
+- MLflow experiments completed
 
 ## Guide
 
@@ -30,6 +38,14 @@ Analyzing the results (i.e. comparing the metrics), you'll identify the best-per
 
 ### Step 5 - Select the Best-Performing experiment
 When we prompted in the notebook, please select the run (``run-ID``) which has performed the best. 
+
+## Summary
+
+In this exercise, you:
+1. Reviewed experiment results from MLflow
+2. Compared model performance metrics
+3. Selected the best-performing model run
+4. Registered the best model in MLflow
 
 ---
 

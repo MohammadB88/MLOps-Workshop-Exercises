@@ -1,4 +1,4 @@
-# 8: Model & Data Monitoring
+# Exercise 8: Model & Data Monitoring
 
 ## Objective
 In this lab, we will:
@@ -7,6 +7,14 @@ In this lab, we will:
 * observe metrics such as data drift, model drift, target drift
 
 ensuring the deployed model remains reliable and continues to perform well in a real-world environment.
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Continuous monitoring detects data drift and model degradation in production.
+
+## Prerequisites
+
+- Completed Exercise 7
+- Model endpoint accessible
 
 ## Guide
 
@@ -52,11 +60,11 @@ As you execute the cells, observe how ``Evidently`` generate insights about the 
 
 ## Summary
 
-In this exercise, you learned how to:
-- Set up model monitoring with Evidently
-- Create reference and current datasets for comparison
-- Generate drift reports to detect data and model drift
-- Interpret monitoring results for production ML systems
+In this exercise, you:
+1. Set up model monitoring with Evidently
+2. Created reference and current datasets for comparison
+3. Generated drift reports to detect data and model drift
+4. Interpreted monitoring results for production ML systems
 
 ---
 

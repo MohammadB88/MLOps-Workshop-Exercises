@@ -1,4 +1,4 @@
-# 6: Model Deployment - Deploy on OpenShift Cluster
+# Exercise 6: Model Deployment - Deploy on OpenShift Cluster
 
 ## Objective
 In this lab, we will:
@@ -7,6 +7,14 @@ In this lab, we will:
 * create necessary Kubernetes resources (i.e deployments, services, and routes)
 
 ensuring the model is accessible and scalable in a production-like environment.
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Kubernetes orchestration provides scalability and reliability for model serving.
+
+## Prerequisites
+
+- Completed Exercise 5
+- Container image built and pushed
 
 ## Guide
 
@@ -104,6 +112,14 @@ spec:
     termination: edge  # or passthrough, depending on your needs
     insecureEdgeTerminationPolicy: Redirect  # Redirect HTTP to HTTPS
 ```
+
+## Summary
+
+In this exercise, you:
+1. Created a Kubernetes Deployment using the built container image
+2. Configured environment variables for model serving
+3. Created a Service to expose the API internally
+4. Created a Route to expose the API externally
 
 ---
 

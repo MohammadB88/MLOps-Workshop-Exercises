@@ -1,10 +1,17 @@
-# 0: Environment and Prerequisites
+# Exercise 0: Environment and Prerequisites
 
 ## Objective
 In this lab, we will:
 
 * make ourselves familiar with the environment
 * clone the repository containing the workshop materials
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Setting up a reproducible environment is the foundation of any MLOps pipeline.
+
+## Prerequisites
+
+- Access to an OpenShift AI JupyterLab environment
 
 ## Guide
 
@@ -62,6 +69,13 @@ and use `git` to download the code:
 ```bash
 git clone git@github.com:your-username/your-forked-repo.git
 ```
+
+## Summary
+
+In this exercise, you:
+1. Accessed the OpenShift AI JupyterLab environment
+2. Cloned the workshop repository using HTTPS or SSH
+3. Verified the repository structure and workshop materials
 
 ---
 

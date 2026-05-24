@@ -1,10 +1,18 @@
-# 3: Model Training & Experiment Tracking
+# Exercise 3: Model Training & Experiment Tracking
 
 ## Objective
 In this lab, we will:
 
 * Train some Models using the prepared ``Train`` and ``Test`` datasets
 * Track the Experiments on MLflow
+
+!!! tip "MLOps Perspective"
+    Why this matters in an MLOps workflow: Experiment tracking with MLflow enables reproducibility and comparison across runs.
+
+## Prerequisites
+
+- Completed Exercise 2
+- Training/test datasets prepared
 
 ## Guide
 
@@ -42,6 +50,14 @@ This allows you to experiment with different configurations.
 Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model performance based on metrics and parameters.
 
 💡 **Note:** Other participants are also storing their experiments on the same instance. So please make sure that you are in the correct experiment.
+
+## Summary
+
+In this exercise, you:
+1. Loaded the training and test datasets
+2. Connected to the MLflow tracking server
+3. Trained multiple models with different hyperparameters
+4. Tracked experiments and compared runs in MLflow UI
 
 ---
 
