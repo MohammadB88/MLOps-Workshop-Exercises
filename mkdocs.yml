@@ -62,6 +62,7 @@ markdown_extensions:
   - pymdownx.snippets:
       auto_append:
         - includes/abbreviations.md
+        - abbreviations.md
       base_path:
         - .
         - docs/theory
@@ -135,7 +136,18 @@ nav:
      - "4 - Evaluation": labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md
      - "5 - Versioning & Packaging": labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md
      - "6 - Deployment & Serving": labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md
-   
+     - "ML Security & Compliance": labs-docs/03_advanced/ml-security-compliance.md
+     - "1 - Security Basics": labs-docs/03_advanced/ml-security-compliance/01_security_basics.md
+     - "2 - Governance Implementation": labs-docs/03_advanced/ml-security-compliance/02_governance_implementation.md
+     - "3 - Audit Logging": labs-docs/03_advanced/ml-security-compliance/03_audit_logging.md
+     - "4 - Compliance Reporting": labs-docs/03_advanced/ml-security-compliance/04_compliance_reporting.md
+     - "Advanced Kubeflow Pipelines": labs-docs/03_advanced/kubeflow-advanced.md
+     - "1 - Basic Triggers": labs-docs/03_advanced/kubeflow-advanced/01_basic_triggers.md
+     - "2 - Advanced Workflows": labs-docs/03_advanced/kubeflow-advanced/02_advanced_workflows.md
+     - "3 - Scheduling & Automation": labs-docs/03_advanced/kubeflow-advanced/03_scheduling_automation.md
+     - "4 - Optimization & Scaling": labs-docs/03_advanced/kubeflow-advanced/04_optimization_scaling.md
+     - "5 - Monitoring & Debugging": labs-docs/03_advanced/kubeflow-advanced/05_monitoring_debugging.md
+    
   - "Environment & Prerequisites":
     - environment-requirement.md
     - git-cheatsheet.md
