@@ -17,6 +17,9 @@ By the end of this exercise, you will be able to:
 2. Access to a KFP environment with persistent logging
 3. Basic familiarity with Prometheus and Grafana concepts
 
+!!! tip "MLOps Perspective"
+    Production pipelines require sophisticated orchestration patterns. These skills enable scalable, reliable, and automated ML workflows.
+
 ## Step 1: Adding Structured Logging to Pipeline Components
 
 Structured logging produces machine-parseable log output that can be indexed and searched. Use JSON-formatted logs for better integration with log aggregation systems like Elasticsearch or Loki.

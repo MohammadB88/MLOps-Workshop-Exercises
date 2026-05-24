@@ -17,6 +17,9 @@ By the end of this exercise, you will be able to:
 2. Access to a KFP environment with GPU nodes (for GPU section)
 3. Understanding of Kubernetes resource management concepts
 
+!!! tip "MLOps Perspective"
+    Production pipelines require sophisticated orchestration patterns. These skills enable scalable, reliable, and automated ML workflows.
+
 ## Step 1: Understanding Resource Requests and Limits in KFP
 
 KFP components run as Kubernetes pods. Setting appropriate resource requests and limits ensures reliable execution and efficient cluster utilization.

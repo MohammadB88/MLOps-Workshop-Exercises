@@ -16,6 +16,9 @@ In this exercise, you will:
 - `pandas` and `json` libraries available
 - Understanding of GDPR principles (right to access, right to erasure)
 
+!!! tip "MLOps Perspective"
+    Security and compliance are foundational to production ML systems. These practices protect models, data, and users while meeting regulatory requirements.
+
 ## Step 1: Understanding GDPR Requirements for ML
 
 Key GDPR articles that impact ML pipelines:
@@ -365,5 +368,6 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
+<div style="display: flex; justify-content: flex-start;">
+<a href="../03_audit_logging/" class="md-button">← Previous</a>
 </div>

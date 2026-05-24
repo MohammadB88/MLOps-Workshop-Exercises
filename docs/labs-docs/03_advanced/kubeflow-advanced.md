@@ -24,6 +24,16 @@ In this workshop, you'll learn how to:
 | 4 | Optimization & Scaling | Resource requests/limits, caching, parallelism |
 | 5 | Monitoring & Debugging | Structured logging, metrics, error handling |
 
+## Hands-On Sessions
+
+Start with basic triggers, then proceed through the exercises in order:
+
+- [Exercise 1 - Basic Triggers](kubeflow-advanced/01_basic_triggers.md)
+- [Exercise 2 - Advanced Workflows](kubeflow-advanced/02_advanced_workflows.md)
+- [Exercise 3 - Scheduling & Automation](kubeflow-advanced/03_scheduling_automation.md)
+- [Exercise 4 - Optimization & Scaling](kubeflow-advanced/04_optimization_scaling.md)
+- [Exercise 5 - Monitoring & Debugging](kubeflow-advanced/05_monitoring_debugging.md)
+
 ## Directory Structure
 
 ```

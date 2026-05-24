@@ -17,6 +17,9 @@ By the end of this exercise, you will be able to:
 2. Kubeflow Pipelines SDK installed (`pip install kfp`)
 3. Understanding of basic pipeline component definitions
 
+!!! tip "MLOps Perspective"
+    Production pipelines require sophisticated orchestration patterns. These skills enable scalable, reliable, and automated ML workflows.
+
 ## Step 1: Understanding Conditional Execution in KFP
 
 Conditional execution allows pipelines to make data-driven decisions at runtime. KFP uses the `kfp.dsl.Condition` context manager to gate component execution based on upstream outputs.

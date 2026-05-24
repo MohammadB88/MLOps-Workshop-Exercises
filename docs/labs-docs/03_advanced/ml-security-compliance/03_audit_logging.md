@@ -16,6 +16,9 @@ In this exercise, you will:
 - Basic understanding of logging and event-driven patterns
 - `pandas` installed for log analysis (`pip install pandas`)
 
+!!! tip "MLOps Perspective"
+    Security and compliance are foundational to production ML systems. These practices protect models, data, and users while meeting regulatory requirements.
+
 ## Step 1: Understanding Audit Trail Requirements
 
 Audit trails in MLOps must capture who did what, when, and with which model version. Regulatory frameworks (SOC 2, GDPR, HIPAA) require:

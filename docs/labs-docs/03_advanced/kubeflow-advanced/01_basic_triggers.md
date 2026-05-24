@@ -18,6 +18,9 @@ By the end of this exercise, you will be able to:
 3. Basic understanding of Python decorators and type hints
 4. Completed the beginner bike demand forecasting lab
 
+!!! tip "MLOps Perspective"
+    Production pipelines require sophisticated orchestration patterns. These skills enable scalable, reliable, and automated ML workflows.
+
 ## Step 1: Import KFP SDK and Configure the Client
 
 The Kubeflow Pipelines SDK provides the `Client` class for interacting with the KFP API server. This is the entry point for creating experiments, running pipelines, and managing triggers.
@@ -294,6 +297,7 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
+<div style="display: flex; justify-content: space-between;">
+<a href="../kubeflow-advanced.md" class="md-button">← Previous</a>
 <a href="../02_advanced_workflows/" class="md-button">Next →</a>
 </div>

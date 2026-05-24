@@ -17,6 +17,9 @@ Before starting this exercise, ensure you have:
 2. A fine-tuned LoRA adapter
 3. MLflow tracking server configured
 
+!!! tip "MLOps Perspective"
+    LLMOps extends MLOps principles to large language models, focusing on efficient fine-tuning, tracking, and deployment of LLM systems.
+
 ## Step 1: Register Model in MLflow
 
 ```python

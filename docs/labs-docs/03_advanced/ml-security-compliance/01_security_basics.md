@@ -16,6 +16,9 @@ In this exercise, you will:
 - A trained model file (e.g., `model.pkl`) from a previous exercise
 - Basic understanding of symmetric encryption concepts
 
+!!! tip "MLOps Perspective"
+    Security and compliance are foundational to production ML systems. These practices protect models, data, and users while meeting regulatory requirements.
+
 ## Step 1: Setting Up Encryption Libraries
 
 First, install and import the necessary cryptographic libraries:
@@ -184,6 +187,7 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
+<div style="display: flex; justify-content: space-between;">
+<a href="../ml-security-compliance.md" class="md-button">← Previous</a>
 <a href="../02_governance_implementation/" class="md-button">Next →</a>
 </div>

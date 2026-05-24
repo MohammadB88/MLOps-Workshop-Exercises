@@ -17,6 +17,9 @@ Before starting this exercise, ensure you have:
 1. Completed Exercise 1: Setup & Exploration
 2. A working environment with transformers, datasets, and other required libraries installed
 
+!!! tip "MLOps Perspective"
+    LLMOps extends MLOps principles to large language models, focusing on efficient fine-tuning, tracking, and deployment of LLM systems.
+
 ## Step 1: Import Required Libraries
 
 Let's start by importing the necessary libraries:

@@ -15,6 +15,9 @@ In this exercise, you will:
 - The repository cloned and the current working directory set to `labs/02_intermediate/02_llm_instruction_tuning`
 - Dependencies installed (`pip install -r requirements.txt`)
 
+!!! tip "MLOps Perspective"
+    LLMOps extends MLOps principles to large language models, focusing on efficient fine-tuning, tracking, and deployment of LLM systems.
+
 ## Step 1: Environment Check
 
 Let's start by checking our environment and verifying GPU availability.
@@ -117,6 +120,7 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
+<div style="display: flex; justify-content: space-between;">
+<a href="../llm-instruction-tuning.md" class="md-button">← Previous</a>
 <a href="../02_data_preparation/" class="md-button">Next →</a>
 </div>

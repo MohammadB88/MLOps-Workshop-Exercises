@@ -17,6 +17,9 @@ By the end of this exercise, you will be able to:
 2. Access to a Kubeflow Pipelines environment with persistent storage
 3. MLflow tracking server configured for model registry
 
+!!! tip "MLOps Perspective"
+    Production pipelines require sophisticated orchestration patterns. These skills enable scalable, reliable, and automated ML workflows.
+
 ## Step 1: Creating Recurring Pipeline Schedules
 
 KFP supports recurring runs with multiple scheduling options. Configure schedules with environment-specific parameters and timezone-aware cron expressions.

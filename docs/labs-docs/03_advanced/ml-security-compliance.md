@@ -22,6 +22,15 @@ In this workshop, you'll learn how to:
 | 3 | Audit Logging | Immutable logs, data provenance, querying |
 | 4 | Compliance Reporting | GDPR, model cards, DSAR automation |
 
+## Hands-On Sessions
+
+Start with the security basics, then proceed through the exercises in order:
+
+- [Exercise 1 - Security Basics](ml-security-compliance/01_security_basics.md)
+- [Exercise 2 - Governance Implementation](ml-security-compliance/02_governance_implementation.md)
+- [Exercise 3 - Audit Logging](ml-security-compliance/03_audit_logging.md)
+- [Exercise 4 - Compliance Reporting](ml-security-compliance/04_compliance_reporting.md)
+
 ## Directory Structure
 
 ```

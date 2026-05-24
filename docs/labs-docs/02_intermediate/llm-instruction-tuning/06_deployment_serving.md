@@ -19,6 +19,9 @@ Before starting this exercise, ensure you have:
 3. Access to an OpenShift/Kubernetes cluster
 4. The `oc` or `kubectl` CLI tools configured
 
+!!! tip "MLOps Perspective"
+    LLMOps extends MLOps principles to large language models, focusing on efficient fine-tuning, tracking, and deployment of LLM systems.
+
 ## Step 1: Review the Dockerfile
 
 Let's first examine the Dockerfile that will be used to containerize our LLM serving application:

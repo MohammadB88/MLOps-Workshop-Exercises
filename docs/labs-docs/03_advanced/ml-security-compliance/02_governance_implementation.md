@@ -16,6 +16,9 @@ In this exercise, you will:
 - A trained model logged to MLflow from a previous exercise
 - Basic familiarity with the MLflow Model Registry
 
+!!! tip "MLOps Perspective"
+    Security and compliance are foundational to production ML systems. These practices protect models, data, and users while meeting regulatory requirements.
+
 ## Step 1: Setting Up the MLflow Client
 
 Initialize the MLflow client and configure the tracking URI:
