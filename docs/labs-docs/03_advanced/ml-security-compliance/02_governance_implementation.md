@@ -225,6 +225,7 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
+<div style="display: flex; justify-content: space-between;">
+<a href="../01_security_basics/" class="md-button">← Previous</a>
 <a href="../03_audit_logging/" class="md-button">Next →</a>
 </div>
