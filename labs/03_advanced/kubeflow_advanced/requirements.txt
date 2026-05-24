@@ -1,0 +1,4 @@
+kfp>=2.0.0
+kubernetes>=27.0.0
+kfp-kubernetes>=1.0.0
+pandas>=2.0.0
