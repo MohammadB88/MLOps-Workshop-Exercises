@@ -122,7 +122,5 @@ To build a strong foundation in MLOps, participants will begin by executing each
 * [Exercise 6 - Model Deployment - Deploy on OpenShift Cluster](01_beginner/bike-forecasting/06_model_deployment_openshift.md)
 * [Exercise 7 - Model Deployment - Testing Model Endpoint-API](01_beginner/bike-forecasting/07_test_model_endpoint.md)
 * [Exercise 8 - Model & Data Monitoring](01_beginner/bike-forecasting/08_model_data_monitoring.md)
-<!-- * [Exercise 10 - Automating the Workflow with ***Kubeflow Pipelines***](bike-forecasting/Exercise8_kubeflow.md)
-* [Exercise 11 - Automating the Workflow with ***Elyra Pipelines***](bike-forecasting/Exercise9_elyra.md) -->
 
 

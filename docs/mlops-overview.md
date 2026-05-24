@@ -22,7 +22,6 @@ graph LR
   <figcaption></figcaption>
 </figure>
 
-<!-- TODO - Should I create a dir and pack all the reading materials in that dir. Does it make sense? -->
 
 * [Introduction](theory/introduction.md)
 <!-- * [tbd](theory/???.md) -->
