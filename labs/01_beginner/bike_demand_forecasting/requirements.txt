@@ -1,4 +1,5 @@
-requests
-seaborn
+requests==2.33.1
+seaborn==0.13.2
 evidently==0.6.7
-mlflow
+mlflow==2.22.5
+numpy==1.24.4
