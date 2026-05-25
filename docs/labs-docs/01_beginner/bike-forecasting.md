@@ -1,8 +1,8 @@
 # Bike-Sharing Demand Forecasting
 
 <figure markdown>
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-light){ width="200" }
-  ![bike sharing logo](../assets/images/bike_sharing_logo.png#only-dark){ width="200" }
+  ![bike sharing logo](../../assets/images/bike_sharing_logo.png#only-light){ width="200" }
+  ![bike sharing logo](../../assets/images/bike_sharing_logo.png#only-dark){ width="200" }
 </figure>
 
 ## Introduction

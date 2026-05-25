@@ -24,20 +24,20 @@ Choose one of the following methods:
 
 Go to the original GitHub repository page and copy the the URL of the repo:
 
-![Clone Repo Github](../../assets/images/clone_repo_github.png)
+![Clone Repo Github](../../../assets/images/clone_repo_github.png)
 
 #### Open the created workbench
 At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
 
-![Clone Repo](../../assets/images/clone_repo.png)
+![Clone Repo](../../../assets/images/clone_repo.png)
 <!-- 
 Copy the URL of the original repo  repository:
 
-![Clone Repo Github](../../assets/images/clone_repo_github.png) -->
+![Clone Repo Github](../../../assets/images/clone_repo_github.png) -->
 
 paste the copied URL from original repo and click on ``clone`` to download the code inside the jupyterlab:
 
-![Clone Repo - add url](../../assets/images/clone_repo_url.png)
+![Clone Repo - add url](../../../assets/images/clone_repo_url.png)
 
 Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials.
 
@@ -64,7 +64,7 @@ cat ~/.ssh/id_ed25519.pub (i.g. cat /opt/app-root/src/.ssh/id_rsa.pub)
 
 #### Clone the repo using SSH-URL and stored SSH-Key
 Copy the URL of the repository
-![Clone Repo SSH Github](../../assets/images/clone_repo_ssh_github.png)
+![Clone Repo SSH Github](../../../assets/images/clone_repo_ssh_github.png)
 
 and use `git` to download the code:
 ```bash
