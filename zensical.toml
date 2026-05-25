@@ -39,29 +39,33 @@ nav = [
     { "What is MLOps?" = "mlops-overview.md" },
     { "Hands-on Labs" = [
         { "Workshop Overview" = "workshop-overview.md" },
-        { "Wine Quality Classifier" = "labs-docs/wine-quality-classifier.md" },
-        { "Bike Demand Forecasting" = "labs-docs/bike-demand-forecasting.md" },
-        { "Beginner: Bike Forecasting" = [
-            { "00 - Environment & Prerequisites" = "labs-docs/01_beginner/bike-forecasting/00_environment_prerequisites.md" },
-            { "01 - Load, Extract and Clean the Data" = "labs-docs/01_beginner/bike-forecasting/01_load_extract_clean_data.md" },
-            { "02 - Prepare the Data for Training" = "labs-docs/01_beginner/bike-forecasting/02_prepare_data_training.md" },
-            { "03 - Model Training and Experiment Tracking" = "labs-docs/01_beginner/bike-forecasting/03_mode_training_experiment_tracking.md" },
-            { "04 - Review Experiments & Select Best Model" = "labs-docs/01_beginner/bike-forecasting/04_review_experiment_best_model.md" },
-            { "05 - Containerize Model Endpoint-API" = "labs-docs/01_beginner/bike-forecasting/05_containerize_model_endpoint.md" },
-            { "06 - Deploy on OpenShift Cluster" = "labs-docs/01_beginner/bike-forecasting/06_model_deployment_openshift.md" },
-            { "07 - Test Model Endpoint-API" = "labs-docs/01_beginner/bike-forecasting/07_test_model_endpoint.md" },
-            { "08 - Model & Data Monitoring" = "labs-docs/01_beginner/bike-forecasting/08_model_data_monitoring.md" }
+        { "Beginner" = [
+            { "Wine Quality Classifier" = "labs-docs/wine-quality-classifier.md" },
+            { "Bike Demand Forecasting" = "labs-docs/bike-demand-forecasting.md" },
+            { "Bike Forecasting Steps" = [
+                { "00 - Environment & Prerequisites" = "labs-docs/01_beginner/bike-forecasting/00_environment_prerequisites.md" },
+                { "01 - Load, Extract and Clean the Data" = "labs-docs/01_beginner/bike-forecasting/01_load_extract_clean_data.md" },
+                { "02 - Prepare the Data for Training" = "labs-docs/01_beginner/bike-forecasting/02_prepare_data_training.md" },
+                { "03 - Model Training and Experiment Tracking" = "labs-docs/01_beginner/bike-forecasting/03_mode_training_experiment_tracking.md" },
+                { "04 - Review Experiments & Select Best Model" = "labs-docs/01_beginner/bike-forecasting/04_review_experiment_best_model.md" },
+                { "05 - Containerize Model Endpoint-API" = "labs-docs/01_beginner/bike-forecasting/05_containerize_model_endpoint.md" },
+                { "06 - Deploy on OpenShift Cluster" = "labs-docs/01_beginner/bike-forecasting/06_model_deployment_openshift.md" },
+                { "07 - Test Model Endpoint-API" = "labs-docs/01_beginner/bike-forecasting/07_test_model_endpoint.md" },
+                { "08 - Model & Data Monitoring" = "labs-docs/01_beginner/bike-forecasting/08_model_data_monitoring.md" }
+            ] }
         ] },
-        { "LLM Instruction Tuning" = [
-            { "Overview" = "labs-docs/02_intermediate/llm-instruction-tuning.md" },
-            { "01 - Setup & Exploration" = "labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md" },
-            { "02 - Data Preparation" = "labs-docs/02_intermediate/llm-instruction-tuning/02_data_preparation.md" },
-            { "03 - LoRA Tuning" = "labs-docs/02_intermediate/llm-instruction-tuning/03_lora_tuning.md" },
-            { "04 - Evaluation" = "labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md" },
-            { "05 - Versioning & Packaging" = "labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md" },
-            { "06 - Deployment & Serving" = "labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md" }
+        { "Intermediate" = [
+            { "LLM Instruction Tuning" = [
+                { "Overview" = "labs-docs/02_intermediate/llm-instruction-tuning.md" },
+                { "01 - Setup & Exploration" = "labs-docs/02_intermediate/llm-instruction-tuning/01_setup_exploration.md" },
+                { "02 - Data Preparation" = "labs-docs/02_intermediate/llm-instruction-tuning/02_data_preparation.md" },
+                { "03 - LoRA Tuning" = "labs-docs/02_intermediate/llm-instruction-tuning/03_lora_tuning.md" },
+                { "04 - Evaluation" = "labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md" },
+                { "05 - Versioning & Packaging" = "labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md" },
+                { "06 - Deployment & Serving" = "labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md" }
+            ] },
+            { "Bike Demand Forecasting Pipeline" = "labs-docs/bike-demand-forecasting-pipeline.md" }
         ] },
-        { "Bike Demand Forecasting Pipeline" = "labs-docs/bike-demand-forecasting-pipeline.md" },
         { "Advanced" = [
             { "Kubeflow Advanced" = [
                 { "Overview" = "labs-docs/03_advanced/kubeflow-advanced.md" },
@@ -96,9 +100,9 @@ nav = [
     ] },
     { "Environment & Prerequisites" = [
         { "Environment Requirements" = "environment-requirement.md" },
+        { "Red Hat Demo Environment" = "redhat-demo-environment.md" },
         { "Git Cheat Sheet" = "git-cheatsheet.md" },
         { "MLflow Installation" = "mlflow-installation.md" },
-        { "Red Hat Demo Environment" = "redhat-demo-environment.md" },
         { "Helm Installation" = "helm-installation.md" }
     ] }
 ]

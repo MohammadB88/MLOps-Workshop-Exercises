@@ -19,7 +19,7 @@ You will complete the following exercises, based on the difficulty of the worksh
 * [Advanced Kubeflow Pipelines](labs-docs/03_advanced/kubeflow-advanced.md)
 
 ```mermaid
-graph TD
+graph LR
     B(Step 1: Beginner Level)
     B --> B1[Wine Quality Classifier]
     B --> B2[Bike Demand Forecasting]
