@@ -253,7 +253,7 @@ mlflow:
   port: 8443
   allowedHosts:
     - "${ALLOWED_HOSTS}"
-  corsAllowedOrigins: ""
+  corsAllowedOrigins: "*"
   staticPrefix: ""
 
 env:
