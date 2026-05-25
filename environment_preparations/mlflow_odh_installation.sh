@@ -88,6 +88,24 @@ REPLICAS_DEFAULT="1"
 read -p "Number of replicas (default: ${REPLICAS_DEFAULT}): " REPLICAS_INPUT
 REPLICAS="${REPLICAS_INPUT:-$REPLICAS_DEFAULT}"
 
+# Authentication mode
+echo ""
+echo "MLflow authentication mode:"
+echo "  1) Disable auth - Browser access works directly (recommended for labs/workshops)"
+echo "  2) Keep auth + OAuth proxy - Secure browser access via OpenShift OAuth"
+AUTH_DEFAULT="1"
+read -p "Choose option (1 or 2, default: ${AUTH_DEFAULT}): " AUTH_CHOICE
+AUTH_CHOICE="${AUTH_CHOICE:-$AUTH_DEFAULT}"
+if [[ "${AUTH_CHOICE}" == "1" ]]; then
+  MLFLOW_APP_NAME=""
+  ENABLE_OAUTH_PROXY="false"
+  echo "MLflow auth will be disabled. Browser access works directly."
+else
+  MLFLOW_APP_NAME="kubernetes-auth"
+  ENABLE_OAUTH_PROXY="true"
+  echo "MLflow auth will be kept. OpenShift OAuth proxy will be set up."
+fi
+
 VALUES_FILE="mlflow_odh_values.yaml"
 MLFLOW_OPERATOR_REPO="https://github.com/opendatahub-io/mlflow-operator.git"
 MLFLOW_CHART_DIR="mlflow-operator-charts"
@@ -106,6 +124,7 @@ echo "Memory Request: ${MEMORY_REQUEST}"
 echo "CPU Limit: ${CPU_LIMIT}"
 echo "Memory Limit: ${MEMORY_LIMIT}"
 echo "Replicas: ${REPLICAS}"
+echo "Auth Mode: $([ -z "${MLFLOW_APP_NAME}" ] && echo 'Disabled (browser access)' || echo 'Enabled (kubernetes-auth)')"
 echo "=========================================="
 echo ""
 read -p "Continue with these settings? (y/n): " CONFIRM
@@ -156,6 +175,24 @@ else
   git clone --depth 1 "${MLFLOW_OPERATOR_REPO}" "${MLFLOW_CHART_DIR}"
 fi
 
+echo "Patching chart deployment template to make auth configurable..."
+export MLFLOW_CHART_DIR
+python << 'PYEOF'
+import os
+import re
+chart_dir = os.environ['MLFLOW_CHART_DIR']
+path = f'{chart_dir}/charts/mlflow/templates/deployment.yaml'
+with open(path, 'r') as f:
+    content = f.read()
+content = content.replace(
+    '            - --app-name=kubernetes-auth',
+    '{{- if .Values.mlflow.appName }}\n            - --app-name={{ .Values.mlflow.appName }}\n{{- end }}'
+)
+with open(path, 'w') as f:
+    f.write(content)
+PYEOF
+echo "Deployment template patched."
+
 ############################################
 # 4. Create custom values.yaml
 ############################################
@@ -205,6 +242,7 @@ storage:
   accessMode: ReadWriteOnce
 
 mlflow:
+  appName: "${MLFLOW_APP_NAME}"
   backendStoreUri: "${BACKEND_URI}"
   artifactsDestination: "file:///mlflow/artifacts"
   enableWorkspaces: true
@@ -278,6 +316,7 @@ echo "Values file created: ${VALUES_FILE}"
 ############################################
 echo "[5/9] Installing MLflow via Helm..."
 HELM_CHART_PATH="${MLFLOW_CHART_DIR}/charts/mlflow"
+INSTALL_OCCURRED=false
 if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
   echo "MLflow Helm release '${RELEASE}' already exists in namespace '${NAMESPACE}'."
   read -p "Upgrade existing release? (y/n): " UPGRADE
@@ -286,6 +325,7 @@ if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
     helm upgrade "${RELEASE}" "${HELM_CHART_PATH}" \
       --namespace "${NAMESPACE}" \
       --values "${VALUES_FILE}"
+    INSTALL_OCCURRED=true
   else
     echo "Skipping installation."
   fi
@@ -294,6 +334,55 @@ else
   helm install "${RELEASE}" "${HELM_CHART_PATH}" \
     --namespace "${NAMESPACE}" \
     --values "${VALUES_FILE}"
+  INSTALL_OCCURRED=true
+fi
+
+if [[ "${INSTALL_OCCURRED}" == "true" && "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
+  echo "Setting up OpenShift OAuth proxy sidecar..."
+  echo "Waiting for deployment to exist..."
+  sleep 3
+
+  # Patch deployment to add OAuth proxy sidecar
+  oc patch deployment "${RELEASE}" -n "${NAMESPACE}" --type=json -p='[
+    {"op": "add", "path": "/spec/template/spec/containers/-", "value": {
+      "name": "oauth-proxy",
+      "image": "registry.redhat.io/openshift4/ose-oauth-proxy:v4.12",
+      "args": [
+        "--https-address=:8444",
+        "--upstream=https://localhost:8443",
+        "--tls-cert=/etc/tls/private/tls.crt",
+        "--tls-key=/etc/tls/private/tls.key",
+        "--openshift-ca=/etc/pki/tls/certs/ca-bundle.crt",
+        "--openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
+        "--skip-auth-regex=^/health",
+        "--openshift-sar={\"resource\":\"namespaces\",\"verb\":\"get\",\"resourceName\":\"'"${NAMESPACE}"'\",\"namespace\":\"'"${NAMESPACE}"'\"}",
+        "--pass-access-token",
+        "--cookie-secure=true"
+      ],
+      "ports": [
+        {"name": "proxy-https", "containerPort": 8444}
+      ],
+      "volumeMounts": [
+        {"name": "mlflow-tls", "mountPath": "/etc/tls/private", "readOnly": true}
+      ],
+      "resources": {
+        "requests": {"cpu": "50m", "memory": "64Mi"},
+        "limits": {"cpu": "200m", "memory": "256Mi"}
+      }
+    }}
+  ]' || echo "WARNING: Failed to add OAuth proxy sidecar. You may need to add it manually."
+
+  # Patch service to add OAuth proxy port
+  oc patch service "${RELEASE}" -n "${NAMESPACE}" --type=json -p='[
+    {"op": "add", "path": "/spec/ports/-", "value": {
+      "name": "proxy-https",
+      "protocol": "TCP",
+      "port": 8444,
+      "targetPort": "proxy-https"
+    }}
+  ]' || echo "WARNING: Failed to add OAuth proxy port to service. You may need to add it manually."
+
+  echo "OAuth proxy setup complete."
 fi
 
 ############################################
@@ -333,6 +422,14 @@ echo ""
 ############################################
 echo "[8/9] Creating OpenShift Route for MLflow UI..."
 
+if [[ "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
+  ROUTE_TARGET_PORT="proxy-https"
+  ROUTE_TLS_TERMINATION="reencrypt"
+else
+  ROUTE_TARGET_PORT="https"
+  ROUTE_TLS_TERMINATION="passthrough"
+fi
+
 cat > mlflow_route.yaml <<EOF
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -346,13 +443,14 @@ spec:
     kind: Service
     name: ${RELEASE}
   port:
-    targetPort: https
+    targetPort: ${ROUTE_TARGET_PORT}
   tls:
-    termination: passthrough
+    termination: ${ROUTE_TLS_TERMINATION}
 EOF
 
 if oc get route "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
-  echo "Route '${RELEASE}' already exists. Skipping."
+  echo "Route '${RELEASE}' already exists. Updating..."
+  oc apply -n "${NAMESPACE}" -f mlflow_route.yaml
 else
   oc apply -n "${NAMESPACE}" -f mlflow_route.yaml
   echo "Route created successfully."
@@ -373,12 +471,19 @@ else
   echo "  oc get route ${RELEASE} -n ${NAMESPACE}"
 fi
 echo ""
+echo "Authentication: $([ -z "${MLFLOW_APP_NAME}" ] && echo 'Disabled (direct browser access)' || echo 'Enabled (OpenShift OAuth proxy)')"
+echo ""
 echo "Check pod status:"
 echo "  oc get pods -n ${NAMESPACE} -l component=mlflow"
 echo ""
 echo "View logs:"
 echo "  oc logs -n ${NAMESPACE} -l component=mlflow"
 echo ""
+if [[ "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
+echo "View OAuth proxy logs:"
+echo "  oc logs -n ${NAMESPACE} deployment/${RELEASE} -c oauth-proxy"
+echo ""
+fi
 echo "Add more namespaces as MLflow workspaces:"
 echo "  oc label namespace <target-namespace> mlflow-enabled=true"
 echo ""
