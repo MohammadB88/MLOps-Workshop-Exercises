@@ -188,6 +188,10 @@ content = content.replace(
     '            - --app-name=kubernetes-auth',
     '{{- if .Values.mlflow.appName }}\n            - --app-name={{ .Values.mlflow.appName }}\n{{- end }}'
 )
+content = content.replace(
+    '            - --enable-workspaces\n            - --workspace-store-uri={{ .Values.mlflow.workspaceStoreUri }}',
+    '{{- if .Values.mlflow.enableWorkspaces }}\n            - --enable-workspaces\n            - --workspace-store-uri={{ .Values.mlflow.workspaceStoreUri }}\n{{- end }}'
+)
 with open(path, 'w') as f:
     f.write(content)
 PYEOF
@@ -245,9 +249,9 @@ mlflow:
   appName: "${MLFLOW_APP_NAME}"
   backendStoreUri: "${BACKEND_URI}"
   artifactsDestination: "file:///mlflow/artifacts"
-  enableWorkspaces: true
-  workspaceStoreUri: "kubernetes://"
-  workspaceLabelSelector: "mlflow-enabled=true"
+  enableWorkspaces: false
+  workspaceStoreUri: ""
+  workspaceLabelSelector: ""
   serveArtifacts: true
   workers: 1
   port: 8443
