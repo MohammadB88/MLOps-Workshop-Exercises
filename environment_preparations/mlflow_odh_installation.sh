@@ -13,6 +13,24 @@ echo " OpenDataHub MLflow Operator Chart"
 echo "=========================================="
 
 ############################################
+# Check prerequisites
+############################################
+if ! command -v git &>/dev/null; then
+  echo "ERROR: git is not installed. Please install git first."
+  exit 1
+fi
+
+if ! command -v helm &>/dev/null; then
+  echo "ERROR: helm is not installed. Please install helm first."
+  exit 1
+fi
+
+if ! command -v oc &>/dev/null; then
+  echo "ERROR: oc (OpenShift CLI) is not installed. Please install oc first."
+  exit 1
+fi
+
+############################################
 # Collect user input
 ############################################
 echo ""
@@ -71,8 +89,8 @@ read -p "Number of replicas (default: ${REPLICAS_DEFAULT}): " REPLICAS_INPUT
 REPLICAS="${REPLICAS_INPUT:-$REPLICAS_DEFAULT}"
 
 VALUES_FILE="mlflow_odh_values.yaml"
-HELM_REPO_URL="https://opendatahub-io.github.io/mlflow-operator"
-HELM_CHART="${HELM_REPO_URL}/mlflow"
+MLFLOW_OPERATOR_REPO="https://github.com/opendatahub-io/mlflow-operator.git"
+MLFLOW_CHART_DIR="mlflow-operator-charts"
 
 echo ""
 echo "=========================================="
@@ -107,17 +125,15 @@ else
 fi
 
 ############################################
-# 2. Add OpenDataHub Helm repository
+# 2. Clone MLflow Operator repository
 ############################################
-echo "[2/8] Adding OpenDataHub Helm repository..."
-if ! helm repo list | grep -q "^opendatahub-io"; then
-  helm repo add opendatahub-io "${HELM_REPO_URL}"
+echo "[2/8] Cloning MLflow Operator repository..."
+if [[ -d "${MLFLOW_CHART_DIR}" ]]; then
+  echo "Chart directory already exists. Updating..."
+  git -C "${MLFLOW_CHART_DIR}" pull
 else
-  echo "OpenDataHub repo already added. Skipping."
+  git clone --depth 1 "${MLFLOW_OPERATOR_REPO}" "${MLFLOW_CHART_DIR}"
 fi
-
-echo "Updating Helm repositories..."
-helm repo update
 
 ############################################
 # 3. Create custom values.yaml
@@ -238,12 +254,13 @@ echo "Values file created: ${VALUES_FILE}"
 # 4. Install MLflow
 ############################################
 echo "[4/8] Installing MLflow via Helm..."
+HELM_CHART_PATH="${MLFLOW_CHART_DIR}/charts/mlflow"
 if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
   echo "MLflow Helm release '${RELEASE}' already exists in namespace '${NAMESPACE}'."
   read -p "Upgrade existing release? (y/n): " UPGRADE
   if [[ "${UPGRADE}" == "y" || "${UPGRADE}" == "Y" ]]; then
     echo "Upgrading existing release..."
-    helm upgrade "${RELEASE}" "${HELM_CHART}" \
+    helm upgrade "${RELEASE}" "${HELM_CHART_PATH}" \
       --namespace "${NAMESPACE}" \
       --values "${VALUES_FILE}"
   else
@@ -251,7 +268,7 @@ if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
   fi
 else
   echo "MLflow Helm release not found. Installing..."
-  helm install "${RELEASE}" "${HELM_CHART}" \
+  helm install "${RELEASE}" "${HELM_CHART_PATH}" \
     --namespace "${NAMESPACE}" \
     --values "${VALUES_FILE}"
 fi
