@@ -1,30 +1,85 @@
 # CLAUDE.md
 
-MLOps Workshop repository with hands-on exercises. Built with MkDocs, published to GitHub Pages.
+MLOps Workshop repository with hands-on exercises. Built with Zensical, deployed to GitHub Pages.
 
 ## Project Structure
 
 ```
 MLOps-Workshop-Exercises/
-├── docs/                              # MkDocs documentation
-│   ├── labs-docs/                     # Lab guides
+├── .agents/skills/                    # Agent skill definitions
+│   ├── ml-pipeline-workflow/
+│   └── mlops-engineer/
+├── .github/workflows/
+│   ├── ci.yml                         # Zensical build + Pages deploy (active)
+│   └── cd.yml                         # Old MkDocs workflow (disabled)
+├── docs/                              # Zensical documentation
+│   ├── index.md                       # Home page
+│   ├── mlops-overview.md              # MLOps theory overview
+│   ├── workshop-overview.md           # Workshop structure
+│   ├── environment-requirement.md
+│   ├── redhat-demo-environment.md
+│   ├── mlflow-installation.md
+│   ├── helm-installation.md
+│   ├── git-cheatsheet.md
+│   ├── theory/introduction.md
+│   ├── labs-docs/
 │   │   ├── bike-demand-forecasting.md
-│   │   ├── bike-forecasting/          # Step-by-step guides
+│   │   ├── bike-demand-forecasting-pipeline.md
+│   │   ├── wine-quality-classifier.md
 │   │   ├── llm-instruction-tuning.md
-│   │   └── llm-instruction-tuning/    # LLMOps step-by-step guides
+│   │   ├── snippets/abbreviations.md
+│   │   ├── tasks/                     # Task 1-9 guides
+│   │   ├── 01_beginner/bike-forecasting/       # 9 step-by-step guides
+│   │   ├── 02_intermediate/llm-instruction-tuning/  # 6 step-by-step guides
+│   │   └── 03_advanced/
+│   │       ├── kubeflow-advanced/     # 5 step-by-step guides
+│   │       └── ml-security-compliance/ # 4 step-by-step guides
 │   └── assets/                        # Images, CSS, JS
+├── environment_preparations/
+│   ├── helm_installtion.sh
+│   ├── mlflow_installation.sh
+│   ├── mlflow_odh_installation.sh     # OpenDataHub operator install (NEW)
+│   └── mlflow_route.ymal              # Route YAML (note: typo in filename)
 ├── labs/
-│   ├── 01_beginner/02_bike_demand_forecasting/  # 6 notebooks
-│   └── 02_intermediate/
-│       ├── bike_demand_forecasting_pipeline/  # Kubeflow pipeline
-│       └── 02_llm_instruction_tuning/            # LLMOps exercise
-│           ├── notebooks/              # 6 Jupyter notebooks
-│           ├── scripts/                # Helper scripts
-│           ├── k8s/                    # Kubernetes manifests
-│           ├── data/                   # Gitignored
-│           └── models/                 # Gitignored
-├── zensical.toml
-└── requirements.txt
+│   ├── 01_beginner/bike_demand_forecasting/
+│   │   ├── notebooks/                 # 6 Jupyter notebooks
+│   │   ├── models/                    # FastAPI + Containerfile + k8s
+│   │   ├── models_cors/               # CORS-enabled variant
+│   │   └── data/test_model/           # Test datasets
+│   ├── 02_intermediate/
+│   │   ├── bike_demand_forecasting_pipeline/  # Kubeflow pipeline (742 lines)
+│   │   │   ├── pipeline_bike_sharing.py       # 6 components
+│   │   │   ├── serve.py                       # FastAPI serving
+│   │   │   ├── Containerfile                  # ubi9/python-311
+│   │   │   ├── requirements.txt
+│   │   │   ├── test_process_dataset.py        # Unit test
+│   │   │   ├── k8s/deployment.yaml            # Deployment + Service
+│   │   │   └── data/                          # raw/, processed/, test_model/
+│   │   ├── llm_instruction_tuning/
+│   │   │   ├── Dockerfile
+│   │   │   ├── environment.yml                # Conda env definition
+│   │   │   ├── requirements.txt
+│   │   │   ├── notebooks/             # 6 Jupyter notebooks
+│   │   │   ├── scripts/               # mlflow_register.py, test_client.py, build_and_push.sh
+│   │   │   └── k8s/                   # deployment.yaml, service.yaml
+│   │   └── archive/bike_demand_forecasting_pipeline/  # Old 4-component version
+│   └── 03_advanced/
+│       ├── kubeflow_advanced/
+│       │   ├── README.md
+│       │   ├── requirements.txt
+│       │   ├── scripts/pipeline_helpers.py  # KFP component wrappers
+│       │   └── notebooks/            # 5 notebooks
+│       └── ml_security_compliance/
+│           ├── README.md
+│           ├── requirements.txt
+│           ├── scripts/audit_logger.py  # JSONL audit trail
+│           └── notebooks/            # 4 notebooks
+├── zensical.toml                     # Zensical site config
+├── requirements.txt                  # Root: zensical==0.0.43
+├── ROADMAP.md                        # Enhancement roadmap
+├── SECURITY.md                       # Security policy
+├── skills-lock.json                  # Agent skill registry
+└── repo_enahncements.txt             # AI agent prompts
 ```
 
 ## Common Commands
@@ -32,28 +87,42 @@ MLOps-Workshop-Exercises/
 ```bash
 # Documentation
 pip install -r requirements.txt
-zensical serve              # Local dev
-zensical build              # Build
+zensical serve              # Local dev (http://localhost:8000)
+zensical build --clean      # Build site/
 zensical gh-deploy --force  # Deploy to GitHub Pages
 
-# Labs
-cd labs/01_beginner/02_bike_demand_forecasting
+# Beginner Lab
+cd labs/01_beginner/bike_demand_forecasting
 pip install -r requirements.txt
 jupyter lab
+
+# Intermediate Pipeline
+cd labs/02_intermediate/bike_demand_forecasting_pipeline
+python test_process_dataset.py           # Run unit tests
+
+# Intermediate LLMOps
+cd labs/02_intermediate/llm_instruction_tuning
+conda env create -f environment.yml
+jupyter lab
+
+# Advanced Labs
+cd labs/03_advanced/kubeflow_advanced
+cd labs/03_advanced/ml_security_compliance
 ```
 
 ## Key Technologies
 
-- **MkDocs Material Theme**: Documentation
+- **Zensical**: Documentation framework (MkDocs Material theme migrated to Zensical)
 - **MLflow**: Experiment tracking and model registry
-- **Kubeflow Pipelines**: Pipeline orchestration
-- **Evidently**: Model monitoring and drift detection
-- **FastAPI**: Model serving REST API
-- **OpenShift/Kubernetes**: Container orchestration
+- **Kubeflow Pipelines (KFP v2)**: Pipeline orchestration with `@dsl.component`/`@dsl.pipeline`
+- **Evidently**: Model monitoring and drift detection (`DataDriftPreset`, `TargetDriftPreset`, `DataQualityPreset`)
+- **FastAPI**: Model serving REST API with Pydantic validation
+- **OpenShift/Kubernetes**: Container orchestration (UBI9 images)
 - **scikit-learn**: ML framework (Random Forest)
-- **Hugging Face Transformers & PEFT**: LLM fine-tuning
+- **Hugging Face Transformers & PEFT**: LLM fine-tuning (LoRA/QLoRA)
 - **bitsandbytes**: Quantization for LLM training
 - **vLLM**: Optimized LLM serving
+- **cryptography**: Audit logging and compliance (advanced lab)
 
 ## Exercise Flows
 
@@ -61,10 +130,26 @@ jupyter lab
 
 1. Data Exploration → Load UCI bike sharing dataset
 2. Data Preparation → Clean, preprocess, split
-3. Model Training → Train Random Forest with hyperparameter tuning
+3. Model Training → Train Random Forest with hyperparameter tuning, MLflow tracking
 4. Model Registration → Register best model in MLflow
-5. Model Testing → Test registered model
+5. Model Testing → Test registered model via FastAPI endpoint
 6. Model Monitoring → Set up Evidently for drift detection
+7. Containerization → Containerfile + Kubernetes deployment
+8. Deployment → Deploy and test on OpenShift
+
+### Bike Demand Forecasting Pipeline (Intermediate)
+
+Kubeflow pipeline (`pipeline_bike_sharing.py`) with 6 components:
+
+1. `get_dataset` — Download and extract UCI dataset
+2. `process_dataset` — Clean, rename columns, split into monthly CSVs, zip
+3. `train_model` — Hyperparameter grid search (50-200 estimators, 5-20 depth), MLflow tracking
+4. `register_model` — Find best run by RMSE, register in Model Registry, validate
+5. `prepare_model_serving` — Download model from MLflow, package with serve.py + requirements + metadata
+6. `monitor_model` — Evidently data drift, target drift, data quality reports (HTML + JSON)
+
+Environment variables: `DATASET_URL`, `MLFLOW_REMOTE_TRACKING_SERVER`, `PARTICIPANT_FIRSTNAME`
+Pipeline compiled with `compiler.Compiler().compile()`.
 
 ### LLMOps Instruction Tuning (Intermediate)
 
@@ -72,8 +157,8 @@ jupyter lab
 2. Data Preparation → Format instruction dataset, tokenize
 3. LoRA Tuning → Train with LoRA/QLoRA, MLflow tracking
 4. Evaluation → Perplexity, qualitative assessment
-5. Versioning & Packaging → Register in MLflow, merge weights, containerize
-6. Deployment & Serving → Deploy to OpenShift/Kubernetes
+5. Versioning & Packaging → Register in MLflow (pytorch.log_model), merge weights, containerize
+6. Deployment & Serving → Deploy to OpenShift/Kubernetes with vLLM
 
 ### LLMOps Model Persistence Chain
 
@@ -93,84 +178,72 @@ Dockerfile   ──copy──>  models/merged_model
 
 Note: `../models/merged_model` (from notebooks/) = `models/merged_model` (lab root), consumed by Dockerfile `COPY models/ /app/models/`.
 
+### Kubeflow Advanced (Advanced)
+
+- 01: Basic Triggers — KFP event-driven triggers
+- 02: Advanced Workflows — Parallelism, conditionals, loops
+- 03: Scheduling & Automation — Recurring runs, cron schedules
+- 04: Optimization & Scaling — Resource tuning, distributed execution
+- 05: Monitoring & Debugging — KFP UI, logging, troubleshooting
+
+### ML Security & Compliance (Advanced)
+
+- 01: Security Basics — Data encryption, access control, model poisoning
+- 02: Governance Implementation — Model lineage, versioning policies
+- 03: Audit Logging — JSONL audit trail, event querying
+- 04: Compliance Reporting — Report generation, MLflow metadata
+
 ## Deployment Architecture
 
-### Bike Forecasting
-- **FastAPI** (`models/app.py`): REST API
-- **Containerfile** (`models/Containerfile`): Container definition
-- **Kubernetes** (`models/k8s_deployment.yaml`): Deployment and service
+### Bike Forecasting (Beginner)
+- **FastAPI** (`models/app.py`): REST API with CORS
+- **Containerfile** (`models/Containerfile`): Python 3.11-slim
+- **Kubernetes** (`models/k8s_deployment.yaml`): Deployment + Service
+- **CORS variant** (`models_cors/`): Same with CORS middleware enabled
+
+### Bike Forecasting Pipeline (Intermediate)
+- **FastAPI** (`serve.py`): Loads model from local path, `/predict` + `/health` endpoints
+- **Containerfile**: UBI9/python-311
+- **Kubernetes** (`k8s/deployment.yaml`): Deployment (512Mi/250m requests, 1Gi/500m limits) + ClusterIP Service, liveness/readiness probes
 
 ### LLMOps
 - **vLLM** (`models/vllm_server.py`): Optimized LLM serving
-- **Dockerfile** (`labs/02_intermediate/02_llm_instruction_tuning/Dockerfile`)
-- **Kubernetes** (`labs/02_intermediate/02_llm_instruction_tuning/k8s/`)
+- **Dockerfile**: Container definition
+- **Kubernetes** (`k8s/`): Deployment (16Gi mem, 4 CPU) + ClusterIP Service
 
-## Pipeline Automation
+## CI/CD
 
-Kubeflow pipeline (`pipeline_bike_sharing.py`):
-1. `get_dataset`: Download and extract dataset
-2. `process_dataset`: Clean, process, split by month
-3. `train_model`: Train with hyperparameter tuning, log to MLflow
-4. `register_model`: Register best model in MLflow
-
-*Planned enhancements:*
-5. `serve_model`: Download registered model and create FastAPI serving endpoint
-6. `monitor_model`: Perform data drift and model monitoring with Evidently
-
-Environment variables:
-- `DATASET_URL`: Dataset download URL
-- `MLFLOW_REMOTE_TRACKING_SERVER`: MLflow tracking server URL
-- `PARTICIPANT_FIRSTNAME`: Experiment naming
+GitHub Actions workflow (`.github/workflows/ci.yml`):
+- Trigger: push to `main`
+- Steps: configure-pages → checkout → setup-python → `pip install zensical` → `zensical build --clean` → upload-pages-artifact → deploy-pages
+- Permissions: `contents: read`, `pages: write`, `id-token: write`
 
 ## Important Notes
 
-- Designed for Red Hat demo environment (OpenShift AI)
+- Designed for Red Hat demo environment (OpenShift AI / OpenDataHub)
 - MLflow tracking server: `http://mlflow-tracking.mlflow.svc.cluster.local:80`
 - Participant names namespace experiments to avoid conflicts
 - Pipeline base image: `quay.io/modh/runtime-images:runtime-datascience-ubi9-python-3.11-20250703`
+- Container serving base image: `registry.access.redhat.com/ubi9/python-311:latest`
+- Beginner models directory was restructured: old `02_bike_demand_forecasting/` → `bike_demand_forecasting/`
+- Old pipeline version preserved in `labs/02_intermediate/archive/`
 
 ## MLflow API Notes
 
 - Use `MlflowClient().search_experiments()` instead of `mlflow.list_experiments()` (removed in newer versions)
 - `mlflow.pytorch.log_model()` persists model weights; Hugging Face's `report_to="mlflow"` only logs metrics
+- Retrieve best runs: `MlflowClient().search_runs(order_by=["metrics.rmse ASC"])`
 
-## Planned Refinements for Intermediate Bike Demand Forecasting Lab
+## Coding Conventions
 
-The intermediate bike demand forecasting lab (`labs/02_intermediate/bike_demand_forecasting_pipeline/`) is planned to be enhanced with the following improvements to provide a more comprehensive MLOps experience:
+**KFP v2**: Components use `@dsl.component(base_image=..., packages_to_install=[...])` with `InputPath`/`OutputPath` type annotations. All components validate: file existence, non-empty data, expected columns, env vars set.
 
-### 1. Add Model Serving Component
-- Create a new component that downloads the registered model from MLflow
-- Implement a FastAPI application for serving predictions with input validation
-- Add health check endpoints and proper error handling
+**MLflow**: `mlflow.set_tracking_uri()` / `mlflow.set_experiment()` pattern. Log with `log_param()`, `log_metric()`, `sklearn.log_model()`. Register with `register_model()`.
 
-### 2. Add Model Monitoring Component
-- Integrate Evidently for model monitoring and drift detection
-- Generate data drift, target drift, and data quality reports
-- Save HTML reports and log monitoring metrics to MLflow
+**FastAPI**: Pydantic `BaseModel` request schemas, `/predict` POST + `/health` GET endpoints, model loaded at startup.
 
-### 3. Add Containerization and Deployment Files
-- Create Containerfile/Dockerfile for building the model serving image
-- Add Kubernetes manifests for deployment (Deployment, Service, Route/Ingress)
-- Include instructions for deploying to OpenShift/Kubernetes
+**Evidently**: `Report(metrics=[DataDriftPreset(), TargetDriftPreset(), DataQualityPreset()])` then `report.run()` → `save_html()` + `as_dict()`.
 
-### 4. Improve Pipeline Robustness
-- Enhance existing components with better error handling and input validation
-- Add comprehensive logging and data validation checks
-- Implement configuration through environment variables or pipeline parameters
-- Add model validation before registration (minimum performance thresholds)
+**Audit Logging** (advanced): Custom `AuditLogger` class writing JSONL format with `log_event()` and `query_events()`.
 
-### 5. Add Comprehensive Documentation
-- Create detailed documentation explaining the pipeline architecture
-- Provide guidance on running and customizing the pipeline
-- Include expected outputs, artifacts, and troubleshooting tips
-- Connect concepts to the beginner lab for progressive learning
-
-### 6. Implement Proper Artifact Management
-- Ensure components use KFP's artifact handling correctly
-- Add metadata to artifacts where appropriate
-- Implement proper cleanup of temporary files
-
-### 7. Add Testing and Validation
-- Include unit tests for individual components
-- Add data validation checks at each pipeline stage
-- Implement model validation before registration
+**Naming**: Constants `UPPER_SNAKE_CASE`, functions `snake_case`, KFP components `verb_noun`, MLflow runs `RF_{n_estimators}_{max_depth}_{rand}`.
