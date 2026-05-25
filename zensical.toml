@@ -21,6 +21,9 @@ site_author = "Mohammad Bahmani"
 # documentation you should set this.
 site_url = "https://MohammadB88.github.io/MLOps-Workshop-Exercises/"
 
+repo_url = "https://github.com/MohammadB88/MLOps-Workshop-Exercises"
+repo_name = "MohammadB88/MLOps-Workshop-Exercises"
+
 # The copyright notice appears in the page footer and can contain an HTML
 # fragment.
 copyright = """
