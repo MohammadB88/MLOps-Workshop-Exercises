@@ -547,6 +547,7 @@ def train_with_artifacts(
 ## Summary
 
 In this exercise, you:
+
 1. Configured CPU, memory, and GPU resource requests and limits for pipeline components
 2. Applied caching strategies to optimize iterative development cycles
 3. Implemented parallel execution with concurrency limits and resource constraints

@@ -143,6 +143,7 @@ When the app is deployed and reachable through its route, we can test the model 
 ## Summary
 
 In this lab, you:
+
 1. Explored and processed the wine quality dataset
 2. Trained a model with MLflow experiment tracking
 3. Deployed the model locally using MLflow

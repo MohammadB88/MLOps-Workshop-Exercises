@@ -42,6 +42,7 @@ Please follow the instructions inside the notebook and execute each code cell to
 ## Summary
 
 In this exercise, you:
+
 1. Downloaded and extracted the Bike Sharing Dataset
 2. Cleaned and preprocessed the data for analysis
 3. Performed exploratory data analysis with visualizations

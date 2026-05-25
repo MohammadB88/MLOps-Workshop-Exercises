@@ -73,6 +73,7 @@ git clone git@github.com:your-username/your-forked-repo.git
 ## Summary
 
 In this exercise, you:
+
 1. Accessed the OpenShift AI JupyterLab environment
 2. Cloned the workshop repository using HTTPS or SSH
 3. Verified the repository structure and workshop materials

@@ -94,6 +94,7 @@ for run in runs:
 ## Summary
 
 You learned how to:
+
 - Calculate perplexity for evaluation
 - Perform qualitative comparisons
 - Use MLflow for experiment comparison

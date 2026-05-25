@@ -47,6 +47,7 @@ Finally, a script is provided to visualize the ``Actual vs Predicted Counts`` fo
 ## Summary
 
 In this exercise, you:
+
 1. Located the model API service URL on OpenShift
 2. Set the model deployment endpoint in the notebook
 3. Sent single and batch inference requests to the API

@@ -165,6 +165,7 @@ print(f"Loaded dataset: {loaded_dataset}")
 ## Summary
 
 In this exercise, you learned how to:
+
 1. Load instruction tuning datasets
 2. Explore and understand data structure
 3. Format data using instruction templates

@@ -112,6 +112,7 @@ with mlflow.start_run(run_name="setup-test"):
 ## Summary
 
 In this exercise, you:
+
 1. Verified your GPU environment and installed dependencies
 2. Loaded TinyLlama, a 1.1B parameter language model
 3. Explored how the tokenizer converts text to tokens

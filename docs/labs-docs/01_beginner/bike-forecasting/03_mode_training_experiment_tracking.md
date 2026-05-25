@@ -54,6 +54,7 @@ Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model perfor
 ## Summary
 
 In this exercise, you:
+
 1. Loaded the training and test datasets
 2. Connected to the MLflow tracking server
 3. Trained multiple models with different hyperparameters

@@ -311,6 +311,7 @@ LLM serving workloads have unique resource characteristics:
 ## Summary
 
 In this exercise, you learned how to:
+
 1. Containerize a fine-tuned LLM with vLLM for serving
 2. Create Kubernetes deployment and service manifests
 3. Deploy to OpenShift/Kubernetes with appropriate resource management

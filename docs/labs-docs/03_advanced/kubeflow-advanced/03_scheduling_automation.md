@@ -545,6 +545,7 @@ def compare_and_promote(
 ## Summary
 
 In this exercise, you:
+
 1. Created recurring pipeline schedules with timezone-aware cron expressions
 2. Implemented performance-gated triggers that conditionally start pipelines
 3. Built automated retraining logic triggered by model degradation

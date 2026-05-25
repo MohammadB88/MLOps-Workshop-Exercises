@@ -116,6 +116,7 @@ spec:
 ## Summary
 
 In this exercise, you:
+
 1. Created a Kubernetes Deployment using the built container image
 2. Configured environment variables for model serving
 3. Created a Service to expose the API internally

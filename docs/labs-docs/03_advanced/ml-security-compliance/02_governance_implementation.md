@@ -217,6 +217,7 @@ GovernanceGate.promote_to_production(
 ## Summary
 
 In this exercise, you:
+
 1. Connected to MLflow and explored available experiments
 2. Created experiments with governance tags for compliance tracking
 3. Searched and filtered experiments by tag values

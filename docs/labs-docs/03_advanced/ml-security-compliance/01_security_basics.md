@@ -179,6 +179,7 @@ print(f"Tracking URI: {config.get('MLFLOW_TRACKING_URI')}")
 ## Summary
 
 In this exercise, you:
+
 1. Set up `cryptography` and `hashlib` for encrypting ML artifacts
 2. Generated and persisted symmetric encryption keys
 3. Encrypted and decrypted model files using Fernet

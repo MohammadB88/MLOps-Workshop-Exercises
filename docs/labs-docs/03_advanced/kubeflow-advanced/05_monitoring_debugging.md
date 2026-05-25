@@ -693,6 +693,7 @@ groups:
 ## Summary
 
 In this exercise, you:
+
 1. Implemented structured JSON logging across pipeline components
 2. Collected and exposed custom metrics to MLflow and Prometheus
 3. Built resilient pipelines with retry logic and graceful degradation

@@ -289,6 +289,7 @@ for job in jobs.jobs:
 ## Summary
 
 In this exercise, you:
+
 1. Configured a KFP client and connected to a pipeline server
 2. Defined reusable pipeline components for data validation and training
 3. Created a cron-based recurring run for daily model retraining

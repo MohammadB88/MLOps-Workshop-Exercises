@@ -60,7 +60,39 @@ nav = [
             { "04 - Evaluation" = "labs-docs/02_intermediate/llm-instruction-tuning/04_evaluation.md" },
             { "05 - Versioning & Packaging" = "labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md" },
             { "06 - Deployment & Serving" = "labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md" }
+        ] },
+        { "Bike Demand Forecasting Pipeline" = "labs-docs/bike-demand-forecasting-pipeline.md" },
+        { "Advanced" = [
+            { "Kubeflow Advanced" = [
+                { "Overview" = "labs-docs/03_advanced/kubeflow-advanced.md" },
+                { "01 - Basic Triggers" = "labs-docs/03_advanced/kubeflow-advanced/01_basic_triggers.md" },
+                { "02 - Advanced Workflows" = "labs-docs/03_advanced/kubeflow-advanced/02_advanced_workflows.md" },
+                { "03 - Scheduling & Automation" = "labs-docs/03_advanced/kubeflow-advanced/03_scheduling_automation.md" },
+                { "04 - Optimization & Scaling" = "labs-docs/03_advanced/kubeflow-advanced/04_optimization_scaling.md" },
+                { "05 - Monitoring & Debugging" = "labs-docs/03_advanced/kubeflow-advanced/05_monitoring_debugging.md" }
+            ] },
+            { "ML Security & Compliance" = [
+                { "Overview" = "labs-docs/03_advanced/ml-security-compliance.md" },
+                { "01 - Security Basics" = "labs-docs/03_advanced/ml-security-compliance/01_security_basics.md" },
+                { "02 - Governance Implementation" = "labs-docs/03_advanced/ml-security-compliance/02_governance_implementation.md" },
+                { "03 - Audit Logging" = "labs-docs/03_advanced/ml-security-compliance/03_audit_logging.md" },
+                { "04 - Compliance Reporting" = "labs-docs/03_advanced/ml-security-compliance/04_compliance_reporting.md" }
+            ] }
         ] }
+    ] },
+    { "Theory" = [
+        { "Introduction to MLOps" = "theory/introduction.md" }
+    ] },
+    { "Tasks" = [
+        { "Task 1" = "labs-docs/tasks/task1.md" },
+        { "Task 2" = "labs-docs/tasks/task2.md" },
+        { "Task 3" = "labs-docs/tasks/task3.md" },
+        { "Task 4" = "labs-docs/tasks/task4.md" },
+        { "Task 5" = "labs-docs/tasks/task5.md" },
+        { "Task 6" = "labs-docs/tasks/task6.md" },
+        { "Task 7" = "labs-docs/tasks/task7.md" },
+        { "Task 8 - Kubeflow" = "labs-docs/tasks/task8_kubeflow.md" },
+        { "Task 9 - Elyra" = "labs-docs/tasks/task9_elyra.md" }
     ] },
     { "Environment & Prerequisites" = [
         { "Environment Requirements" = "environment-requirement.md" },

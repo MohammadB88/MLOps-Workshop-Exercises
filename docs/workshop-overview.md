@@ -1,10 +1,6 @@
 # Workshop Overview
 
-In this page, we will go through implementing MLOps concepts to several use cases:
-
-- **Beginner**: [Wine Quality Classifier](labs-docs/wine-quality-classifier.md), [Bike Demand Forecasting](labs-docs/bike-demand-forecasting.md)
-- **Intermediate**: [LLM Instruction Tuning](labs-docs/02_intermediate/llm-instruction-tuning.md), [Kubeflow Pipeline](labs-docs/bike-demand-forecasting-pipeline.md)
-- **Advanced**: [ML Security & Compliance](labs-docs/03_advanced/ml-security-compliance.md), [Advanced Kubeflow Pipelines](labs-docs/03_advanced/kubeflow-advanced.md)
+In this page, we will go through implementing MLOps concepts to several use cases. 
 
 You will complete the following exercises, based on the difficulty of the workshop:
 
@@ -23,11 +19,16 @@ You will complete the following exercises, based on the difficulty of the worksh
 * [Advanced Kubeflow Pipelines](labs-docs/03_advanced/kubeflow-advanced.md)
 
 ```mermaid
-graph LR
-    A[Beginner: Bike Demand Forecasting] --> B[Intermediate: LLM Instruction Tuning]
-    A --> C[Intermediate: Kubeflow Pipeline]
-    B --> D[Advanced: ML Security & Compliance]
-    C --> E[Advanced: Kubeflow Advanced]
-    D --> F[Production ML]
-    E --> F
+graph TD
+    B(Step 1: Beginner Level)
+    B --> B1[Wine Quality Classifier]
+    B --> B2[Bike Demand Forecasting]
+    B1 --> I(Step 2: Intermediate Level)
+    B2 --> I
+    I --> I1[LLM Instruction Tuning]
+    I --> I2[Kubeflow Pipeline]
+    I1 --> A(Step 3: Advanced Level)
+    I2 --> A
+    A --> A1[ML Security & Compliance]
+    A --> A2[Advanced Kubeflow Pipelines]
 ```

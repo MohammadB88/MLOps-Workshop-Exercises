@@ -188,6 +188,7 @@ Now if you go to the **ImageStream** (``bike-sharing-imagestream``), the built i
 ## Summary
 
 In this exercise, you:
+
 1. Reviewed the FastAPI REST API application for model serving
 2. Reviewed the Containerfile for building the model image
 3. Created an ImageStream on OpenShift

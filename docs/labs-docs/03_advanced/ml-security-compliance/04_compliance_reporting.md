@@ -360,6 +360,7 @@ This package should be retained for {365} days.
 ## Summary
 
 In this exercise, you:
+
 1. Reviewed GDPR requirements and their impact on ML workflows
 2. Generated a Model Card from MLflow experiment metadata
 3. Built a structured compliance report with data lineage

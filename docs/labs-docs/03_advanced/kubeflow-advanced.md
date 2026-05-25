@@ -8,6 +8,7 @@ Kubeflow Pipelines provides a platform for building, deploying, and managing ML 
 
 In this workshop, you'll learn how to:
 
+
 - Configure time-based and event-based pipeline triggers
 - Implement complex workflow patterns (conditions, loops, fan-out/fan-in)
 - Automate pipeline scheduling and retraining triggers

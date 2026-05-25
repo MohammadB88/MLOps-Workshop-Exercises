@@ -99,6 +99,7 @@ model.save_pretrained("./lora_adapter")
 ## Summary
 
 You learned how to:
+
 - Apply LoRA for parameter-efficient fine-tuning
 - Train with MLflow tracking
 - Save LoRA adapters for deployment

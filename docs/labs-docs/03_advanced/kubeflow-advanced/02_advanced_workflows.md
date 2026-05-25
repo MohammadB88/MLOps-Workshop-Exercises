@@ -368,6 +368,7 @@ def advanced_ml_workflow(
 ## Summary
 
 In this exercise, you:
+
 1. Defined conditional branches using `kfp.dsl.Condition` to gate component execution
 2. Implemented if/else patterns for data-quality-driven model selection
 3. Created parallel hyperparameter sweeps with `kfp.dsl.ParallelFor`

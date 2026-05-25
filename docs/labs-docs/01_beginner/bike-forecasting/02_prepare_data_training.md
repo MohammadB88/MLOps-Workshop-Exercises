@@ -66,6 +66,7 @@ print(X_train.head(), X_test.head())
 ## Summary
 
 In this exercise, you:
+
 1. Loaded the cleaned dataset from the previous exercise
 2. Defined features and target variable for training
 3. Split the data into training and test datasets

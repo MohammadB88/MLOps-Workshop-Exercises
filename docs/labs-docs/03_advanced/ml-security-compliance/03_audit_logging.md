@@ -275,6 +275,7 @@ export_audit_report(query, "audit_report_compliance.json", "compliance")
 ## Summary
 
 In this exercise, you:
+
 1. Defined an audit event schema for ML prediction events
 2. Created an append-only `AuditLogger` with tamper-evident design
 3. Logged simulated prediction events with full metadata

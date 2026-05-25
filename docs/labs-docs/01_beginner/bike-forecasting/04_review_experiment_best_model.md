@@ -42,6 +42,7 @@ When we prompted in the notebook, please select the run (``run-ID``) which has p
 ## Summary
 
 In this exercise, you:
+
 1. Reviewed experiment results from MLflow
 2. Compared model performance metrics
 3. Selected the best-performing model run

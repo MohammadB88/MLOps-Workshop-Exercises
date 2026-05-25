@@ -8,6 +8,7 @@ As machine learning systems move from experimentation to production, security an
 
 In this workshop, you'll learn how to:
 
+
 - Implement security controls for ML artifacts and pipelines
 - Establish model governance frameworks with access control
 - Build immutable audit trails for ML decision-making

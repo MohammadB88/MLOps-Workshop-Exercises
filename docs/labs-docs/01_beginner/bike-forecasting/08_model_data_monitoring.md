@@ -61,6 +61,7 @@ As you execute the cells, observe how ``Evidently`` generate insights about the 
 ## Summary
 
 In this exercise, you:
+
 1. Set up model monitoring with Evidently
 2. Created reference and current datasets for comparison
 3. Generated drift reports to detect data and model drift
