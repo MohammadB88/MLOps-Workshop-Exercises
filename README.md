@@ -71,7 +71,7 @@ MLOps-Workshop-Exercises/
 ├── ROADMAP.md                         # Project roadmap
 ├── LICENSE                            # MIT License
 ├── SECURITY.md                        # Security policy
-├── mkdocs.yml                         # MkDocs configuration
+├── zensical.toml                      # Zensical configuration
 ├── requirements.txt                   # Python dependencies
 ├── CLAUDE.md                          # AI assistant instructions
 ├── docs/
@@ -181,7 +181,7 @@ cd MLOps-Workshop-Exercises
 pip install -r requirements.txt
 
 # Serve documentation locally
-mkdocs serve
+zensical serve
 ```
 
 ### Running the Labs

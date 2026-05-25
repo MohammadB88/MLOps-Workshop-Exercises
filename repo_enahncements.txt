@@ -1,0 +1,99 @@
+PROMPT 1: BEGINNER LAB ENHANCEMENT
+Improve the beginner bike demand forecasting lab (labs/01_beginner/bike_demand_forecasting/notebooks/) with these specific changes to all 6 notebooks:
+
+1. Add a 3-part header markdown cell at the top of each notebook:
+   - "What you will learn": 2-3 concrete learning outcomes
+   - "Why this matters in MLOps": Connect the step to production reality
+   - "You're done when...": Observable success criteria
+
+2. Add a "why MLOps" framing paragraph before the first code cell in each notebook:
+   - Notebook 03 (Model Training): Explain that tracking every run separates ML engineering from experimentation
+   - Notebook 06 (Monitoring): Explain that drift is why models fail silently in production
+   - Similar contextual explanations for other notebooks
+
+3. Add 1-2 guided exercises per notebook using fill-in-the-blank pattern:
+   - Example: mlflow.log_metric("rmse", ___) in notebook 03
+   - Example: Evidently report configuration in notebook 06
+
+4. Add a lab map diagram to notebook 01 showing the full 6-step flow:
+   Explore → Prepare → Train/MLflow → Register/MLflow → Serve/FastAPI → Monitor/Evidently
+   Include the tool used at each step
+
+All changes should be purely additive - new markdown cells and minor code annotations only.
+
+
+PROMPT 2: NEW ADVANCED LABS CREATION
+Create two new advanced-level labs:
+
+1. ML Security & Compliance Lab (labs/03_advanced/ml_security_compliance/):
+   - Model governance practices
+   - Audit trails for ML models
+   - Access control and model versioning security
+   - Compliance tracking (GDPR, etc.) for ML systems
+   - Include notebooks covering: security basics, governance implementation, audit logging, compliance reporting
+
+2. Advanced Kubeflow Pipelines Lab (labs/03_advanced/kubeflow_advanced/):
+   - Pipeline triggering mechanisms (time-based, event-based)
+   - Complex workflow patterns (conditional execution, loops)
+   - Pipeline scheduling and automation
+   - Resource optimization and scaling in KFP
+   - Monitoring and debugging complex pipelines
+   - Include notebooks covering: basic triggers, advanced workflows, scheduling, optimization, monitoring
+
+
+PROMPT 3: DOCUMENTATION IMPROVEMENTS
+Enhance the MLOps workshop documentation with these improvements:
+
+1. Fix inconsistent terminology across all docs files:
+   - Standardize MLflow vs ML Flow usage
+   - Standardize Kubeflow vs KFP usage
+   - Create and apply a terminology glossary
+
+2. Add missing prerequisites and context:
+   - Begin each lab doc with clear prerequisites
+   - Add "before you begin" sections explaining required knowledge
+   - Include links to foundational concepts when referenced
+
+3. Improve visual hierarchy and scanning:
+   - Add consistent section numbering
+   - Use callout boxes for important notes, warnings, tips
+   - Standardize heading levels and formatting
+   - Add visual separators between major sections
+
+4. Fix inconsistent lab documentation:
+   - Ensure all lab docs follow the same structure
+   - Standardize exercise formatting and difficulty markers
+   - Create a lab documentation template and apply to all labs
+
+5. Add Mermaid diagram support:
+   - Replace text-based architecture descriptions with Mermaid diagrams
+   - Add pipeline flow diagrams, component interaction diagrams
+   - Include diagram examples in ML overview and lab setup documents
+
+6. Research and recommend implementation of Zensical or similar advanced markdown-based documentation tools for potential future enhancement.
+
+
+PROMPT 4: PRODUCTION-FOCUSED ENHANCEMENTS
+Add production-environment focus elements throughout the repository:
+
+1. In beginner lab notebooks, add production context callouts:
+   - When showing MLflow tracking: explain how this enables model reproducibility in production
+   - When showing model registration: connect to CI/CD pipelines and model promotion
+   - When showing monitoring: explain production alerting and incident response
+
+2. Add "Production Considerations" sections to lab documentation:
+   - Scaling considerations for each component
+   - Security best practices implemented
+   - Monitoring and observability approaches
+   - Backup and disaster recovery approaches
+
+3. Create a production-readiness checklist document:
+   - Items to check before moving from lab to production
+   - Performance benchmarks to establish
+   - Security validations to perform
+   - Monitoring setup verification
+
+4. Add simple but realistic production patterns:
+   - Basic CI/CD pipeline examples (GitHub Actions)
+   - Simple monitoring dashboards
+   - Basic model validation before promotion

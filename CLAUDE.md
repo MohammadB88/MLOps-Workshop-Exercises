@@ -23,7 +23,7 @@ MLOps-Workshop-Exercises/
 │           ├── k8s/                    # Kubernetes manifests
 │           ├── data/                   # Gitignored
 │           └── models/                 # Gitignored
-├── mkdocs.yml
+├── zensical.toml
 └── requirements.txt
 ```
 
@@ -32,9 +32,9 @@ MLOps-Workshop-Exercises/
 ```bash
 # Documentation
 pip install -r requirements.txt
-mkdocs serve              # Local dev
-mkdocs build              # Build
-mkdocs gh-deploy --force  # Deploy to GitHub Pages
+zensical serve              # Local dev
+zensical build              # Build
+zensical gh-deploy --force  # Deploy to GitHub Pages
 
 # Labs
 cd labs/01_beginner/02_bike_demand_forecasting
