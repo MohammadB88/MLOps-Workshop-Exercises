@@ -117,7 +117,7 @@ fi
 ############################################
 # 1. Create OpenShift project / namespace
 ############################################
-echo "[1/8] Creating OpenShift project '${NAMESPACE}' (if not exists)..."
+echo "[1/9] Creating OpenShift project '${NAMESPACE}' (if not exists)..."
 if ! oc get project "${NAMESPACE}" &>/dev/null; then
   oc new-project "${NAMESPACE}"
 else
@@ -125,9 +125,27 @@ else
 fi
 
 ############################################
-# 2. Clone MLflow Operator repository
+# 2. Detect OpenShift cluster URL
 ############################################
-echo "[2/8] Cloning MLflow Operator repository..."
+echo "[2/9] Detecting OpenShift cluster URL..."
+API_URL=$(oc whoami --show-server)
+echo "OpenShift API server: ${API_URL}"
+
+CLUSTER_DOMAIN=$(echo "${API_URL}" | sed -E 's|^https://api\.||; s|:6443$||')
+ALLOWED_HOSTS="*.apps.${CLUSTER_DOMAIN}"
+
+echo "Detected apps domain: *.apps.${CLUSTER_DOMAIN}"
+read -p "Is this correct for the OpenShift apps domain? (y/n): " DOMAIN_CONFIRM
+if [[ "${DOMAIN_CONFIRM}" != "y" && "${DOMAIN_CONFIRM}" != "Y" ]]; then
+  read -p "Enter the correct apps domain (e.g. apps.ocp.example.com): " CUSTOM_DOMAIN
+  ALLOWED_HOSTS="*.${CUSTOM_DOMAIN}"
+fi
+echo "MLflow allowedHosts will be set to: ${ALLOWED_HOSTS}"
+
+############################################
+# 3. Clone MLflow Operator repository
+############################################
+echo "[3/9] Cloning MLflow Operator repository..."
 if [[ -d "${MLFLOW_CHART_DIR}" ]]; then
   echo "Chart directory already exists. Updating..."
   git -C "${MLFLOW_CHART_DIR}" pull
@@ -136,9 +154,9 @@ else
 fi
 
 ############################################
-# 3. Create custom values.yaml
+# 4. Create custom values.yaml
 ############################################
-echo "[3/8] Creating custom MLflow values file..."
+echo "[4/9] Creating custom MLflow values file..."
 
 cat > "${VALUES_FILE}" <<EOF
 # MLflow OpenDataHub Installation Values
@@ -191,7 +209,8 @@ mlflow:
   serveArtifacts: true
   workers: 1
   port: 8443
-  allowedHosts: []
+  allowedHosts:
+    - "${ALLOWED_HOSTS}"
   corsAllowedOrigins: ""
   staticPrefix: ""
 
@@ -251,9 +270,9 @@ EOF
 echo "Values file created: ${VALUES_FILE}"
 
 ############################################
-# 4. Install MLflow
+# 5. Install MLflow
 ############################################
-echo "[4/8] Installing MLflow via Helm..."
+echo "[5/9] Installing MLflow via Helm..."
 HELM_CHART_PATH="${MLFLOW_CHART_DIR}/charts/mlflow"
 if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
   echo "MLflow Helm release '${RELEASE}' already exists in namespace '${NAMESPACE}'."
@@ -274,9 +293,9 @@ else
 fi
 
 ############################################
-# 5. Verify installation
+# 6. Verify installation
 ############################################
-echo "[5/8] Verifying MLflow installation..."
+echo "[6/9] Verifying MLflow installation..."
 sleep 5
 
 if oc get deployment "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
@@ -299,16 +318,16 @@ if helm status "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
 fi
 
 ############################################
-# 6. MLflow installation completed
+# 7. MLflow installation completed
 ############################################
 echo ""
-echo "[6/8] MLflow installation completed successfully."
+echo "[7/9] MLflow installation completed successfully."
 echo ""
 
 ############################################
-# 7. Deploy OpenShift Route for MLflow UI
+# 8. Deploy OpenShift Route for MLflow UI
 ############################################
-echo "[7/8] Creating OpenShift Route for MLflow UI..."
+echo "[8/9] Creating OpenShift Route for MLflow UI..."
 
 cat > mlflow_route.yaml <<EOF
 apiVersion: route.openshift.io/v1
@@ -336,9 +355,9 @@ else
 fi
 
 ############################################
-# 8. Display access information
+# 9. Display access information
 ############################################
-echo "[8/8] Access information"
+echo "[9/9] Access information"
 echo "=========================================="
 echo ""
 echo "MLflow UI will be available at:"
