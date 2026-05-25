@@ -553,7 +553,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../02_advanced_workflows/" class="md-button">← Previous</a>
-<a href="../04_optimization_scaling/" class="md-button">Next →</a>
-</div>

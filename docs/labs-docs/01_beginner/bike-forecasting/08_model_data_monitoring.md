@@ -68,7 +68,4 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-start;">
-<a href="../07_test_model_endpoint/" class="md-button">← Previous</a>
-</div>
 

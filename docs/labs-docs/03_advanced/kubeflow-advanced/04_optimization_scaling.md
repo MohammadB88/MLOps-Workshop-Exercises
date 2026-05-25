@@ -555,7 +555,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../03_scheduling_automation/" class="md-button">← Previous</a>
-<a href="../05_monitoring_debugging/" class="md-button">Next →</a>
-</div>

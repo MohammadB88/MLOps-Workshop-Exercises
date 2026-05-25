@@ -61,7 +61,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../02_prepare_data_training/" class="md-button">← Previous</a>
-<a href="../04_review_experiment_best_model/" class="md-button">Next →</a>
-</div>

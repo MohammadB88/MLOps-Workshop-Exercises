@@ -174,7 +174,3 @@ In this exercise, you learned how to:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../01_setup_exploration/" class="md-button">← Previous</a>
-<a href="../03_lora_tuning/" class="md-button">Next →</a>
-</div>

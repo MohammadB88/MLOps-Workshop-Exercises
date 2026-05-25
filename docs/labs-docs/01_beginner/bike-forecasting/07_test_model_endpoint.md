@@ -54,7 +54,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../06_model_deployment_openshift/" class="md-button">← Previous</a>
-<a href="../08_model_data_monitoring/" class="md-button">Next →</a>
-</div>

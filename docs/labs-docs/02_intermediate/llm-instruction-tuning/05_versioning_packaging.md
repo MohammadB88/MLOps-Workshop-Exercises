@@ -142,7 +142,3 @@ You learned how to:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../04_evaluation/" class="md-button">← Previous</a>
-<a href="../06_deployment_serving/" class="md-button">Next →</a>
-</div>

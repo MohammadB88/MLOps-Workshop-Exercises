@@ -79,6 +79,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-end;">
-<a href="../01_load_extract_clean_data/" class="md-button">Next →</a>
-</div>

@@ -376,7 +376,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../01_basic_triggers/" class="md-button">← Previous</a>
-<a href="../03_scheduling_automation/" class="md-button">Next →</a>
-</div>

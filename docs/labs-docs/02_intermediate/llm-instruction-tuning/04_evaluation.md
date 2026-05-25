@@ -100,7 +100,3 @@ You learned how to:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../03_lora_tuning/" class="md-button">← Previous</a>
-<a href="../05_versioning_packaging/" class="md-button">Next →</a>
-</div>

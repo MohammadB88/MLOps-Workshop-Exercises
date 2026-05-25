@@ -187,7 +187,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../ml-security-compliance.md" class="md-button">← Previous</a>
-<a href="../02_governance_implementation/" class="md-button">Next →</a>
-</div>

@@ -120,7 +120,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../llm-instruction-tuning.md" class="md-button">← Previous</a>
-<a href="../02_data_preparation/" class="md-button">Next →</a>
-</div>

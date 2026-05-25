@@ -123,8 +123,4 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../05_containerize_model_endpoint/" class="md-button">← Previous</a>
-<a href="../07_test_model_endpoint/" class="md-button">Next →</a>
-</div>
 

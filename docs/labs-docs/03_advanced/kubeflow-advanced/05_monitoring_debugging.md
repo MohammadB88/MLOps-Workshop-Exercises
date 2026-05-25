@@ -701,6 +701,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../04_optimization_scaling/" class="md-button">← Previous</a>
-</div>

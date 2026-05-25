@@ -73,7 +73,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../01_load_extract_clean_data/" class="md-button">← Previous</a>
-<a href="../03_mode_training_experiment_tracking/" class="md-button">Next →</a>
-</div>

@@ -195,7 +195,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../04_review_experiment_best_model/" class="md-button">← Previous</a>
-<a href="../06_model_deployment_openshift/" class="md-button">Next →</a>
-</div>

@@ -283,7 +283,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../02_governance_implementation/" class="md-button">← Previous</a>
-<a href="../04_compliance_reporting/" class="md-button">Next →</a>
-</div>

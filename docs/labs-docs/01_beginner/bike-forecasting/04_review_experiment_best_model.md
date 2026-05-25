@@ -49,7 +49,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: space-between;">
-<a href="../03_mode_training_experiment_tracking/" class="md-button">← Previous</a>
-<a href="../05_containerize_model_endpoint/" class="md-button">Next →</a>
-</div>

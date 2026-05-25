@@ -368,6 +368,3 @@ In this exercise, you:
 
 ---
 
-<div style="display: flex; justify-content: flex-start;">
-<a href="../03_audit_logging/" class="md-button">← Previous</a>
-</div>
