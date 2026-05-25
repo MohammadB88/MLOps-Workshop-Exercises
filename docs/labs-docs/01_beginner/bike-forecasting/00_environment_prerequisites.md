@@ -13,12 +13,14 @@ In this lab, we will:
 
 - Access to an OpenShift AI JupyterLab environment
 
-## Guide
-
-### Step 1 - Access the Environment
+## Step 1: Access the Environment
 You will be provided a link and necessary credentials to an OpenShift AI instance with a ready workbench including *JupyterLab*. 
 
-### Step 2a - Clone the Repository - HTTPs-URL
+## Step 2: Clone the Repository
+
+Choose one of the following methods:
+
+### Option A: HTTPS URL
 
 Go to the original GitHub repository page and copy the the URL of the repo:
 
@@ -39,8 +41,7 @@ paste the copied URL from original repo and click on ``clone`` to download the c
 
 Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials.
 
-
-### Step 2b - Clone the Repository - SSH-URL
+### Option B: SSH URL
 In case you are going to clone the repo from a terminal, use below instructions:
 
 #### Generate an SSH key

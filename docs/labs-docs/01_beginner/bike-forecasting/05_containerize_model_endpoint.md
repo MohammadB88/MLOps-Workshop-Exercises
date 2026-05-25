@@ -16,9 +16,7 @@ enabling easy deployment to cloud or on-prem environments and making the model a
 - Completed Exercise 4
 - Best model registered in MLflow
 
-## Guide
-
-### Step 1 - Review the REST API Application and Containerfile
+## Step 1: Review the REST API Application and Containerfile
 
 REST-API application is written in python (`models/app.py`):
 
@@ -127,12 +125,12 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Now that we have an ``REST-API`` python application and a ``Containerfile``, we can build the container image for the model deployment.
 
-### Step 2 - Go to the OpenShift Console (Administrator Perspective)
+## Step 2: Go to the OpenShift Console (Administrator Perspective)
 When logged in, go to the ``Administrator`` perspective. You can find it by clicking on `Developer` at the top left corner.
 
 Find your project (e.g. `user1`) in the openshift console and click on it, so that the resources in this namespace will be shown. 
 
-### Step 3 - Create an ImageStream on OpenShift
+## Step 3: Create an ImageStream on OpenShift
 ImageStream on OpenShift is a container registry like ``hub.docker.com`` or `quay.io`, on which one can store and share images.
 
 Go to `Builds -> ImageStream` to create an ImageStream on OpenShift to track and manage the container image built for your model API, allowing seamless integration with ``BuildConfig`` and deployments.
@@ -144,7 +142,7 @@ metadata:
   name: bike-sharing-imagestream
 ```
 
-### 4. Create a BuildConfig on OpenShift
+## Step 4: Create a BuildConfig on OpenShift
 `BuildConfig` on OpenShift offers a way to build container images from Containerfiles and application sources that are stored on any git platform (i.e. `Github`). Since our code resides on Github, we use this method to build the image and will store it in the `ImageStream` created in the last step.
 
 You can find this resource under `Builds -> BuildConfig`.

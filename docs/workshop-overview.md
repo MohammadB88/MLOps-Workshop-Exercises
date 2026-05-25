@@ -7,7 +7,7 @@ You will complete the following exercises, based on the difficulty of the worksh
 ### Beginner Level
 
 * [Wine Quality Classifier](labs-docs/wine-quality-classifier.md)
-* [Bike Demand Forecasting](labs-docs/bike-demand-forecasting.md)
+* [Bike Forecasting](labs-docs/01_beginner/bike-forecasting.md)
 
 ### Intermediate Level
 

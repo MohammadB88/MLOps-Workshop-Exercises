@@ -15,13 +15,11 @@ In this lab, we will:
 - Completed Exercise 1
 - Cleaned dataset saved in data/processed
 
-## Guide
-
-### Step 1 - Find and Open the Jupyter Notebook 
+## Step 1: Find and Open the Jupyter Notebook 
 
 In directory ``"workshop_materials/bike_demand_forecasting"``, please open the second notebook, `"02_model_training.ipynb"`, and follow the instructions below to complete this task.
 
-### Step 2 - Load the Processed Data
+## Step 2: Load the Processed Data
 
 In this task, we take the cleaned dataset from the last task (`data/processed`) and prepare it for model training.
 
@@ -31,7 +29,7 @@ data_2011_01.csv
 data_2011_02.csv
 ```
 
-### step 3 - Set the Categorical Features
+## Step 3: Set the Categorical Features
 
 We already have set the numerical features. 
 
@@ -40,7 +38,7 @@ You only need to set these categorical features:
 ['season', 'holiday', 'workingday', 'weathersit']
 ```
 
-### step 4 - Split the DataSet into Training and Test DataSets
+## Step 4: Split the DataSet into Training and Test DataSets
 
 In order to split the dataset into training and testing datasets, data scientists usually use ``train_test_split`` function from ``sklearn.model_selection`` module.
 
@@ -49,7 +47,7 @@ Just add this line of code in the appropriate cell, without any changes:
 train_test_split(X_input, y_input, test_size=0.3, random_state=42)
 ```
 
-### step 5 - Inspect the Split Data
+## Step 5: Inspect the Split Data
 Check the shape of your training and test datasets to confirm the split was successful:
 
 Just paste this line in a cell under the same notebook and run it.

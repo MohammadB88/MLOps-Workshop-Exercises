@@ -16,13 +16,11 @@ ensuring the model is accessible and scalable in a production-like environment.
 - Completed Exercise 5
 - Container image built and pushed
 
-## Guide
-
-### Step 1 - Go to the OpenShift Console
+## Step 1: Go to the OpenShift Console
 Find your project (e.g. `user1`) in the openshift console.
 💡 **Note:** Please make sure that you are in your given project.
 
-### Step 2 - Create a Deployment Using the Built Image
+## Step 2: Create a Deployment Using the Built Image
 From the left panel go to `Workloads -> Deployment` and create a new deployment. 
 
 💡 **Note One:** Please set the link to the image from the last task. It could also be found in the created ``ImageStream``.
@@ -71,7 +69,7 @@ spec:
               memory: "512Mi"
 ```
 
-### Step 3 - Service: Expose the API Endpoint internally 
+## Step 3: Service: Expose the API Endpoint internally 
 Create a service to expose your API internally for applications on the same cluster:
 
 From the left panel go to `Network -> Service` and create a new service. 
@@ -92,7 +90,7 @@ spec:
 
 Now, the model is reachable only from inside the cluster!
 
-### Step 4 - Route (Optional): Expose the API Endpoint externally
+## Step 4: Route (Optional): Expose the API Endpoint externally
 Deploy this resource **ONLY and ONLY** if you want to make your model accessible outside the OpenShift cluster.
 
 From the left panel go to `Network -> Route` and create a new route.
