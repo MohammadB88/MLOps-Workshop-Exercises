@@ -124,6 +124,9 @@ else
   echo "Project '${NAMESPACE}' already exists. Skipping."
 fi
 
+echo "Labeling namespace '${NAMESPACE}' with mlflow-enabled=true for MLflow workspaces..."
+oc label namespace "${NAMESPACE}" mlflow-enabled=true --overwrite
+
 ############################################
 # 2. Detect OpenShift cluster URL
 ############################################
@@ -206,6 +209,7 @@ mlflow:
   artifactsDestination: "file:///mlflow/artifacts"
   enableWorkspaces: true
   workspaceStoreUri: "kubernetes://"
+  workspaceLabelSelector: "mlflow-enabled=true"
   serveArtifacts: true
   workers: 1
   port: 8443
@@ -374,6 +378,9 @@ echo "  oc get pods -n ${NAMESPACE} -l component=mlflow"
 echo ""
 echo "View logs:"
 echo "  oc logs -n ${NAMESPACE} -l component=mlflow"
+echo ""
+echo "Add more namespaces as MLflow workspaces:"
+echo "  oc label namespace <target-namespace> mlflow-enabled=true"
 echo ""
 echo "Uninstall MLflow:"
 echo "  helm uninstall ${RELEASE} -n ${NAMESPACE}"
