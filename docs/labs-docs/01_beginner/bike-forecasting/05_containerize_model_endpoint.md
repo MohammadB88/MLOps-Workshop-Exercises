@@ -159,7 +159,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/MohammadB88/MLOps-Workshop-Exercises.git'
-    contextDir: workshop_materials/bike_demand_forecasting/models
+    contextDir: labs/01_beginner/bike_demand_forecasting/models
   strategy:
     type: Docker
     dockerStrategy:
