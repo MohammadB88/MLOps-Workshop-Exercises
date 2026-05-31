@@ -14,6 +14,7 @@ In this lab, we will:
 You will be provided a link and necessary credentials to an OpenShift AI instance with a ready workbench including *JupyterLab*. 
 
 ## Step 2: Clone the Repository
+Clone the repository containing lab materials from GitHub.
 
 ### Copy the Repo-URL
 
@@ -34,7 +35,7 @@ paste the copied URL from original repo and click on ``clone`` to download the c
 
 ![Clone Repo - add url](../../../assets/images/clone_repo_url.png)
 
-Go to the path `MLOps-Workshop-Exercises/labs/`, where you find the workshop materials.
+Go to the path `MLOps-Workshop-Exercises/labs/01_beginner/`, where you find the workshop materials for `bike demand forecasting`.
 
 <!-- ### Option B: SSH URL
 In case you are going to clone the repo from a terminal, use below instructions:

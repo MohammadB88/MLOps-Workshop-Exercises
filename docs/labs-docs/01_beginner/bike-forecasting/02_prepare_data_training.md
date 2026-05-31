@@ -7,6 +7,11 @@ In this lab, we will:
 * Define Features and Target Variable
 * Prepare the Data for Model Training
 
+!!! info "What you will learn"
+    - How to select numerical and categorical features for a regression task.
+    - The importance of the train-test split to prevent data leakage.
+    - How to persist processed splits for downstream model training.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Proper data preparation ensures consistent, reliable inputs for model training.
 

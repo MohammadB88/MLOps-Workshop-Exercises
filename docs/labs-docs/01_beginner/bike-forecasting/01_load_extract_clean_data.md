@@ -12,6 +12,11 @@ In this lab, we will:
 3. **Conduct Exploratory Data Analysis (EDA)**: 
 4. **Save the Processed Data**:  -->
 
+!!! info "What you will learn"
+    - How to ingest raw datasets and perform initial cleaning.
+    - Techniques for exploratory data analysis (EDA) to uncover patterns.
+    - How to prepare a dataset for machine learning model training.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Data exploration and validation are critical first steps before any model training.
 
