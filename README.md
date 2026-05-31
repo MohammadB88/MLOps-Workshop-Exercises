@@ -70,9 +70,6 @@ MLOps-Workshop-Exercises/
 ├── .agents/skills/                    # Agent skill definitions
 │   ├── ml-pipeline-workflow/
 │   └── mlops-engineer/
-├── .github/workflows/
-│   ├── ci.yml                         # Zensical build + Pages deploy (active)
-│   └── cd.yml                         # Old MkDocs workflow (disabled)
 ├── docs/                              # Zensical documentation
 │   ├── index.md                       # Home page
 │   ├── mlops-overview.md              # MLOps theory overview
@@ -141,55 +138,14 @@ MLOps-Workshop-Exercises/
 │           ├── scripts/audit_logger.py
 │           └── notebooks/            # 4 notebooks
 ├── zensical.toml                     # Zensical site config
-├── zensical-test/                    # Zensical test configuration
 ├── requirements.txt                  # Root: zensical==0.0.43
 ├── LICENSE                           # MIT License
 ├── README.md                         # Project overview
 ├── ROADMAP.md                        # Enhancement roadmap
 ├── SECURITY.md                       # Security policy
 ├── CLAUDE.md                         # AI assistant instructions
-├── skills-lock.json                  # Agent skill registry
-└── repo_enahncements.txt             # AI agent prompts
+└── skills-lock.json                  # Agent skill registry
 ```
-
----
-
-## 📚 Workshop Structure
-
-The workshop is organized into **two progressive skill levels**, each with focused learning materials and hands-on labs:
-
-### 🟢 Beginner Level
-*Start here if you're new to MLOps*
-
-**Lab: Bike Demand Forecasting**
-- **01 Data Exploration** - Load and explore UCI bike sharing dataset
-- **02 Data Preparation** - Clean, preprocess, and split data
-- **03 Model Training** - Train Random Forest with hyperparameter tuning
-- **04 Model Registration** - Register best model in MLflow
-- **05 Model Testing** - Test registered model via REST API
-- **06 Model Monitoring** - Set up Evidently for drift detection
-
-**Time Commitment:** 4-6 hours
-
----
-
-### 🟡 Intermediate Level
-*Build production-ready ML pipelines*
-
-**Lab 1: Bike Demand Forecasting Pipeline**
-- End-to-end Kubeflow pipeline with MLflow tracking
-- Automated data processing and model training
-- Hyperparameter optimization and model registration
-
-**Lab 2: LLMOps Instruction Tuning**
-- **01 Setup & Exploration** - Load base model (TinyLlama/Phi-2)
-- **02 Data Preparation** - Format instruction dataset, tokenize
-- **03 LoRA Tuning** - Train with LoRA/QLoRA, MLflow tracking
-- **04 Evaluation** - Perplexity, qualitative assessment
-- **05 Versioning & Packaging** - Register in MLflow, merge weights, containerize
-- **06 Deployment & Serving** - Deploy to OpenShift/Kubernetes with vLLM
-
-**Time Commitment:** 8-12 hours
 
 ---
 
@@ -211,70 +167,18 @@ This workshop uses industry-standard tools:
 
 ---
 
-## 🏃 Getting Started
-
-**To access the full documentation with interactive navigation, visit:** [MLOps Workshop](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
-
-### Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/MohammadB88/MLOps-Workshop-Exercises.git
-cd MLOps-Workshop-Exercises
-
-# Install documentation dependencies
-pip install -r requirements.txt
-
-# Serve documentation locally
-zensical serve
-```
-
-### Running the Labs
-
-**Beginner Lab (Bike Demand Forecasting):**
-```bash
-cd labs/01_beginner/02_bike_demand_forecasting
-pip install -r requirements.txt
-jupyter lab
-```
-
-**Intermediate Lab (LLM Instruction Tuning):**
-```bash
-cd labs/02_intermediate/02_llm_instruction_tuning
-pip install -r requirements.txt
-jupyter lab
-```
-
----
-
 ## 📖 Documentation
 
 | Resource | Description |
 |----------|-------------|
 | [Workshop Site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) | Full interactive documentation |
-| [Bike Forecasting Guide](docs/labs-docs/bike-demand-forecasting.md) | Beginner lab overview |
-| [LLM Instruction Tuning](docs/labs-docs/llm-instruction-tuning.md) | Intermediate LLMOps lab |
-| [Environment Setup](docs/environment-requirement.md) | Installation and configuration |
-| [Git Cheatsheet](docs/git-cheatsheet.md) | Git reference guide |
-| [Roadmap](ROADMAP.md) | Future plans and improvements |
-
-<!-- ---
-
-## 🎓 Learning Path
-
-We recommend following this learning path:
-
-```
-1. Read MLOps Fundamentals → 2. Complete Beginner Labs
-                    ↓
-3. Study Deployment Concepts → 4. Complete Intermediate Labs
-                    ↓
-5. Learn CI/CD & Monitoring → 6. Complete Advanced Labs
-                    ↓
-         7. Build Your Own MLOps Project!
-``` -->
-
-<!-- **Estimated Total Time:** 25-30 hours for complete workshop -->
+| [MLOps Overview](docs/mlops-overview.md) | MLOps theory and concepts |
+| [Bike Forecasting Lab](docs/labs-docs/bike-demand-forecasting.md) | Beginner lab: 9 step-by-step guides |
+| [Wine Quality Classifier](docs/labs-docs/wine-quality-classifier.md) | Beginner lab (placeholder) |
+| [Bike Forecasting Pipeline](docs/labs-docs/bike-demand-forecasting-pipeline.md) | Intermediate Kubeflow pipeline lab |
+| [LLM Instruction Tuning](docs/labs-docs/llm-instruction-tuning.md) | Intermediate LLMOps lab: 6 step-by-step guides |
+| [Kubeflow Advanced](docs/labs-docs/03_advanced/kubeflow-advanced.md) | Advanced KFP lab: 5 step-by-step guides |
+| [ML Security & Compliance](docs/labs-docs/03_advanced/ml-security-compliance.md) | Advanced security lab: 4 step-by-step guides |
 
 ---
 
