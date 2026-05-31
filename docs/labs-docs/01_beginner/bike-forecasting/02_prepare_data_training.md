@@ -13,7 +13,7 @@ In this lab, we will:
     - How to persist processed splits for downstream model training.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Proper data preparation ensures consistent, reliable inputs for model training.
+    Feature engineering and data splitting are often sources of "training-serving skew." By explicitly defining features and saving splits, we create a reproducible artifact that ensures the model is evaluated on data it has never seen, mimicking real-world deployment. Data preparation is not just about cleaning; it's about creating a reproducible data pipeline. In a professional environment, these steps would be encapsulated in a pipeline component (like a Kubeflow component), ensuring that the exact same transformations are applied to training and production data.
 
 ## Prerequisites
 

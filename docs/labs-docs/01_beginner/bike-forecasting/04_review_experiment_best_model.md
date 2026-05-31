@@ -12,7 +12,7 @@ In this lab, we will:
     - How to uniquely name and version models for production deployment.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Model selection based on metrics is essential for deploying the best performing model.
+    Model registration is the bridge between training and deployment. By promoting a run to a registry, we decouple the "experimentation" phase from the "serving" phase. This enables CI/CD pipelines to automatically pick up the latest "Production" version without manual file swaps. In a mature MLOps setup, the transition from a run to a registered model often involves an automated validation gate (e.g., comparing the new model against a baseline). Here, we perform this selection manually to understand the criteria used before automating the process.
 
 ## Prerequisites
 

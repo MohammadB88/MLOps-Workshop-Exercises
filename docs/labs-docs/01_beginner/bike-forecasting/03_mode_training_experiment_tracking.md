@@ -12,7 +12,7 @@ In this lab, we will:
     - How to compare multiple runs to identify the optimal model configuration.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Experiment tracking with MLflow enables reproducibility and comparison across runs.
+    Manual experimentation is the "enemy" of reproducibility. Tracking every run in MLflow separates ML engineering from haphazard experimentation, allowing teams to collaborate, audit, and revert to previous model versions with confidence. Experiment tracking is the heartbeat of the iterative ML process. Instead of manually recording results in a spreadsheet, we use tools like MLflow to create a systemic record of truth. This ensures that when we find a "best model," we know exactly which hyperparameters and dataset version produced it.
 
 ## Prerequisites
 

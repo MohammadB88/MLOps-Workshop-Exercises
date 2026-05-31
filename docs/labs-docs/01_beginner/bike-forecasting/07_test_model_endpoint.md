@@ -13,7 +13,7 @@ ensuring the model can send back predictions based on the REST-API requests.
     - How to validate model predictions against actual ground-truth data.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Testing endpoints ensures the deployed model serves predictions correctly.
+    A model is useless if it cannot be consumed. Wrapping a model in a REST API allows it to be integrated into larger applications. Testing the endpoint ensures the serving infrastructure (Kubernetes/OpenShift) and the model logic are both functioning correctly before exposing the model to users. Model serving is where the rubber meets the road. In production, we often use Load Balancers and API Gateways to manage traffic. Testing the endpoint is the first step in 'Integration Testing,' ensuring the model contract (input/output schema) is strictly followed.
 
 ## Prerequisites
 

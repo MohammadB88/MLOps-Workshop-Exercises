@@ -14,7 +14,7 @@ enabling easy deployment to cloud or on-prem environments and making the model a
     - How to enable easy deployment to cloud or on-prem environments and make the model accessible for real-time predictions via HTTP/S requests
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Containerization enables consistent deployment across environments.
+    Containerization enables consistent deployment across environments by packaging the model with its dependencies, ensuring that the model behaves the same way from development to production.
 
 ## Prerequisites
 

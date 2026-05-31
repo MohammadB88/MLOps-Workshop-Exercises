@@ -14,7 +14,7 @@ ensuring the model is accessible and scalable in a production-like environment.
     - How to ensure the model is accessible and scalable in a production-like environment
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Kubernetes orchestration provides scalability and reliability for model serving.
+    Deploying ML models to production requires treating infrastructure as code. Containerization ensures consistency across environments, while Kubernetes provides orchestration for scaling, self-healing, and versioned deployments. This approach enables reliable, repeatable model serving that can be monitored, rolled back, and scaled based on demand—core principles of MLOps that bridge experimentation and production.
 
 ## Prerequisites
 

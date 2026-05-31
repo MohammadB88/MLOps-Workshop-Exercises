@@ -14,7 +14,7 @@ ensuring the deployed model remains reliable and continues to perform well in a 
     - How to compare baseline (reference) data against new (current) data to identify performance degradation.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Continuous monitoring detects data drift and model degradation in production.
+    ML models are not 'set and forget.' As the real world changes (e.g., a new bike-sharing policy or a global pandemic), the data changes. Drift is why models fail silently in production—their accuracy drops, but they still provide answers. Monitoring reports are the 'smoke alarm' that tells engineers when to retrain the model. Continuous Monitoring is the final loop of the MLOps cycle. While we manually generate reports here, in production, this would be an automated job that triggers an alert or a retraining pipeline if drift exceeds a certain threshold. This creates a 'self-healing' ML system.
 
 ## Prerequisites
 
