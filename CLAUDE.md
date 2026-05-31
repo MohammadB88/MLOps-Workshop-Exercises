@@ -41,11 +41,13 @@ MLOps-Workshop-Exercises/
 │   ├── mlflow_odh_installation.sh     # OpenDataHub operator install (NEW)
 │   └── mlflow_route.ymal              # Route YAML (note: typo in filename)
 ├── labs/
-│   ├── 01_beginner/bike_demand_forecasting/
-│   │   ├── notebooks/                 # 6 Jupyter notebooks
-│   │   ├── models/                    # FastAPI + Containerfile + k8s
-│   │   ├── models_cors/               # CORS-enabled variant
-│   │   └── data/test_model/           # Test datasets
+│   ├── 01_beginner/
+│   │   ├── bike_demand_forecasting/
+│   │   │   ├── notebooks/                 # 6 Jupyter notebooks
+│   │   │   │   └── data/test_model/       # Test datasets
+│   │   │   ├── models/                    # FastAPI + Containerfile + k8s
+│   │   │   └── models_cors/               # CORS-enabled variant
+│   │   └── wine_quality_TODO/             # Placeholder for next lab
 │   ├── 02_intermediate/
 │   │   ├── bike_demand_forecasting_pipeline/  # Kubeflow pipeline (742 lines)
 │   │   │   ├── pipeline_bike_sharing.py       # 6 components
@@ -59,6 +61,9 @@ MLOps-Workshop-Exercises/
 │   │   │   ├── Dockerfile
 │   │   │   ├── environment.yml                # Conda env definition
 │   │   │   ├── requirements.txt
+│   │   │   ├── README.md
+│   │   │   ├── data/                          # Training datasets
+│   │   │   ├── models/                        # Merged model output
 │   │   │   ├── notebooks/             # 6 Jupyter notebooks
 │   │   │   ├── scripts/               # mlflow_register.py, test_client.py, build_and_push.sh
 │   │   │   └── k8s/                   # deployment.yaml, service.yaml
@@ -75,7 +80,10 @@ MLOps-Workshop-Exercises/
 │           ├── scripts/audit_logger.py  # JSONL audit trail
 │           └── notebooks/            # 4 notebooks
 ├── zensical.toml                     # Zensical site config
+├── zensical-test/                    # Zensical test configuration
 ├── requirements.txt                  # Root: zensical==0.0.43
+├── LICENSE                           # MIT License
+├── README.md                         # Project overview
 ├── ROADMAP.md                        # Enhancement roadmap
 ├── SECURITY.md                       # Security policy
 ├── skills-lock.json                  # Agent skill registry

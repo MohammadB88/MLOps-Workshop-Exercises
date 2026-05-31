@@ -67,44 +67,89 @@ This workshop is designed for :
 
 ```
 MLOps-Workshop-Exercises/
-├── README.md                          # This file
-├── ROADMAP.md                         # Project roadmap
-├── LICENSE                            # MIT License
-├── SECURITY.md                        # Security policy
-├── zensical.toml                      # Zensical configuration
-├── requirements.txt                   # Python dependencies
-├── CLAUDE.md                          # AI assistant instructions
-├── docs/
-│   ├── index.md                       # Documentation homepage
-│   ├── labs-docs/                     # Lab guides
+├── .agents/skills/                    # Agent skill definitions
+│   ├── ml-pipeline-workflow/
+│   └── mlops-engineer/
+├── .github/workflows/
+│   ├── ci.yml                         # Zensical build + Pages deploy (active)
+│   └── cd.yml                         # Old MkDocs workflow (disabled)
+├── docs/                              # Zensical documentation
+│   ├── index.md                       # Home page
+│   ├── mlops-overview.md              # MLOps theory overview
+│   ├── workshop-overview.md           # Workshop structure
+│   ├── environment-requirement.md
+│   ├── redhat-demo-environment.md
+│   ├── mlflow-installation.md
+│   ├── helm-installation.md
+│   ├── git-cheatsheet.md
+│   ├── theory/introduction.md
+│   ├── labs-docs/
 │   │   ├── bike-demand-forecasting.md
-│   │   ├── bike-forecasting/          # Step-by-step guides
+│   │   ├── bike-demand-forecasting-pipeline.md
+│   │   ├── wine-quality-classifier.md
 │   │   ├── llm-instruction-tuning.md
-│   │   └── llm-instruction-tuning/    # LLMOps step-by-step guides
-│   ├── environment-requirement.md     # Environment setup
-│   ├── git-cheatsheet.md              # Git reference
-│   ├── helm-installation.md           # Helm installation guide
+│   │   ├── snippets/abbreviations.md
+│   │   ├── tasks/                     # Task 1-9 guides
+│   │   ├── 01_beginner/bike-forecasting/       # 9 step-by-step guides
+│   │   ├── 02_intermediate/llm-instruction-tuning/  # 6 step-by-step guides
+│   │   └── 03_advanced/
+│   │       ├── kubeflow-advanced/     # 5 step-by-step guides
+│   │       └── ml-security-compliance/ # 4 step-by-step guides
 │   └── assets/                        # Images, CSS, JS
+├── environment_preparations/
+│   ├── helm_installtion.sh
+│   ├── mlflow_installation.sh
+│   ├── mlflow_odh_installation.sh
+│   └── mlflow_route.ymal
 ├── labs/
 │   ├── 01_beginner/
-│   │   └── 02_bike_demand_forecasting/
-│   │       ├── notebooks/              # 6 Jupyter notebooks
-│   │       ├── models/                 # FastAPI app, Containerfile
-│   │       ├── data/                   # Gitignored
-│   │       └── requirements.txt
-│   └── 02_intermediate/
-│       ├── 01_bike_demand_forecasting_pipeline/
-│       │   ├── pipeline_bike_sharing.py  # Kubeflow pipeline
-│       │   └── requirements.txt
-│       └── 02_llm_instruction_tuning/
-│           ├── notebooks/              # 6 Jupyter notebooks
-│           ├── scripts/                # Helper scripts
-│           ├── k8s/                    # Kubernetes manifests
-│           ├── data/                   # Gitignored
-│           ├── models/                 # Gitignored
-│           ├── Dockerfile
-│           └── requirements.txt
-└── environment_preparations/           # Setup scripts and configs
+│   │   ├── bike_demand_forecasting/
+│   │   │   ├── notebooks/                 # 6 Jupyter notebooks
+│   │   │   │   └── data/test_model/       # Test datasets
+│   │   │   ├── models/                    # FastAPI + Containerfile + k8s
+│   │   │   └── models_cors/               # CORS-enabled variant
+│   │   └── wine_quality_TODO/             # Placeholder for next lab
+│   ├── 02_intermediate/
+│   │   ├── bike_demand_forecasting_pipeline/  # Kubeflow pipeline
+│   │   │   ├── pipeline_bike_sharing.py       # 6 components
+│   │   │   ├── serve.py                       # FastAPI serving
+│   │   │   ├── Containerfile                  # ubi9/python-311
+│   │   │   ├── requirements.txt
+│   │   │   ├── test_process_dataset.py        # Unit test
+│   │   │   ├── k8s/deployment.yaml            # Deployment + Service
+│   │   │   └── data/                          # raw/, processed/, test_model/
+│   │   ├── llm_instruction_tuning/
+│   │   │   ├── Dockerfile
+│   │   │   ├── environment.yml                # Conda env definition
+│   │   │   ├── requirements.txt
+│   │   │   ├── README.md
+│   │   │   ├── data/                          # Training datasets
+│   │   │   ├── models/                        # Merged model output
+│   │   │   ├── notebooks/             # 6 Jupyter notebooks
+│   │   │   ├── scripts/               # mlflow_register.py, test_client.py, build_and_push.sh
+│   │   │   └── k8s/                   # deployment.yaml, service.yaml
+│   │   └── archive/bike_demand_forecasting_pipeline/  # Old 4-component version
+│   └── 03_advanced/
+│       ├── kubeflow_advanced/
+│       │   ├── README.md
+│       │   ├── requirements.txt
+│       │   ├── scripts/pipeline_helpers.py
+│       │   └── notebooks/            # 5 notebooks
+│       └── ml_security_compliance/
+│           ├── README.md
+│           ├── requirements.txt
+│           ├── scripts/audit_logger.py
+│           └── notebooks/            # 4 notebooks
+├── zensical.toml                     # Zensical site config
+├── zensical-test/                    # Zensical test configuration
+├── requirements.txt                  # Root: zensical==0.0.43
+├── LICENSE                           # MIT License
+├── README.md                         # Project overview
+├── ROADMAP.md                        # Enhancement roadmap
+├── SECURITY.md                       # Security policy
+├── CLAUDE.md                         # AI assistant instructions
+├── skills-lock.json                  # Agent skill registry
+└── repo_enahncements.txt             # AI agent prompts
 ```
 
 ---
