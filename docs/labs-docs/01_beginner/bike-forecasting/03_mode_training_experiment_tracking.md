@@ -6,6 +6,11 @@ In this lab, we will:
 * Train some Models using the prepared ``Train`` and ``Test`` datasets
 * Track the Experiments on MLflow
 
+!!! info "What you will learn"
+    - How to train a Random Forest regressor with hyperparameter tuning.
+    - Using MLflow to log parameters, metrics, and model artifacts.
+    - How to compare multiple runs to identify the optimal model configuration.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Experiment tracking with MLflow enables reproducibility and comparison across runs.
 

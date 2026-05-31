@@ -8,6 +8,11 @@ In this lab, we will:
 
 ensuring the model is accessible and scalable in a production-like environment.
 
+!!! info "What you will learn"
+    - How to deploy the containerized model API onto OpenShift cluster
+    - How to create necessary Kubernetes resources (i.e deployments, services, and routes)
+    - How to ensure the model is accessible and scalable in a production-like environment
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Kubernetes orchestration provides scalability and reliability for model serving.
 

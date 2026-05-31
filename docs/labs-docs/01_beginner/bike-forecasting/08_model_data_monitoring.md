@@ -8,6 +8,11 @@ In this lab, we will:
 
 ensuring the deployed model remains reliable and continues to perform well in a real-world environment.
 
+!!! info "What you will learn"
+    - The concept of Data, Target, and Model Drift in production ML.
+    - How to use Evidently to generate monitoring reports.
+    - How to compare baseline (reference) data against new (current) data to identify performance degradation.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Continuous monitoring detects data drift and model degradation in production.
 

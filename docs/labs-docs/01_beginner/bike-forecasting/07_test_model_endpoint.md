@@ -7,6 +7,11 @@ In this lab, we will:
 
 ensuring the model can send back predictions based on the REST-API requests.
 
+!!! info "What you will learn"
+    - How to interact with a deployed ML model via HTTP POST requests.
+    - The difference between single-sample inference and batch inference.
+    - How to validate model predictions against actual ground-truth data.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Testing endpoints ensures the deployed model serves predictions correctly.
 

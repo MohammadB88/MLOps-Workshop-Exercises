@@ -8,6 +8,11 @@ In this lab, we will:
 
 enabling easy deployment to cloud or on-prem environments and making the model accessible for real-time predictions via HTTP/S requests.
 
+!!! info "What you will learn"
+    - How to package the trained model into a RESTful API using a web framework (e.g., Flask or FastAPI)
+    - How to containerize the service (e.g. with Docker, Podman, BuildConfig on OpenShift)
+    - How to enable easy deployment to cloud or on-prem environments and make the model accessible for real-time predictions via HTTP/S requests
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Containerization enables consistent deployment across environments.
 

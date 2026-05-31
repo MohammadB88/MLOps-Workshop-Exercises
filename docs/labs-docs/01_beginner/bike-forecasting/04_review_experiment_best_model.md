@@ -6,6 +6,11 @@ In this lab, we will:
 * Review the performance of different models and runs
 * Select the Model with the best performance
 
+!!! info "What you will learn"
+    - How to query and analyze metadata for multiple MLflow runs.
+    - The process of promoting a specific model version to the Model Registry.
+    - How to uniquely name and version models for production deployment.
+
 !!! tip "MLOps Perspective"
     Why this matters in an MLOps workflow: Model selection based on metrics is essential for deploying the best performing model.
 
