@@ -3,11 +3,8 @@
 ## Objective
 In this lab, we will:
 
-* make ourselves familiar with the environment
+* make ourselves familiar with the environment (Openshift & OpenShiftAI)
 * clone the repository containing the workshop materials
-
-!!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Setting up a reproducible environment is the foundation of any MLOps pipeline.
 
 ## Prerequisites
 
@@ -18,15 +15,13 @@ You will be provided a link and necessary credentials to an OpenShift AI instanc
 
 ## Step 2: Clone the Repository
 
-Choose one of the following methods:
-
-### Option A: HTTPS URL
+### Copy the Repo-URL
 
 Go to the original GitHub repository page and copy the the URL of the repo:
 
 ![Clone Repo Github](../../../assets/images/clone_repo_github.png)
 
-#### Open the created workbench
+### Open the created workbench
 At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
 
 ![Clone Repo](../../../assets/images/clone_repo.png)
@@ -39,9 +34,9 @@ paste the copied URL from original repo and click on ``clone`` to download the c
 
 ![Clone Repo - add url](../../../assets/images/clone_repo_url.png)
 
-Go to the path `MLOps-Workshop-Exercises/workshop_materials/`, where you find the workshop materials.
+Go to the path `MLOps-Workshop-Exercises/labs/`, where you find the workshop materials.
 
-### Option B: SSH URL
+<!-- ### Option B: SSH URL
 In case you are going to clone the repo from a terminal, use below instructions:
 
 #### Generate an SSH key
@@ -69,13 +64,13 @@ Copy the URL of the repository
 and use `git` to download the code:
 ```bash
 git clone git@github.com:your-username/your-forked-repo.git
-```
+``` -->
 
 ## Summary
 
 In this exercise, you:
 
-1. Accessed the OpenShift AI JupyterLab environment
+1. Accessed and get familiar the OpenShift AI JupyterLab environment
 2. Cloned the workshop repository using HTTPS or SSH
 3. Verified the repository structure and workshop materials
 

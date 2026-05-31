@@ -18,10 +18,10 @@ ensuring the model can send back predictions based on the REST-API requests.
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-Please open the notebook, `"05_model_testing_endpoint.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
+Please open the notebook, `"05_model_testing_endpoint.ipynb"` in the same directory ``"labs/01_beginner/bike_demand_forecasting"``.
 
 ## Step 2: Prepare or Find the Test Data
-A sample test dataset (e.g., a few rows of processed features) is already created for you in CSV or txt format that matches the model's input schema: ``workshop_materials/bike_demand_forecasting/data/test_model``.
+A sample test dataset (e.g., a few rows of processed features) is already created for you in CSV or txt format that matches the model's input schema: ``labs/01_beginner/bike_demand_forecasting/data/test_model``.
 
 Run the cells in the notebook to take this test dataset and create the inference request.
 

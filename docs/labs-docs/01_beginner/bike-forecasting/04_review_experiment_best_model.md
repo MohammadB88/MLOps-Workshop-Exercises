@@ -16,7 +16,7 @@ In this lab, we will:
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-Please open the notebook, `"04_model_registration.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
+Please open the notebook, `"04_model_registration.ipynb"` in the same directory ``"labs/01_beginner/bike_demand_forecasting"``.
 
 
 ## Step 2: Set the MLflow Remote Tracking Server

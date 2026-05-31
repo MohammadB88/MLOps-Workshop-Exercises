@@ -18,7 +18,7 @@ ensuring the deployed model remains reliable and continues to perform well in a 
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-Please open the notebook, `"06_model_monitoring.ipynb"` in the same directory ``"workshop_materials/bike_demand_forecasting"``.
+Please open the notebook, `"06_model_monitoring.ipynb"` in the same directory ``"labs/01_beginner/bike_demand_forecasting"``.
 
 
 ## Step 2: Find Service URL for Model API on the OpenShift Console

@@ -16,7 +16,7 @@ In this lab, we will:
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-In the same directory ``"workshop_materials/bike_demand_forecasting"``, you should open the notebook, `"03_model_training.ipynb"`.
+In the same directory ``"labs/01_beginner/bike_demand_forecasting"``, you should open the notebook, `"03_model_training.ipynb"`.
 
 ## Step 2: Load the Train and Test Data
 

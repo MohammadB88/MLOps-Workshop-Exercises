@@ -61,13 +61,6 @@ bike_forecasting/
 | [Docker](https://www.docker.com/) / OpenShift | Containerization and orchestration |
 | [Evidently AI](https://www.evidentlyai.com/) | Model monitoring and drift detection |
 
-## Getting Started
-
-1. Launch the OpenShift AI notebook environment
-2. Clone the workshop repository
-3. Navigate to `workshop_materials/bike_demand_forecasting/`
-4. Install dependencies from `requirements.txt`
-
 ## Hands-On Sessions
 
 Start with the environment setup, then proceed through the exercises in order:

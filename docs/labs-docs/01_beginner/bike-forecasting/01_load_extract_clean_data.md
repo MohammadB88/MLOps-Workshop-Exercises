@@ -22,7 +22,7 @@ In this lab, we will:
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-In directory ``"workshop_materials/bike_demand_forecasting"``, look for notebook `"01_data_exploration.ipynb"` and open it. 
+In directory ``"labs/01_beginner/bike_demand_forecasting"``, look for notebook `"01_data_exploration.ipynb"` and open it. 
 
 ## Step 2: Download the dataset into the environment 
 
