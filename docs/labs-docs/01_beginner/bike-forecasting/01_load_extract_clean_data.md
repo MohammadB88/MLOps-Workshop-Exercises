@@ -18,11 +18,10 @@ In this lab, we will:
     - How to prepare a dataset for machine learning model training.
 
 !!! tip "MLOps Perspective"
-    Why this matters in an MLOps workflow: Data exploration and validation are critical first steps before any model training.
+    Production-grade ML starts with data quality. In a real MLOps pipeline, manual data exploration is replaced by automated validation and preprocessing to ensure consistency and prevent 'garbage in, garbage out'. Standardizing how we explore and clean data allows us to build reproducible pipelines that can be versioned and audited—the foundation of the ML lifecycle.
 
 ## Prerequisites
 
-- Completed Exercise 0
 - Repository cloned and opened
 
 ## Step 1: Find and Open the Jupyter Notebook 
