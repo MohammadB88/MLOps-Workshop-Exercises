@@ -13,25 +13,25 @@ In this lab, we will:
     - How to persist processed splits for downstream model training.
 
 !!! tip "MLOps Perspective"
-    Feature engineering and data splitting are often sources of "training-serving skew." By explicitly defining features and saving splits, we create a reproducible artifact that ensures the model is evaluated on data it has never seen, mimicking real-world deployment. Data preparation is not just about cleaning; it's about creating a reproducible data pipeline. In a professional environment, these steps would be encapsulated in a pipeline component (like a Kubeflow component), ensuring that the exact same transformations are applied to training and production data.
+    Feature engineering and data splitting are often sources of "training-serving skew." By explicitly defining features and saving splits, we create a reproducible artifact that ensures the model is evaluated on data it has never seen. Data preparation is not just about cleaning; it's about creating a reproducible data pipeline. In a professional environment, these steps would be encapsulated in a pipeline component (like a Kubeflow component), ensuring that the exact same transformations are applied to training and production data.
 
 ## Prerequisites
 
-- Completed Exercise 1
-- Cleaned dataset saved in data/processed
+- Cleaned dataset saved in directory `data/processed`
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
-In directory ``"labs/01_beginner/bike_demand_forecasting"``, please open the second notebook, `"02_model_training.ipynb"`, and follow the instructions below to complete this task.
+In directory ``"labs/01_beginner/bike_demand_forecasting"``, please open the second notebook, `"02_data_preparation.ipynb"`, and follow the instructions below to complete the tasks.
 
 ## Step 2: Load the Processed Data
 
 In this task, we take the cleaned dataset from the last task (`data/processed`) and prepare it for model training.
 
-Add the cleaned data for the first two month in the appropriate cell:
+Add the cleaned data for the first three months in the appropriate cell:
 ```bash
 data_2011_01.csv
 data_2011_02.csv
+data_2011_03.csv
 ```
 
 ## Step 3: Set the Categorical Features

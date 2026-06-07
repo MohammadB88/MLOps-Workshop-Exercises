@@ -16,8 +16,8 @@ In this lab, we will:
 
 ## Prerequisites
 
-- Completed Exercise 3
-- MLflow experiments completed
+- Experiments are completed
+- Results are stored on MLflow
 
 ## Step 1: Find and Open the Jupyter Notebook 
 

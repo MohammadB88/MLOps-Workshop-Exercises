@@ -8,21 +8,21 @@ In this lab, we will:
 
 ## Prerequisites
 
-- Access to an OpenShift AI JupyterLab environment
+- Access to an OpenShift environment with OpenShift-AI and JupyterLab activated
 
 ## Step 1: Access the Environment
-You will be provided a link and necessary credentials to an OpenShift AI instance with a ready workbench including *JupyterLab*. 
+You will be provided a link and necessary credentials to an OpenShift instance with a ready workbench including *JupyterLab*. 
 
 ## Step 2: Clone the Repository
 Clone the repository containing lab materials from GitHub.
 
-### Copy the Repo-URL
+#### Copy the Repo-URL
 
-Go to the original GitHub repository page and copy the the URL of the repo:
+Go to the original GitHub repository page: "[Clone Repo Github](https://github.com/MohammadB88/MLOps-Workshop-Exercises)" and copy the the URL of the repo:
 
 ![Clone Repo Github](../../../assets/images/clone_repo_github.png)
 
-### Open the created workbench
+#### Open the created workbench
 At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
 
 ![Clone Repo](../../../assets/images/clone_repo.png)
@@ -71,8 +71,8 @@ git clone git@github.com:your-username/your-forked-repo.git
 
 In this exercise, you:
 
-1. Accessed and get familiar the OpenShift AI JupyterLab environment
-2. Cloned the workshop repository using HTTPS or SSH
+1. Access and get familiar with the workshop environment
+2. Cloned the workshop repository using HTTPS 
 3. Verified the repository structure and workshop materials
 
 ---

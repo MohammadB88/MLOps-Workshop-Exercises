@@ -1,4 +1,4 @@
-# Exercise 1: Load, Extract, and Clean the Data
+# Exercise 1: Load, Explore and Process the Data
 
 ## Objective
 In this lab, we will:
@@ -15,14 +15,14 @@ In this lab, we will:
 !!! info "What you will learn"
     - How to ingest raw datasets and perform initial cleaning.
     - Techniques for exploratory data analysis (EDA) to uncover patterns.
-    - How to prepare a dataset for machine learning model training.
+    - How to prepare a dataset for model training in machine learning.
 
 !!! tip "MLOps Perspective"
     Production-grade ML starts with data quality. In a real MLOps pipeline, manual data exploration is replaced by automated validation and preprocessing to ensure consistency and prevent 'garbage in, garbage out'. Standardizing how we explore and clean data allows us to build reproducible pipelines that can be versioned and audited—the foundation of the ML lifecycle.
 
 ## Prerequisites
 
-- Repository cloned and opened
+- Cloned workshop repository
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
@@ -48,7 +48,7 @@ In this exercise, you:
 1. Downloaded and extracted the Bike Sharing Dataset
 2. Cleaned and preprocessed the data for analysis
 3. Performed exploratory data analysis with visualizations
-4. Saved the cleaned dataset for model training
+4. Saved the cleaned dataset for data preparation
 
 ---
 

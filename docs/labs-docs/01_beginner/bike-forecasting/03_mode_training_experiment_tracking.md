@@ -16,8 +16,7 @@ In this lab, we will:
 
 ## Prerequisites
 
-- Completed Exercise 2
-- Training/test datasets prepared
+- Training/test datasets are prepared
 
 ## Step 1: Find and Open the Jupyter Notebook 
 
