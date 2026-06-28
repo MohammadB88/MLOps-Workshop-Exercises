@@ -16,11 +16,12 @@ MLOps-Workshop-Exercises/
 │   ├── index.md                       # Home page
 │   ├── mlops-overview.md              # MLOps theory overview
 │   ├── workshop-overview.md           # Workshop structure
-│   ├── environment-requirement.md
-│   ├── redhat-demo-environment.md
-│   ├── mlflow-installation.md
-│   ├── helm-installation.md
-│   ├── git-cheatsheet.md
+│   ├── environment-requirements/     # Environment setup guides
+│   │   ├── environment-requirement.md
+│   │   ├── redhat-demo-environment.md
+│   │   ├── mlflow-installation.md
+│   │   ├── helm-installation.md
+│   │   └── git-cheatsheet.md
 │   ├── theory/introduction.md
 │   ├── labs-docs/
 │   │   ├── bike-demand-forecasting.md
@@ -30,11 +31,13 @@ MLOps-Workshop-Exercises/
 │   │   ├── snippets/abbreviations.md
 │   │   ├── tasks/                     # Task 1-9 guides
 │   │   ├── 01_beginner/bike-forecasting/       # 9 step-by-step guides
+│   │   ├── 02_intermediate/bike-demand-forecasting-pipeline/  # 6 step-by-step guides
 │   │   ├── 02_intermediate/llm-instruction-tuning/  # 6 step-by-step guides
 │   │   └── 03_advanced/
 │   │       ├── kubeflow-advanced/     # 5 step-by-step guides
 │   │       └── ml-security-compliance/ # 4 step-by-step guides
 │   └── assets/                        # Images, CSS, JS
+
 ├── environment_preparations/
 │   ├── helm_installtion.sh
 │   ├── mlflow_installation.sh
