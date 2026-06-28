@@ -2,6 +2,13 @@
 
 In this page, we will go through implementing MLOps concepts to several use cases. 
 
+The diagram below illustrates the stages of the MLOps lifecycle.
+
+<figure markdown>
+  ![MLOps Lifecycle Diagram](assets/images/mlops-lifecycle-diagram.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
 You will complete the following exercises, based on the difficulty of the workshop:
 
 ### Beginner Level

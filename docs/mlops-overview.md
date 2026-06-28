@@ -2,7 +2,7 @@
 
 What is MLOps and why and which tools and workflows.
 
-```mermaid
+<!-- ```mermaid
 graph LR
     A[Data Collection] --> B[Data Validation]
     B --> C[Feature Engineering]
@@ -15,10 +15,10 @@ graph LR
     H --> I{Drift Detected?}
     I -->|Yes| A
     I -->|No| H
-```
+``` -->
 
 <figure markdown>
-  ![MLOps Lifecycle Diagram](assets/images/mlops-lifecycle-diagram.png){ loading=lazy }
+  ![MLOps Lifecycle Diagram](assets/github_banner_mlops.png){ loading=lazy }
   <figcaption></figcaption>
 </figure>
 
