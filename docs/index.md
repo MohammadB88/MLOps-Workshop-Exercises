@@ -35,6 +35,7 @@ You will learn all about MLOps concepts, tools and principles:
 Upon completing this lab, you will be equipped to apply MLOps principles and tools to bring machine learning models from your laptop to a cloud native environment.
 
 ## Lab Overview
+
 - **Beginner:**
     * Wine Quality Classifier
     * Bike Demand Forecasting

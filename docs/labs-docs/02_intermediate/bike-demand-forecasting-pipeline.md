@@ -18,7 +18,19 @@ The pipeline demonstrates key MLOps concepts including:
 - Automated model deployment preparation
 - Foundation for model monitoring and drift detection
 
+## Lab Guides
+
+Follow these step-by-step guides to complete the lab:
+
+- [Environment Prerequisites](bike-demand-forecasting-pipeline/00_environment_prerequisites.md)
+- [Step 1: Dataset Ingestion and Processing](bike-demand-forecasting-pipeline/01_dataset_ingestion_and_processing.md)
+- [Step 2: Model Training and Experiment Tracking](bike-demand-forecasting-pipeline/02_model_training_and_experiment_tracking.md)
+- [Step 3: Model Registration and Validation](bike-demand-forecasting-pipeline/03_model_registration_and_validation.md)
+- [Step 4: Model Serving Preparation](bike-demand-forecasting-pipeline/04_model_serving_preparation.md)
+- [Step 5: Model Monitoring with Evidently](bike-demand-forecasting-pipeline/05_model_monitoring_with_evidently.md)
+
 ## Overview of the Pipeline
+
 
 The pipeline consists of the following components:
 
