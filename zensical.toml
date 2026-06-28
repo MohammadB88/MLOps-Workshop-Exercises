@@ -35,8 +35,7 @@ Copyright &copy; 2026 Mohammad Bahmani
 nav = [
     { "Home" = [
         { "index.md" = "index.md" },
-        { "MLOps Overview" = "mlops-overview.md" },
-        { "Workshop Overview" = "workshop-overview.md" }
+        { "MLOps Overview" = "mlops-overview.md" }
     ] },
     { "What is MLOps?" = "mlops-overview.md" },
     { "Hands-on Labs" = [
