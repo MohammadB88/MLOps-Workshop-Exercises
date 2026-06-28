@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'docs/**'
+      - 'zensical.toml'
+      - 'requirements.txt'
+
 permissions:
   contents: read
   pages: write
