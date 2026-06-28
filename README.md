@@ -1,9 +1,6 @@
 # Production MLOps Workshop: From Laptop to Cloud Native
 
-<figure markdown>
-  ![MLOps Lifecycle Diagram](docs/assets/images/github_banner_mlops.png){ loading=lazy }
-  <figcaption></figcaption>
-</figure>
+![MLOps Lifecycle Diagram](docs/assets/images/github_banner_mlops.png)
 
 [![GitHub Pages](https://img.shields.io/badge/docs-github_pages-blue)](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
