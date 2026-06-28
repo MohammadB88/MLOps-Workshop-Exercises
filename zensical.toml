@@ -99,11 +99,13 @@ nav = [
         { "Introduction to MLOps" = "theory/introduction.md" }
     ] },
     { "Environment & Prerequisites" = [
-        { "Environment Requirements" = "environment-requirements/environment-requirement.md" },
-        { "Red Hat Demo Environment" = "environment-requirements/redhat-demo-environment.md" },
-        { "Git Cheat Sheet" = "environment-requirements/git-cheatsheet.md" },
-        { "MLflow Installation" = "environment-requirements/mlflow-installation.md" },
-        { "Helm Installation" = "environment-requirements/helm-installation.md" }
+        { "Environment Requirements" = [
+            { "Overview" = "environment-requirements/environment-requirement.md" },
+            { "Red Hat Demo Environment" = "environment-requirements/redhat-demo-environment.md" },
+            { "Git Cheat Sheet" = "environment-requirements/git-cheatsheet.md" },
+            { "MLflow Installation" = "environment-requirements/mlflow-installation.md" },
+            { "Helm Installation" = "environment-requirements/helm-installation.md" }
+        ] }
     ] }
 ]
 
