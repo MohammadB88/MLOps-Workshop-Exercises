@@ -12,6 +12,7 @@ You will complete the following exercises, based on the difficulty of the worksh
 ### Intermediate Level
 
 * [LLM Instruction Tuning](labs-docs/02_intermediate/llm-instruction-tuning.md)
+* [Bike Demand Forecasting Pipeline](labs-docs/02_intermediate/bike-demand-forecasting-pipeline.md)
 
 ### Advanced Level
 
