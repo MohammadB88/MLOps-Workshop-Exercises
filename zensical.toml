@@ -67,7 +67,15 @@ nav = [
                 { "05 - Versioning & Packaging" = "labs-docs/02_intermediate/llm-instruction-tuning/05_versioning_packaging.md" },
                 { "06 - Deployment & Serving" = "labs-docs/02_intermediate/llm-instruction-tuning/06_deployment_serving.md" }
             ] },
-            { "Bike Demand Forecasting Pipeline" = "labs-docs/bike-demand-forecasting-pipeline.md" }
+            { "Bike Demand Forecasting Pipeline" = [
+                { "Overview" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline.md" },
+                { "00 - Environment & Prerequisites" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/00_environment_prerequisites.md" },
+                { "01 - Dataset Ingestion and Processing" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/01_dataset_ingestion_and_processing.md" },
+                { "02 - Model Training and Experiment Tracking" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/02_model_training_and_experiment_tracking.md" },
+                { "03 - Model Registration and Validation" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/03_model_registration_and_validation.md" },
+                { "04 - Model Serving Preparation" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/04_model_serving_preparation.md" },
+                { "05 - Model Monitoring with Evidently" = "labs-docs/02_intermediate/bike-demand-forecasting-pipeline/05_model_monitoring_with_evidently.md" }
+            ] }
         ] },
         { "Advanced" = [
             { "Kubeflow Advanced" = [
@@ -89,17 +97,6 @@ nav = [
     ] },
     { "Theory" = [
         { "Introduction to MLOps" = "theory/introduction.md" }
-    ] },
-    { "Tasks" = [
-        { "Task 1" = "labs-docs/tasks/task1.md" },
-        { "Task 2" = "labs-docs/tasks/task2.md" },
-        { "Task 3" = "labs-docs/tasks/task3.md" },
-        { "Task 4" = "labs-docs/tasks/task4.md" },
-        { "Task 5" = "labs-docs/tasks/task5.md" },
-        { "Task 6" = "labs-docs/tasks/task6.md" },
-        { "Task 7" = "labs-docs/tasks/task7.md" },
-        { "Task 8 - Kubeflow" = "labs-docs/tasks/task8_kubeflow.md" },
-        { "Task 9 - Elyra" = "labs-docs/tasks/task9_elyra.md" }
     ] },
     { "Environment & Prerequisites" = [
         { "Environment Requirements" = "environment-requirement.md" },
