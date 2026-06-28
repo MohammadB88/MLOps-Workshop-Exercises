@@ -36,14 +36,17 @@ Upon completing this lab, you will be equipped to apply MLOps principles and too
 
 ## Lab Overview
 
-- **Beginner:**
+??? dropdown "Beginner Labs"
     * Wine Quality Classifier
     * Bike Demand Forecasting
-- **Intermediate:**
+
+??? dropdown "Intermediate Labs"
     * End-to-end pipelines with Kubeflow
     * LLM Instruction Tuning (LLMOps)
-- **Advanced:**
+
+??? dropdown "Advanced Labs"
     * CI/CD and monitoring (planned)
+
 
 
 ## From other sources:
