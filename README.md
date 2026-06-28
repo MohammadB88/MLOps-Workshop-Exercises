@@ -1,5 +1,7 @@
 # Production MLOps Workshop: From Laptop to Cloud Native
 
+![MLOps Overview](docs/assets/github_banner_mlops.png)
+
 [![GitHub Pages](https://img.shields.io/badge/docs-github_pages-blue)](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md) 
