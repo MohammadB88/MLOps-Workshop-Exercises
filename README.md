@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://img.shields.io/badge/docs-github_pages-blue)](https://mohammadb88.github.io/MLOps-Workshop-Exercises/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-<!-- [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md) -->
+ [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md) 
 <!-- [![Stars](https://img.shields.io/github/stars/MohammadB88/MLOps-Workshop-Exercises?style=social)](https://github.com/MohammadB88/MLOps-Workshop-Exercises/stargazers) -->
 
  <!-- **Transform your machine learning models from Jupyter notebooks to production-ready systems.**
@@ -201,6 +201,7 @@ This workshop uses industry-standard tools:
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Our community standards are outlined in the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
 
