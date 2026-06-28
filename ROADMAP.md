@@ -9,54 +9,6 @@ Focus: Add structured learning materials and skill-leveled labs to make the work
 ## 🎯 Project Goals
 
 * Add comprehensive learning materials for MLOps fundamentals
-* Create skill-leveled labs (Beginner, Intermediate, Advanced)
-* Establish proper repository governance (Code of Conduct, Contributing, License, Security)
-* Improve README with clear introduction and value proposition
-* Further improve the structure of github pages
-
----
-
-## 📋 1: Repository Foundation
-
-### 1.1 Standard Repository Files
-
-- [x] **LICENSE**
-  - Select appropriate license (MIT, Apache 2.0, or CC-BY-4.0)
-  - Add license file
-  - Update copyright notices
-
-- [x] **SECURITY.md**
-  - Security policy
-  - Vulnerability reporting process
-  - Supported versions
-  - Security best practices for labs
-
-- [ ] **CODE_OF_CONDUCT.md**
-  - Define community standards
-  - Reporting guidelines
-  - Enforcement policies
-  - Based on Contributor Covenant
-
-- [ ] **CONTRIBUTING.md**
-  - How to contribute labs
-  - Pull request process
-  - Code style guidelines
-  - Lab submission template
-  - Review process
-
-### 1.2 README Enhancement
-
-- [ ] **Revamp README.md**
-  - Add compelling introduction
-  - Add table of contents
-  - Workshop overview and objectives
-  - Who should use this workshop (audience???)
-  - Prerequisites and setup requirements
-  - Lab structure and progression
-  - Quick start guide
-  - ???Add badges (build status, license, contributors)
-  - Include demo screenshots/GIFs from each lab
-  - Link to learning materials, github-pages and labs
 
 ---
 
