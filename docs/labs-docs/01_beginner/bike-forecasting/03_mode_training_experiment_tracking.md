@@ -48,7 +48,12 @@ Choose a set of the model parameters (e.g., max_depth, n_estimators) from a pred
 
 This allows you to experiment with different configurations.
 
-## Step 6: MLflow UI - Compare Runs in your specific Experiment
+## Step 6: Log Model Metrics
+In this step, you will log the model's performance metrics to MLflow.
+
+Use the exact variable names from the previous cell that contain the calculated RMSE and R2 values so they can be logged correctly.
+
+## Step 7: MLflow UI - Compare Runs in your specific Experiment
 Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model performance based on metrics and parameters.
 
 💡 **Note:** Other participants are also storing their experiments on the same instance. So please make sure that you are in the correct experiment.
@@ -60,7 +65,8 @@ In this exercise, you:
 1. Loaded the training and test datasets
 2. Connected to the MLflow tracking server
 3. Trained multiple models with different hyperparameters
-4. Tracked experiments and compared runs in MLflow UI
+4. Logged performance metrics (RMSE and R2) to MLflow
+5. Tracked experiments and compared runs in MLflow UI
 
 ---
 
