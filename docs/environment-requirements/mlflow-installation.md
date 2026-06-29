@@ -45,6 +45,7 @@ The script will prompt you for the following configurations:
       - **Disable auth**: Direct browser access (recommended for labs).
       - **Keep auth**: Secure access via OpenShift OAuth proxy.
 
+
 4. **Verify the installation:**
    The script will automatically create the project, patch the chart, install MLflow via Helm, set up the OpenShift Route, and provide the final access URL.
 
