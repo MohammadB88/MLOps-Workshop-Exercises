@@ -31,11 +31,11 @@ In this task, we take the split dataset from the last task (`data/split`) and st
 💡 **Note:** **The link to the MLflow server will be provided during the workshop!**
 You should replace the `MLFLOW_REMOTE_TRACKING_SERVER` with this provided URL.
 
-## Step 4: Set a Dummy Name or your Firstname (It should be unique!)
+## Step 4: Define a Unique Experiment Name
 
-💡 **Note:** There is only one instance of ``MLflow Server`` for all the participants. So in order to avoid any confusion, please make sure that you put an unique name!
+💡 **Note:** All participants share a single ``MLflow Server`` instance. To avoid mixing your results with others, you must use a unique experiment name.
 
-You should replace the `YOUR_FIRSTNAME` with a dummy name or your firstname.
+Use your first name or a unique dummy name to replace `YOUR_FIRSTNAME` when defining your experiment name, as discussed in the previous step.
 
 ## Step 5: Select Model Parameters
 Choose a set of the model parameters (e.g., max_depth, n_estimators) from a predefined range:
@@ -51,7 +51,7 @@ This allows you to experiment with different configurations.
 ## Step 6: Log Model Metrics
 In this step, you will log the model's performance metrics to MLflow.
 
-Use the exact variable names from the previous cell that contain the calculated RMSE and R2 values so they can be logged correctly.
+Use the exact variable names from the previous cell that contain the calculated ``RMSE`` and ``R2`` values so they can be logged correctly.
 
 ## Step 7: MLflow UI - Compare Runs in your specific Experiment
 Go to your Experiment on ``MLflow UI`` to compare runs and evaluate model performance based on metrics and parameters.
