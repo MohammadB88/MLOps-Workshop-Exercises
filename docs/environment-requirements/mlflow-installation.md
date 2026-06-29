@@ -5,9 +5,9 @@ This guide describes how to install MLflow on OpenShift using the OpenDataHub ML
 ## Prerequisites
 
 Before running the installation script, ensure you have the following tools installed and configured:
-- **git**: For cloning the operator repository.
-- **helm**: For managing the MLflow installation.
-- **oc (OpenShift CLI)**: For interacting with the OpenShift cluster.
+   - **git**: For cloning the operator repository.
+   - **helm**: For managing the MLflow installation.
+   - **oc (OpenShift CLI)**: For interacting with the OpenShift cluster.
 
 ## Installation Steps
 
