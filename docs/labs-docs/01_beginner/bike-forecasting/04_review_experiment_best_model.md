@@ -29,11 +29,11 @@ Please open the notebook, `"04_model_registration.ipynb"` in the same directory 
 💡 **Note:** **The link to the MLflow server will be provided during the workshop!**
 You should replace the `MLFLOW_REMOTE_TRACKING_SERVER` with this provided URL.
 
-## Step 3: Set a Dummy Name or your Firstname (It should be unique!)
+## Step 3: Define a Unique Experiment Name
 
-💡 **Note:** There is only one instance of ``MLflow Server`` for all the participants. So in order to avoid any confusion, please make sure that you put an unique name!
+💡 **Note:** All participants share a single ``MLflow Server`` instance. To avoid mixing your results with others, you must use a unique experiment name.
 
-You should replace the `YOUR_FIRSTNAME` with a dummy name or your firstname.
+Use your first name or a unique dummy name to replace `YOUR_FIRSTNAME` when defining your experiment name, as discussed in the previous lab.
 
 ## Step 4: Review the Experiments' Results
 At this step, you should just run the cell and review the output. 

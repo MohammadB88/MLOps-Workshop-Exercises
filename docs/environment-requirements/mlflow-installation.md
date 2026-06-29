@@ -43,8 +43,6 @@ Before running the installation script, ensure you have the following tools inst
    The script will automatically create the project, patch the chart, install MLflow via Helm, set up the OpenShift Route, and provide the final access URL.
 
 
-
-
 ## Post-Installation
 
 - **Access MLflow UI**: Use the URL provided by the script at the end of the execution.

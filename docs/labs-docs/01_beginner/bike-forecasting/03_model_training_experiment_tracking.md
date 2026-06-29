@@ -31,11 +31,11 @@ In this task, we take the split dataset from the last task (`data/split`) and st
 💡 **Note:** **The link to the MLflow server will be provided during the workshop!**
 You should replace the `MLFLOW_REMOTE_TRACKING_SERVER` with this provided URL.
 
-## Step 4: Define a Unique Experiment Name
+## Step 4: Set a Dummy Name or your Firstname (It should be unique!)
 
-💡 **Note:** All participants share a single ``MLflow Server`` instance. To avoid mixing your results with others, you must use a unique experiment name.
+💡 **Note:** There is only one instance of ``MLflow Server`` for all the participants. So in order to avoid any confusion, please make sure that you put an unique name!
 
-Use your first name or a unique dummy name to replace `YOUR_FIRSTNAME` when defining your experiment name, as discussed in the previous step.
+You should replace the `YOUR_FIRSTNAME` with a dummy name or your firstname.
 
 ## Step 5: Select Model Parameters
 Choose a set of the model parameters (e.g., max_depth, n_estimators) from a predefined range:

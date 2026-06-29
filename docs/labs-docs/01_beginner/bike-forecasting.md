@@ -68,7 +68,7 @@ Start with the environment setup, then proceed through the exercises in order:
 - [Exercise 0 - Environment & Prerequisites](bike-forecasting/00_environment_prerequisites.md)
 - [Exercise 1 - Load, Extract, and Clean the Data](bike-forecasting/01_load_extract_clean_data.md)
 - [Exercise 2 - Prepare the Data for Training](bike-forecasting/02_prepare_data_training.md)
-- [Exercise 3 - Model Training & Experiment Tracking](bike-forecasting/03_mode_training_experiment_tracking.md)
+- [Exercise 3 - Model Training & Experiment Tracking](bike-forecasting/03_model_training_experiment_tracking.md)
 - [Exercise 4 - Review Experiments & Select the Best Model](bike-forecasting/04_review_experiment_best_model.md)
 - [Exercise 5 - Containerize the Model Endpoint-API](bike-forecasting/05_containerize_model_endpoint.md)
 - [Exercise 6 - Deploy on OpenShift Cluster](bike-forecasting/06_model_deployment_openshift.md)
