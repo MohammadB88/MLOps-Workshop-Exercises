@@ -29,21 +29,21 @@ Before running the installation script, ensure you have the following tools inst
 
 3. **Configure the installation:**
 
-   The script will prompt you for the following configurations:
+The script will prompt you for the following configurations:
 
-      - **OpenShift namespace**: The project where MLflow will be deployed (default: `mlflow`).
+   - **OpenShift namespace**: The project where MLflow will be deployed (default: `mlflow`).
 
-      - **Helm release name**: The name of the Helm release (default: `mlflow`).
+   - **Helm release name**: The name of the Helm release (default: `mlflow`).
 
-      - **Backend store URI**: The database URI (default: `sqlite:////mlflow/mlflow.db`).
+   - **Backend store URI**: The database URI (default: `sqlite:////mlflow/mlflow.db`).
 
-      - **Persistent storage**: Whether to enable persistent storage (default: `true`) and its size (default: `2Gi`).
+   - **Persistent storage**: Whether to enable persistent storage (default: `true`) and its size (default: `2Gi`).
 
-      - **Resource Limits**: CPU and Memory requests/limits.
+   - **Resource Limits**: CPU and Memory requests/limits.
 
-      - **Authentication Mode**: 
-         - **Disable auth**: Direct browser access (recommended for labs).
-         - **Keep auth**: Secure access via OpenShift OAuth proxy.
+   - **Authentication Mode**: 
+      - **Disable auth**: Direct browser access (recommended for labs).
+      - **Keep auth**: Secure access via OpenShift OAuth proxy.
 
 4. **Verify the installation:**
    The script will automatically create the project, patch the chart, install MLflow via Helm, set up the OpenShift Route, and provide the final access URL.
