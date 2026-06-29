@@ -5,8 +5,11 @@ This guide describes how to install MLflow on OpenShift using the OpenDataHub ML
 ## Prerequisites
 
 Before running the installation script, ensure you have the following tools installed and configured:
+
    - **git**: For cloning the operator repository.
+
    - **helm**: For managing the MLflow installation.
+
    - **oc (OpenShift CLI)**: For interacting with the OpenShift cluster.
 
 ## Installation Steps
@@ -26,11 +29,17 @@ Before running the installation script, ensure you have the following tools inst
 
 3. **Configure the installation:**
    The script will prompt you for the following configurations:
+
    - **OpenShift namespace**: The project where MLflow will be deployed (default: `mlflow`).
+
    - **Helm release name**: The name of the Helm release (default: `mlflow`).
+
    - **Backend store URI**: The database URI (default: `sqlite:////mlflow/mlflow.db`).
+
    - **Persistent storage**: Whether to enable persistent storage (default: `true`) and its size (default: `2Gi`).
+
    - **Resource Limits**: CPU and Memory requests/limits.
+
    - **Authentication Mode**: 
      - **Disable auth**: Direct browser access (recommended for labs).
      - **Keep auth**: Secure access via OpenShift OAuth proxy.
@@ -45,8 +54,11 @@ Before running the installation script, ensure you have the following tools inst
   ```bash
   oc label namespace <target-namespace> mlflow-enabled=true
   ```
-- **Uninstall**:
-  ```bash
-  helm uninstall mlflow -n mlflow
-  oc delete route mlflow -n mlflow
-  ```
+  
+## Uninstall MLflow
+To uninstall MLflow from your OpenShift cluster, run the following commands:
+
+```bash
+helm uninstall mlflow -n mlflow
+oc delete route mlflow -n mlflow
+```
