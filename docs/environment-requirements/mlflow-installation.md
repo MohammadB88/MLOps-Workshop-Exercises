@@ -28,7 +28,6 @@ Before running the installation script, ensure you have the following tools inst
    ```
 
 3. **Configure the installation:**
-   
    The script will prompt you for the following configurations:
 
    - **OpenShift namespace**: The project where MLflow will be deployed (default: `mlflow`).
@@ -42,6 +41,7 @@ Before running the installation script, ensure you have the following tools inst
 
 4. **Verify the installation:**
    The script will automatically create the project, patch the chart, install MLflow via Helm, set up the OpenShift Route, and provide the final access URL.
+
 
 
 
