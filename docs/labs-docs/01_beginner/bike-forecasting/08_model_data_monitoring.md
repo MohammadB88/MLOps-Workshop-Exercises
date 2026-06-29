@@ -40,18 +40,19 @@ In this task, we need to set the path to the cleaned dataset (`data/processed`) 
 ``Reference data`` is the data the the model is trained on. 
 ``Current data`` is the unseen data to the model, which can be used to show the model performance over time. 
 
-For reference data, you should set the first two month in the appropriate cell:
+For reference data, you should set the first three months in the appropriate cell:
 ```bash
 data_2011_01.csv
 data_2011_02.csv
-```
-
-For current data, we set it for now to the third month in the appropriate cell:
-```bash
 data_2011_03.csv
 ```
 
-Optional: You can try the whole notebook with data from another month to see the difference in the model performance. 
+For current data, we set it for now to the fourth month in the appropriate cell:
+```bash
+data_2011_04.csv
+```
+
+Optional: You can try the whole notebook with data from another month (i.e ``data_2011_05.csv``) to see the difference in the model performance. 
 
 ## Step 4: Add Predictions on Both Datasets as another Column
 For this task, you do not need to change or add anything. Just run the corresponding cells.

@@ -61,6 +61,8 @@ spec:
           env:
             - name: MLFLOW_TRACKING_URI
               value: "MLFLOW_REMOTE_TRACKING_SERVER"
+            - name: MLFLOW_TRACKING_INSECURE_TLS
+              value: true
             - name: MODEL_NAME
               value: "MODEL_NAME" # f"BikeSharingModel_{PARTICIPANT_FIRSTNAME}"
             - name: MODEL_VERSION
