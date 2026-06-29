@@ -1,74 +1,52 @@
-# MLflow Installation with helm
-In order to install mlflow on OpenShift using helm charts from bitnami, following steps are necessary:
+# MLflow Installation on OpenShift (OpenDataHub)
 
-1. Open a terminal on the bastian host or direct connect to a ``"web terminal"`` client on the openshift.
+This guide describes how to install MLflow on OpenShift using the OpenDataHub MLflow Operator Helm chart.
 
-2. Create a namespace/project ``mlflow` in the cluster:
-```bash
-oc new-project mlflow 
-```
+## Prerequisites
 
-3. Add the bitnami charts as a repository:
-```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-```
+Before running the installation script, ensure you have the following tools installed and configured:
+- **git**: For cloning the operator repository.
+- **helm**: For managing the MLflow installation.
+- **oc (OpenShift CLI)**: For interacting with the OpenShift cluster.
 
-you can check if the repository is correctly added:
-```bash
-helm repo list
-helm rpeo update
-```
+## Installation Steps
 
-4. Copy the values of the mlflow charts in a yaml file:
-```bash
-helm show values bitnami/mlflow > mlflow_values.yaml
-```
+1. **Prepare the environment:**
+   Log in to the jumphost, clone the repository, and navigate to the root directory:
+   ```bash
+   git clone <repository-url>
+   cd MLOps-Workshop-Exercises
+   ```
 
-5. Open the `mlflow_values.yaml` with editor (usually vim/vi):
-```bash
-vim mlflow_values.yaml
-```
+2. **Run the installation script:**
+   ```bash
+   chmod +x environment_preparations/mlflow_odh_installation.sh
+   ./environment_preparations/mlflow_odh_installation.sh
+   ```
 
-edit some parts:
+3. **Configure the installation:**
+   The script will prompt you for the following configurations:
+   - **OpenShift namespace**: The project where MLflow will be deployed (default: `mlflow`).
+   - **Helm release name**: The name of the Helm release (default: `mlflow`).
+   - **Backend store URI**: The database URI (default: `sqlite:////mlflow/mlflow.db`).
+   - **Persistent storage**: Whether to enable persistent storage (default: `true`) and its size (default: `2Gi`).
+   - **Resource Limits**: CPU and Memory requests/limits.
+   - **Authentication Mode**: 
+     - **Disable auth**: Direct browser access (recommended for labs).
+     - **Keep auth**: Secure access via OpenShift OAuth proxy.
 
-The service type for tracking server is is `LoadBalancer`, which should be ClusterIP (Search for ``"LoadBalancer"`` in the values file you just generated):
-```bash
-LoadBalancer -> ClusterIP
-```
+4. **Verify the installation:**
+   The script will automatically create the project, patch the chart, install MLflow via Helm, set up the OpenShift Route, and provide the final access URL.
 
-We will later add a route to access the UI of the mlflow tracking server.
+## Post-Installation
 
-Disable the authentification for tracking server (Search for ``"username: user"`` in the values file you just generated):
-```bash
-enabled: true -> enabled: false
-username: user
-```
-
-Due to change in bitnami policy for its images and charts, we need to pull the images from another repository.
-
-So these repositories should be changed to find the images in  `bitnamilegacy` instead of `bitnami`:
-
-```bash
-repository: bitnamil/mlflow -> bitnamilegacy/mlflow
-
-repository: bitnamil/os-shell -> bitnamilegacy/os-shell
-
-repository: bitnami/git -> bitnamilegacy/git
-```
-
-**Workaround for now:** In addition, we will disable the ``postgresql`` and `minio`:
-
-```bash
-postgresql:
-  enabled: false
-
-minio:
-  enabled: false
-```
-
-6. Install the MLflow using helm charts and these values:
-```bash
-helm install mlflow bitnami/mlflow --namespace mlflow --values mlflow_values.yaml
-```
-
-
+- **Access MLflow UI**: Use the URL provided by the script at the end of the execution.
+- **Add Workspaces**: To allow other namespaces to use MLflow, label them:
+  ```bash
+  oc label namespace <target-namespace> mlflow-enabled=true
+  ```
+- **Uninstall**:
+  ```bash
+  helm uninstall mlflow -n mlflow
+  oc delete route mlflow -n mlflow
+  ```
