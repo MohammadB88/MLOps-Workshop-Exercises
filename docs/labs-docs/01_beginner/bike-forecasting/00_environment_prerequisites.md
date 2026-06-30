@@ -16,22 +16,22 @@ You will be provided a link and necessary credentials to access an OpenShift ins
 Follow these steps to set up your environment:
 
 1. **Create a Project**: Start by creating a new project in the OpenShift console to isolate your workshop resources.
-"![Create Project](../../../assets/images/osai_project.png)"
+<img src="../../../assets/images/osai_project.png" width="600">
 
 2. **Create a Workbench**: Navigate to the OpenShift AI (RHODS) dashboard and create a new workbench instance.
-"![Create Workbench](../../../assets/images/osai_create_wb.png)"
+<img src="../../../assets/images/osai_create_wb.png" width="600">
 
 3. **Open the Workbench**: Once the workbench is provisioned, click the "Open" button to launch the JupyterLab environment.
-"![Open Workbench](../../../assets/images/osai_open_wb.png)"
+<img src="../../../assets/images/osai_open_wb.png" width="600">
 
 4. **Login to Workbench**: If prompted, enter your credentials to authenticate and access the workbench.
-"![Login Workbench](../../../assets/images/osai_login_wb.png)"
+<img src="../../../assets/images/osai_login_wb.png" width="600">
 
 5. **Access the Dashboard**: You are now inside the workbench environment.
-"![Access Workbench](../../../assets/images/osai_access_wb.png)"
+<img src="../../../assets/images/osai_access_wb.png" width="600">
 
 6. **Verify the Interface**: Familiarize yourself with the JupyterLab interface where you will be performing the exercises.
-"![First Page Workbench](../../../assets/images/osai_firstpage_wb.png)"
+<img src="../../../assets/images/osai_firstpage_wb.png" width="600">
 
 ## Step 2: Clone the Repository
 Clone the repository containing lab materials from GitHub.
@@ -40,12 +40,12 @@ Clone the repository containing lab materials from GitHub.
 
 Go to the original GitHub repository page: "[Clone Repo Github](https://github.com/MohammadB88/MLOps-Workshop-Exercises)" and copy the the URL of the repo:
 
-![Clone Repo Github](../../../assets/images/clone_repo_github.png)
+<img src="../../../assets/images/clone_repo_github.png" width="600">
 
 #### Open the created workbench
 At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
 
-![Clone Repo](../../../assets/images/clone_repo.png)
+<img src="../../../assets/images/clone_repo.png" width="600">
 <!-- 
 Copy the URL of the original repo  repository:
 
@@ -53,7 +53,7 @@ Copy the URL of the original repo  repository:
 
 paste the copied URL from original repo and click on ``clone`` to download the code inside the jupyterlab:
 
-![Clone Repo - add url](../../../assets/images/clone_repo_url.png)
+<img src="../../../assets/images/clone_repo_url.png" width="600">
 
 Go to the path `MLOps-Workshop-Exercises/labs/01_beginner/`, where you find the workshop materials for `bike demand forecasting`.
 
