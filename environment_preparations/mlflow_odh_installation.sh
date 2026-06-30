@@ -426,7 +426,7 @@ if [[ "${INSTALL_OCCURRED}" == "true" && "${ENABLE_OAUTH_PROXY}" == "true" ]]; t
       "image": "registry.redhat.io/openshift4/ose-oauth-proxy:v4.12",
       "args": [
         "--https-address=:8444",
-        "--upstream=https://localhost:8443",
+        "--upstream=https://'"${RELEASE}"'.'"${NAMESPACE}"'.svc:8443",
         "--tls-cert=/etc/tls/private/tls.crt",
         "--tls-key=/etc/tls/private/tls.key",
         "--openshift-ca=/etc/pki/tls/certs/ca-bundle.crt",
