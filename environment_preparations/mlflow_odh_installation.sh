@@ -211,7 +211,7 @@ if [[ "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
   echo "[*] Pre-creating OAuth resources for MLflow UI authentication..."
   echo "    Predicted Route hostname: ${ROUTE_HOSTNAME}"
 
-  COOKIE_SECRET=$(openssl rand -base64 32)
+  COOKIE_SECRET=$(openssl rand -base64 24)
   OAUTH_CLIENT_SECRET=$(openssl rand -base64 32)
 
   echo "    Creating OAuthClient 'mlflow-oauth-${RELEASE}'..."
