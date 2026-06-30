@@ -65,6 +65,33 @@ STORAGE_SIZE_DEFAULT="2Gi"
 read -p "Storage size (default: ${STORAGE_SIZE_DEFAULT}): " STORAGE_SIZE_INPUT
 STORAGE_SIZE="${STORAGE_SIZE_INPUT:-$STORAGE_SIZE_DEFAULT}"
 
+# Storage class selection
+STORAGE_CLASS=""
+if [[ "${STORAGE_ENABLED}" == "true" ]]; then
+  echo ""
+  echo "Available storage classes:"
+  if ! SC_OUTPUT=$(oc get storageclass -o name 2>/dev/null) || [[ -z "${SC_OUTPUT}" ]]; then
+    echo "  (No storage classes found or unable to query. Using cluster default.)"
+  else
+    echo ""
+    mapfile -t SC_LIST < <(echo "${SC_OUTPUT}" | sed 's|storageclass.storage.k8s.io/||')
+    for i in "${!SC_LIST[@]}"; do
+      DEFAULT=$(oc get storageclass "${SC_LIST[$i]}" -o jsonpath='{.metadata.annotations.storageclass\.kubernetes\.io/is-default-class}' 2>/dev/null)
+      DEFAULT_LABEL=""
+      [[ "${DEFAULT}" == "true" ]] && DEFAULT_LABEL=" (default)"
+      echo "  $((i+1))) ${SC_LIST[$i]}${DEFAULT_LABEL}"
+    done
+    echo ""
+    read -p "Select storage class by number, or press Enter for cluster default: " SC_CHOICE
+    if [[ -n "${SC_CHOICE}" && "${SC_CHOICE}" =~ ^[0-9]+$ && "${SC_CHOICE}" -le "${#SC_LIST[@]}" ]]; then
+      STORAGE_CLASS="${SC_LIST[$((SC_CHOICE-1))]}"
+      echo "Using storage class: ${STORAGE_CLASS}"
+    else
+      echo "Using cluster default storage class."
+    fi
+  fi
+fi
+
 # Resource configuration
 CPU_REQUEST_DEFAULT="1"
 MEMORY_REQUEST_DEFAULT="2Gi"
@@ -119,6 +146,7 @@ echo "Helm Release: ${RELEASE}"
 echo "Backend Store URI: ${BACKEND_URI}"
 echo "Storage Enabled: ${STORAGE_ENABLED}"
 echo "Storage Size: ${STORAGE_SIZE}"
+echo "Storage Class: ${STORAGE_CLASS:-"(cluster default)"}"
 echo "CPU Request: ${CPU_REQUEST}"
 echo "Memory Request: ${MEMORY_REQUEST}"
 echo "CPU Limit: ${CPU_LIMIT}"
@@ -242,7 +270,7 @@ resources:
 storage:
   enabled: ${STORAGE_ENABLED}
   size: ${STORAGE_SIZE}
-  storageClassName: ""
+  storageClassName: "${STORAGE_CLASS}"
   accessMode: ReadWriteOnce
 
 mlflow:
