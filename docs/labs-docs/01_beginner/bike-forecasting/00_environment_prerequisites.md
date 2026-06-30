@@ -49,11 +49,11 @@ Go to the original GitHub repository page: "[Clone Repo Github](https://github.c
 <img src="../../../assets/images/clone_repo_github.png" width="400">
 
 #### Open the created workbench
-At the left panel, you can click on git-icon shown in the below image and select `Clone a Repository`.
+At the left panel, you can click on the git-icon shown in the image below and select `Clone a Repository`.
 
 <img src="../../../assets/images/clone_repo.png" width="400">
 
-paste the copied URL from original repo and click on ``clone`` to download the code inside the jupyterlab:
+paste the copied URL from the original repo and click on ``clone`` to download the code inside the jupyterlab:
 
 <img src="../../../assets/images/clone_repo_url.png" width="400">
 
