@@ -37,7 +37,7 @@ It is shown under the ``Hostname`` and end with ``svc.cluster.local``.
 
 In this task, we need to set the path to the cleaned dataset (`data/processed`) as reference and current data.
 
-``Reference data`` is the data the the model is trained on. 
+``Reference data`` is the data the model is trained on. 
 ``Current data`` is the unseen data to the model, which can be used to show the model performance over time. 
 
 For reference data, you should set the first three months in the appropriate cell:
@@ -60,7 +60,7 @@ These will get the predictions on both the reference and current datasets and ad
 
 ## Step 5: Create and Observe the Drift Reports  
 In order to generate different monitoring reports, we use ``Evidently`` as tool. 
-As you execute the cells, observe how ``Evidently`` generate insights about the model and data, like data drift, model performance over time, and input data quality—all rendered interactively. I added a line to save this reports in ``html`` format under the directory ``reports/data_2011...``.
+As you execute the cells, observe how ``Evidently`` generates insights about the model and data, like data drift, model performance over time, and input data quality, all rendered interactively. The reports are stored in ``html`` format under the directory ``reports/data_2011...``.
 
 ## Summary
 
