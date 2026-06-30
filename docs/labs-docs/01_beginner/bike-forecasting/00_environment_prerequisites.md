@@ -16,22 +16,22 @@ You will be provided a link and necessary credentials to access an OpenShift ins
 Follow these steps to set up your environment:
 
 1. **Create a Project**: Start by creating a new project in the OpenShift console to isolate your workshop resources.
-![Create Project](../../../assets/images/os_project.png)
+"![Create Project](../../../assets/images/osai_project.png)"
 
 2. **Create a Workbench**: Navigate to the OpenShift AI (RHODS) dashboard and create a new workbench instance.
-![Create Workbench](../../../assets/images/os_create_wb.png)
+"![Create Workbench](../../../assets/images/osai_create_wb.png)"
 
 3. **Open the Workbench**: Once the workbench is provisioned, click the "Open" button to launch the JupyterLab environment.
-![Open Workbench](../../../assets/images/os_open_wb.png)
+"![Open Workbench](../../../assets/images/osai_open_wb.png)"
 
 4. **Login to Workbench**: If prompted, enter your credentials to authenticate and access the workbench.
-![Login Workbench](../../../assets/images/os_login_wb.png)
+"![Login Workbench](../../../assets/images/osai_login_wb.png)"
 
 5. **Access the Dashboard**: You are now inside the workbench environment.
-![Access Workbench](../../../assets/images/os_access_wb.png)
+"![Access Workbench](../../../assets/images/osai_access_wb.png)"
 
 6. **Verify the Interface**: Familiarize yourself with the JupyterLab interface where you will be performing the exercises.
-![First Page Workbench](../../../assets/images/os_firstpage_wb.png)
+"![First Page Workbench](../../../assets/images/osai_firstpage_wb.png)"
 
 ## Step 2: Clone the Repository
 Clone the repository containing lab materials from GitHub.
