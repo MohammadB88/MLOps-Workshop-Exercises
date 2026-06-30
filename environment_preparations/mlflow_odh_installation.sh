@@ -30,6 +30,11 @@ if ! command -v oc &>/dev/null; then
   exit 1
 fi
 
+if ! command -v openssl &>/dev/null; then
+  echo "ERROR: openssl is not installed. Please install openssl first."
+  exit 1
+fi
+
 ############################################
 # Collect user input
 ############################################
@@ -189,8 +194,48 @@ read -p "Is this correct for the OpenShift apps domain? (y/n): " DOMAIN_CONFIRM
 if [[ "${DOMAIN_CONFIRM}" != "y" && "${DOMAIN_CONFIRM}" != "Y" ]]; then
   read -p "Enter the correct apps domain (e.g. apps.ocp.example.com): " CUSTOM_DOMAIN
   ALLOWED_HOSTS="*.${CUSTOM_DOMAIN}"
+  APPS_DOMAIN="${CUSTOM_DOMAIN}"
+else
+  APPS_DOMAIN="apps.${CLUSTER_DOMAIN}"
 fi
 echo "MLflow allowedHosts will be set to: ${ALLOWED_HOSTS}"
+
+############################################
+# Pre-create OAuthClient and secrets for OAuth proxy
+############################################
+if [[ "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
+  ROUTE_HOSTNAME="${RELEASE}-${NAMESPACE}.${APPS_DOMAIN}"
+  OAUTH_REDIRECT_URL="https://${ROUTE_HOSTNAME}/oauth/callback"
+
+  echo ""
+  echo "[*] Pre-creating OAuth resources for MLflow UI authentication..."
+  echo "    Predicted Route hostname: ${ROUTE_HOSTNAME}"
+
+  COOKIE_SECRET=$(openssl rand -base64 32)
+  OAUTH_CLIENT_SECRET=$(openssl rand -base64 32)
+
+  echo "    Creating OAuthClient 'mlflow-oauth-${RELEASE}'..."
+  cat <<EOF | oc apply -f -
+apiVersion: oauth.openshift.io/v1
+kind: OAuthClient
+metadata:
+  name: mlflow-oauth-${RELEASE}
+secret: ${OAUTH_CLIENT_SECRET}
+redirectURIs:
+  - "${OAUTH_REDIRECT_URL}"
+grantMethod: auto
+accessTokenMaxAgeSeconds: 28800
+EOF
+
+  echo "    Creating secret 'mlflow-oauth-${RELEASE}' in namespace '${NAMESPACE}'..."
+  oc create secret generic "mlflow-oauth-${RELEASE}" \
+    --from-literal=cookie-secret="${COOKIE_SECRET}" \
+    --from-literal=client-secret="${OAUTH_CLIENT_SECRET}" \
+    -n "${NAMESPACE}" --dry-run=client -o yaml | oc apply -f -
+
+  echo "    OAuth resources created."
+  echo ""
+fi
 
 ############################################
 # 3. Clone MLflow Operator repository
@@ -388,8 +433,14 @@ if [[ "${INSTALL_OCCURRED}" == "true" && "${ENABLE_OAUTH_PROXY}" == "true" ]]; t
         "--openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
         "--skip-auth-regex=^/health",
         "--openshift-sar={\"resource\":\"namespaces\",\"verb\":\"get\",\"resourceName\":\"'"${NAMESPACE}"'\",\"namespace\":\"'"${NAMESPACE}"'\"}",
+        "--client-id=mlflow-oauth-'"${RELEASE}"'",
+        "--redirect-url=https://'"${ROUTE_HOSTNAME}"'/oauth/callback",
         "--pass-access-token",
         "--cookie-secure=true"
+      ],
+      "env": [
+        {"name": "OAUTH2_PROXY_CLIENT_SECRET", "valueFrom": {"secretKeyRef": {"name": "mlflow-oauth-'"${RELEASE}"'", "key": "client-secret"}}},
+        {"name": "OAUTH2_PROXY_COOKIE_SECRET", "valueFrom": {"secretKeyRef": {"name": "mlflow-oauth-'"${RELEASE}"'", "key": "cookie-secret"}}}
       ],
       "ports": [
         {"name": "proxy-https", "containerPort": 8444}
@@ -522,6 +573,7 @@ echo ""
 echo "Uninstall MLflow:"
 echo "  helm uninstall ${RELEASE} -n ${NAMESPACE}"
 echo "  oc delete route ${RELEASE} -n ${NAMESPACE}"
+echo "  oc delete OAuthClient mlflow-oauth-${RELEASE}"
 echo ""
 echo "=========================================="
 echo "Installation complete!"
