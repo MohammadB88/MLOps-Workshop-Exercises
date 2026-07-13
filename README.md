@@ -76,7 +76,9 @@ MLOps-Workshop-Exercises/
 │   ├── index.md                       # Home page
 │   ├── mlops-overview.md              # MLOps theory overview
 │   ├── workshop-overview.md           # Workshop structure
-│   ├── environment-requirement.md
+│   ├── environment-requirement
+|   |    ├── environment-requirements.md 
+|   |    └──git-cheatsheet.md
 │   ├── redhat-demo-environment.md
 │   ├── mlflow-installation.md
 │   ├── helm-installation.md
@@ -164,7 +166,7 @@ This workshop uses industry-standard tools:
 | **Model Serving** | FastAPI, vLLM |
 | **ML Frameworks** | scikit-learn, Hugging Face Transformers |
 | **LLM Training** | PEFT (LoRA/QLoRA), bitsandbytes |
-| **Documentation** | MkDocs Material Theme |
+| **Documentation** | Zensical Material Theme |
 | **Languages** | Python, YAML |
 
 ---
@@ -175,10 +177,10 @@ This workshop uses industry-standard tools:
 |----------|-------------|
 | [Workshop Site](https://mohammadb88.github.io/MLOps-Workshop-Exercises/) | Full interactive documentation |
 | [MLOps Overview](docs/mlops-overview.md) | MLOps theory and concepts |
-| [Bike Forecasting Lab](docs/labs-docs/bike-demand-forecasting.md) | Beginner lab: 9 step-by-step guides |
-| [Wine Quality Classifier](docs/labs-docs/wine-quality-classifier.md) | Beginner lab (placeholder) |
-| [Bike Forecasting Pipeline](docs/labs-docs/bike-demand-forecasting-pipeline.md) | Intermediate Kubeflow pipeline lab |
-| [LLM Instruction Tuning](docs/labs-docs/llm-instruction-tuning.md) | Intermediate LLMOps lab: 6 step-by-step guides |
+| [Bike Forecasting Lab](docs/labs-docs/01_beginner/bike-demand-forecasting.md) | Beginner lab: 9 step-by-step guides |
+| [Wine Quality Classifier](docs/labs-docs/01_beginner/wine-quality-classifier.md) | Beginner lab (placeholder) |
+| [Bike Forecasting Pipeline](docs/labs-docs/02_intermediate/bike-demand-forecasting-pipeline.md) | Intermediate Kubeflow pipeline lab |
+| [LLM Instruction Tuning](docs/labs-docs/02_intermediate/llm-instruction-tuning.md) | Intermediate LLMOps lab: 6 step-by-step guides |
 | [Kubeflow Advanced](docs/labs-docs/03_advanced/kubeflow-advanced.md) | Advanced KFP lab: 5 step-by-step guides |
 | [ML Security & Compliance](docs/labs-docs/03_advanced/ml-security-compliance.md) | Advanced security lab: 4 step-by-step guides |
 

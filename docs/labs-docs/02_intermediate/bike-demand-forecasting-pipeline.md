@@ -22,7 +22,7 @@ The pipeline demonstrates key MLOps concepts including:
 
 Follow these step-by-step guides to complete the lab:
 
-- [Environment Prerequisites](../../environment-requirements/00_environment_prerequisites.md)
+- [Environment Prerequisites](bike-demand-forecasting-pipeline/00_environment_prerequisites.md)
 - [Step 1: Dataset Ingestion and Processing](bike-demand-forecasting-pipeline/01_dataset_ingestion_and_processing.md)
 - [Step 2: Model Training and Experiment Tracking](bike-demand-forecasting-pipeline/02_model_training_and_experiment_tracking.md)
 - [Step 3: Model Registration and Validation](bike-demand-forecasting-pipeline/03_model_registration_and_validation.md)
