@@ -180,7 +180,7 @@ spec:
 
 This config tells OpenShift how to build the container image from your source code.
 
-Now click on **Action** on top right corner and select **Start Build**. 
+Now click on **Action** in the top right corner and select **Start Build**. 
 
 You can see the process of building the image in the respective builds-run under the tab `Builds`. 
 
