@@ -44,12 +44,12 @@ Verify **all** items before starting.
 
 2. Navigate to **Ecosystem → Software Catalog**.
 
-   ![Ecosystem menu with Software Catalog entry](images/01-ecosystem-software-catalog.png)
+   ![Ecosystem menu with Software Catalog entry](../docs/assets/images/01-ecosystem-software-catalog.png)
 
 3. Under **Type**, filter for **Operators**, then type
    `Red Hat OpenShift AI` into the keyword filter.
 
-   ![Software Catalog filtered to the RHOAI operator tile](images/02-catalog-rhoai-tile.png)
+   ![Software Catalog filtered to the RHOAI operator tile](../docs/assets/images/02-catalog-rhoai-tile.png)
 
 4. Click the **Red Hat OpenShift AI** tile. An information side panel opens.
 
