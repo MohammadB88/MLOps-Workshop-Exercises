@@ -1,9 +1,11 @@
 # Red Hat OpenShift AI 3.4 — Minimal Installation Guide
 
 **Target:** OpenShift Container Platform 4.20 (Web Console install)
-**Scope:** Dashboard + Workbenches only. No model serving (KServe), no pipelines,
-no distributed workloads. No additional operator dependencies required.
+
+**Scope:** Dashboard + Workbenches only. No model serving (KServe), no pipelines, no distributed workloads. No additional operator dependencies required.
+
 **Time required:** ~20–30 minutes
+
 **Last verified:** 2026-07-14 against the official RHOAI 3.4 documentation
 
 ---
