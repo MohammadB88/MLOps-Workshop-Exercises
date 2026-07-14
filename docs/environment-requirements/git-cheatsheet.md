@@ -22,5 +22,5 @@ This chapter lists the most important and most frequently used Git commands. The
 !!! note
     This cheatsheet is not intended to be exhaustive, but merely serves as a reminder of the most important commands.
 
-!!! note
-    Further details and best practices could be found here: [Tim Gruetzmacher - Version Control](https://timgrt.github.io/Ansible-Best-Practices/development/git/)
+!!! tip
+    Further details and best practices could be found here: [Computacenter Ansible Best Practices - Version Control](https://computacenter-com.github.io/ansible-best-practices/development/git/)
