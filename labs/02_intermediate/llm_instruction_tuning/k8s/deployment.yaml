@@ -19,7 +19,7 @@ spec:
         image: IMAGE_PLACEHOLDER:latest
         ports:
         - containerPort: 8000
-        env:
+        env:                          # Can this be deleted? Is it being used?
         - name: MODEL_NAME
           value: "TinyLlama-1.1B-Chat-v1.0"
         resources:
