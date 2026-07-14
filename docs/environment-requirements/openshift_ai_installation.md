@@ -175,6 +175,18 @@ oc get pods -n redhat-ods-applications
 
 ## 4. Access the Dashboard
 
+**Option A — Application launcher (easiest):**
+
+In the OpenShift web console, click the application launcher icon
+(⋮⋮⋮ grid symbol, top right corner) and select **Red Hat OpenShift AI**.
+
+![Application launcher menu with Red Hat OpenShift AI entry](images/10a-app-launcher.png)
+
+> The entry appears automatically once the dashboard component is deployed.
+> If it's missing, the dashboard pod is not ready yet — see Section 7.
+
+**Option B — Route via CLI:**
+
 ```bash
 oc get route rhods-dashboard -n redhat-ods-applications \
   -o jsonpath='{.spec.host}{"\n"}'
