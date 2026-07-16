@@ -237,7 +237,7 @@ oc adm groups new rhods-users
 oc adm groups add-users rhods-users alice bob
 ```
 
----
+<!-- ---
 
 ## 6. Smoke test: first project + workbench
 
@@ -263,11 +263,11 @@ oc adm groups add-users rhods-users alice bob
 
 ```bash
 oc get notebooks,pods,pvc -n smoke-test
-```
+``` -->
 
 ---
 
-## 7. Troubleshooting quick reference
+## 6. Troubleshooting quick reference
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
@@ -279,7 +279,7 @@ oc get notebooks,pods,pvc -n smoke-test
 
 ---
 
-## 8. Enabling components later (outlook)
+## 7. Enabling components later (outlook)
 
 Components can be flipped to `Managed` at any time — no reinstall needed.
 Example for model serving (requires **cert-manager Operator** first):
