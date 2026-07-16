@@ -44,12 +44,12 @@ Verify **all** items before starting.
 
 2. Navigate to **Ecosystem → Software Catalog**.
 
-   ![Ecosystem menu with Software Catalog entry](../docs/assets/images/01-ecosystem-software-catalog.png)
+   ![Ecosystem menu with Software Catalog entry](../assets/images/01-ecosystem-software-catalog.png)
 
 3. Under **Type**, filter for **Operators**, then type
    `Red Hat OpenShift AI` into the keyword filter.
 
-   ![Software Catalog filtered to the RHOAI operator tile](../docs/assets/images/02-catalog-rhoai-tile.png)
+   ![Software Catalog filtered to the RHOAI operator tile](../assets/images/02-catalog-rhoai-tile.png)
 
 4. Click the **Red Hat OpenShift AI** tile. An information side panel opens.
 
@@ -60,7 +60,7 @@ Verify **all** items before starting.
 
    Click **Install**.
 
-   ![Operator info panel with channel and version selection](images/03-operator-info-panel.png)
+   ![Operator info panel with channel and version selection](../assets/images/03-operator-info-panel.png)
 
 6. On the **Install Operator** page, configure:
 
@@ -70,19 +70,17 @@ Verify **all** items before starting.
    | Installed Namespace | **Operator recommended: `redhat-ods-operator`** | predefined operator namespace |
    | Update approval | **Manual** (recommended for prod) | RHOAI upgrades sequentially through every intermediate version; with *Automatic*, OLM immediately walks to the latest release |
 
-   ![Install Operator page with namespace and update approval settings](images/04-install-operator-page.png)
+   ![Install Operator page with namespace and update approval settings](../assets/images/04-install-operator-page.png)
 
 7. Click **Install** and wait until the checkmark appears
    ("Installed operator: ready for use").
 
-   ![Installation succeeded confirmation](images/05-install-succeeded.png)
+   ![Installation succeeded confirmation](../assets/images/05-install-succeeded.png)
 
-**Verification:**
+**Verification (Optional):**
 
 Navigate to **Ecosystem → Installed Operators** (project: `redhat-ods-operator`)
 and confirm status **Succeeded**. This can take a few minutes.
-
-![Installed Operators list showing RHOAI with status Succeeded](images/06-installed-operators-succeeded.png)
 
 Or via CLI:
 
@@ -100,51 +98,72 @@ The Operator alone installs no user-facing components. Components are enabled
 through a `DataScienceCluster` custom resource. `Managed` = install and keep
 active; `Removed` = do not install (remove if present).
 
-1. Navigate to **Ecosystem → Installed Operators → Red Hat OpenShift AI**.
+1. Click on `Create DataScienceCluster`  or navigate to **Ecosystem → Installed Operators → Red Hat OpenShift AI**.
 
 2. Open the **DataScienceCluster** tab and click **Create DataScienceCluster**.
 
-   ![RHOAI operator detail page, DataScienceCluster tab](images/07-dsc-tab.png)
+   ![RHOAI operator detail page, DataScienceCluster tab](../assets/images/05-install-succeeded.png)
 
 3. Switch to **YAML view** and paste:
 
-   ![Create DataScienceCluster page in YAML view](images/08-dsc-yaml-view.png)
+   ![Create DataScienceCluster page in YAML view](../assets/images/08-dsc-yaml-view.png)
 
 ```yaml
-   apiVersion: datasciencecluster.opendatahub.io/v2
-   kind: DataScienceCluster
-   metadata:
-     name: default-dsc
-   spec:
-     components:
-       dashboard:
-         managementState: Managed
-       workbenches:
-         managementState: Managed
-         workbenchNamespace: rhods-notebooks
-       kserve:
-         managementState: Removed
-       aipipelines:
-         managementState: Removed
-         argoWorkflowsControllers:
-           managementState: Removed
-       modelregistry:
-         managementState: Removed
-         registriesNamespace: rhoai-model-registries
-       llamastackoperator:
-         managementState: Removed
-       feastoperator:
-         managementState: Removed
-       kueue:
-         managementState: Removed
-         defaultClusterQueueName: default
-         defaultLocalQueueName: default
-       ray:
-         managementState: Removed
-       trainingoperator:
-         managementState: Removed
-       trustyai:
-         managementState: Removed
+  apiVersion: datasciencecluster.opendatahub.io/v2
+  kind: DataScienceCluster
+  metadata:
+    name: default-dsc
+    labels:
+      app.kubernetes.io/name: datasciencecluster
+  spec:
+    components:
+      dashboard:
+        managementState: Managed
+      workbenches:
+        workbenchNamespace: rhods-notebooks   # cannot be changed after installation
+        managementState: Managed
+      kserve:
+        managementState: Removed              # enable later; requires cert-manager Operator
+        modelsAsService:
+          managementState: Removed
+        nim:
+          airGapped: false
+          managementState: Removed
+        rawDeploymentServiceConfig: Headless
+        wva:
+          managementState: Removed
+      aipipelines:
+        managementState: Removed
+        argoWorkflowsControllers:
+          managementState: Removed
+      modelregistry:
+        registriesNamespace: rhoai-model-registries
+        managementState: Removed
+      llamastackoperator:
+        managementState: Removed
+      feastoperator:
+        managementState: Removed
+      trustyai:
+        managementState: Removed
+        eval:
+          lmeval:
+            permitCodeExecution: deny
+            permitOnline: deny
+        mcpGuardrailsMode: false
+      kueue:
+        defaultClusterQueueName: default
+        defaultLocalQueueName: default
+        managementState: Removed
+      ray:
+        managementState: Removed
+      trainer:
+        managementState: Removed
+      trainingoperator:
+        managementState: Removed
+      sparkoperator:
+        managementState: Removed
+      mlflowoperator:
+        managementState: Removed
 ```
 
    **Notes:**
@@ -171,7 +190,7 @@ oc get pods -n redhat-ods-applications
 # odh-notebook-controller-...  Running
 ```
 
-![DataScienceCluster with status Ready](images/09-dsc-ready.png)
+![DataScienceCluster with status Ready](../assets/images/09-dsc-ready.png)
 
 ---
 
@@ -182,7 +201,7 @@ oc get pods -n redhat-ods-applications
 In the OpenShift web console, click the application launcher icon
 (⋮⋮⋮ grid symbol, top right corner) and select **Red Hat OpenShift AI**.
 
-![Application launcher menu with Red Hat OpenShift AI entry](images/10a-app-launcher.png)
+![Application launcher menu with Red Hat OpenShift AI entry](../assets/images/10-app-launcher.png)
 
 > The entry appears automatically once the dashboard component is deployed.
 > If it's missing, the dashboard pod is not ready yet — see Section 7.
@@ -197,9 +216,7 @@ oc get route rhods-dashboard -n redhat-ods-applications \
 Open the URL in a browser and log in with your OpenShift identity provider
 credentials.
 
-![RHOAI dashboard login via OpenShift IdP](images/10-dashboard-login.png)
-
-![RHOAI dashboard home page](images/11-dashboard-home.png)
+![RHOAI dashboard home page](../assets/images/11-dashboard-home.png)
 
 ---
 
@@ -211,7 +228,7 @@ By default only cluster admins have full access. Add your users/groups:
 2. Add OpenShift groups or users as **Data science users** and
    **Data science administrators**.
 
-![User management page with user and admin groups](images/12-user-management.png)
+![User management page with user and admin groups](../assets/images/12-user-management.png)
 
 Alternatively via OpenShift groups on the CLI:
 
@@ -227,19 +244,19 @@ oc adm groups add-users rhods-users alice bob
 1. Dashboard → **Data science projects → Create project** → name it
    (e.g. `smoke-test`).
 
-   ![Create data science project dialog](images/13-create-project.png)
+   ![Create data science project dialog](../assets/images/13-create-project.png)
 
 2. In the project, on the **Workbenches** tile, click **Create workbench**:
    - **Image:** e.g. *Jupyter | Minimal | Python 3.12*
    - **Deployment size:** Small
    - **Cluster storage:** keep default (creates a PVC)
 
-   ![Create workbench form](images/14-create-workbench.png)
+   ![Create workbench form](../assets/images/14-create-workbench.png)
 
 3. Wait until status changes from *Starting* to **Running**, then click
    **Open** and log in.
 
-   ![Workbench in Running state](images/15-workbench-running.png)
+   ![Workbench in Running state](../assets/images/15-workbench-running.png)
 
 **What happened behind the scenes:** a `Notebook` CR and its pod were created
 **in the `smoke-test` namespace** — not in `rhods-notebooks`:
