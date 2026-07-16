@@ -218,7 +218,7 @@ credentials.
 
 ![RHOAI dashboard home page](../assets/images/11-dashboard-home.png)
 
----
+<!-- ---
 
 ## 5. Grant user access
 
@@ -235,7 +235,7 @@ Alternatively via OpenShift groups on the CLI:
 ```bash
 oc adm groups new rhods-users
 oc adm groups add-users rhods-users alice bob
-```
+``` -->
 
 <!-- ---
 
@@ -267,7 +267,7 @@ oc get notebooks,pods,pvc -n smoke-test
 
 ---
 
-## 6. Troubleshooting quick reference
+## 5. Troubleshooting quick reference
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
@@ -279,7 +279,7 @@ oc get notebooks,pods,pvc -n smoke-test
 
 ---
 
-## 7. Enabling components later (outlook)
+## 6. Enabling components later (outlook)
 
 Components can be flipped to `Managed` at any time — no reinstall needed.
 Example for model serving (requires **cert-manager Operator** first):
