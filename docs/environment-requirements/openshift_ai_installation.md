@@ -218,9 +218,8 @@ credentials.
 
 ![RHOAI dashboard home page](../assets/images/11-dashboard-home.png)
 
-<!-- ---
 
-## 5. Grant user access
+<!-- ## 5. Grant user access
 
 By default only cluster admins have full access. Add your users/groups:
 
