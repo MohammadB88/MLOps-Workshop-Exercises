@@ -219,7 +219,8 @@ credentials.
 ![RHOAI dashboard home page](../assets/images/11-dashboard-home.png)
 
 
-<!-- ## 5. Grant user access
+<!--
+## 5. Grant user access
 
 By default only cluster admins have full access. Add your users/groups:
 
@@ -234,9 +235,9 @@ Alternatively via OpenShift groups on the CLI:
 ```bash
 oc adm groups new rhods-users
 oc adm groups add-users rhods-users alice bob
-``` -->
+```
 
-<!-- ---
+---
 
 ## 6. Smoke test: first project + workbench
 
@@ -262,7 +263,8 @@ oc adm groups add-users rhods-users alice bob
 
 ```bash
 oc get notebooks,pods,pvc -n smoke-test
-``` -->
+```
+-->
 
 ---
 
