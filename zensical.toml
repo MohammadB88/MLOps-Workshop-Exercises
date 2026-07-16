@@ -100,6 +100,7 @@ nav = [
         { "Environment Setup" = [
             { "Overview" = "environment-requirements/environment-requirement.md" },
             { "Red Hat Demo Environment" = "environment-requirements/redhat-demo-environment.md" },
+            { "OpenShift AI Installation" = "environment-requirements/openshift_ai_installation.md" },
             { "Git Cheat Sheet" = "environment-requirements/git-cheatsheet.md" },
             { "MLflow Installation" = "environment-requirements/mlflow-installation.md" },
             { "Helm Installation" = "environment-requirements/helm-installation.md" }
