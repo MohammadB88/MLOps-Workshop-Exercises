@@ -40,7 +40,7 @@ At this step, you should just run the cell and review the output.
 Analyzing the results (i.e. comparing the metrics), you'll identify the best-performing model configuration and select it for further evaluation or deployment.
 
 ## Step 5: Select the Best-Performing experiment
-When we prompted in the notebook, please select the run (``run-ID``) which has performed the best. 
+When prompted in the notebook, please select the run (``run-name``) which has performed the best. 
 
 ## Summary
 
