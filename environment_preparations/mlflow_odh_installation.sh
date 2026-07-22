@@ -330,6 +330,15 @@ mlflow:
   port: 8443
   allowedHosts:
     - "${ALLOWED_HOSTS}"
+    # Internal hosts used by kubelet health/readiness probes and in-cluster
+    # clients. Probes connect by pod IP, so the Host header is the raw pod
+    # IP:port (e.g. 10.133.2.40:8443) and must be allowed or MLflow returns
+    # 403 and the pod never becomes Ready. Service DNS covers in-cluster API.
+    - "${RELEASE}.${NAMESPACE}.svc"
+    - "${RELEASE}.${NAMESPACE}.svc.cluster.local"
+    - "10.*"
+    - "172.*"
+    - "192.168.*"
   corsAllowedOrigins: "*"
   staticPrefix: ""
 
