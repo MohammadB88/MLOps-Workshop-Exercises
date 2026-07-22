@@ -505,45 +505,12 @@ echo ""
 ############################################
 echo "[8/9] Creating OpenShift Route for MLflow UI..."
 
-# Both paths use reencrypt termination: the router terminates TLS with a
-# publicly-trusted cert, then re-encrypts to the backend (OAuth proxy on
-# proxy-https, or MLflow directly on https). Both backends present the
-# internal service-serving cert (mlflow-tls), so the route needs the
-# service-serving CA as destinationCACertificate to trust that upstream.
-# passthrough is deliberately avoided: it forwards a raw TLS stream to the
-# pod, whose serving cert is only valid for the internal *.svc name and
-# breaks behind corporate TLS-inspecting proxies (error 515).
 if [[ "${ENABLE_OAUTH_PROXY}" == "true" ]]; then
   ROUTE_TARGET_PORT="proxy-https"
+  ROUTE_TLS_TERMINATION="reencrypt"
 else
   ROUTE_TARGET_PORT="https"
-fi
-ROUTE_TLS_TERMINATION="reencrypt"
-
-# Fetch the OpenShift service-serving CA so the router can validate the
-# backend's serving cert on the reencrypt hop.
-echo "Retrieving service-serving CA for route destinationCACertificate..."
-SERVICE_CA=$(oc get configmap openshift-service-ca.crt -n "${NAMESPACE}" -o jsonpath='{.data.service-ca\.crt}' 2>/dev/null || true)
-
-# Fallback: request the CA bundle be injected into a dedicated configmap if
-# the default one is not present in this namespace.
-if [[ -z "${SERVICE_CA}" ]]; then
-  echo "  Default service CA configmap not found; requesting CA bundle injection..."
-  oc create configmap mlflow-service-ca -n "${NAMESPACE}" --dry-run=client -o yaml | oc apply -f -
-  oc annotate configmap mlflow-service-ca -n "${NAMESPACE}" \
-    service.beta.openshift.io/inject-cabundle=true --overwrite
-  for _ in $(seq 1 12); do
-    SERVICE_CA=$(oc get configmap mlflow-service-ca -n "${NAMESPACE}" -o jsonpath='{.data.service-ca\.crt}' 2>/dev/null || true)
-    [[ -n "${SERVICE_CA}" ]] && break
-    sleep 2
-  done
-fi
-
-if [[ -z "${SERVICE_CA}" ]]; then
-  echo "WARNING: Could not obtain service-serving CA. The reencrypt route will"
-  echo "         be created without destinationCACertificate and may return"
-  echo "         error 515 (upstream certificate untrusted). Add it manually with:"
-  echo "         oc patch route ${RELEASE} -n ${NAMESPACE} --type=merge -p ..."
+  ROUTE_TLS_TERMINATION="passthrough"
 fi
 
 cat > mlflow_route.yaml <<EOF
@@ -562,16 +529,7 @@ spec:
     targetPort: ${ROUTE_TARGET_PORT}
   tls:
     termination: ${ROUTE_TLS_TERMINATION}
-    insecureEdgeTerminationPolicy: Redirect
 EOF
-
-# Append destinationCACertificate (indented under tls:) if we obtained the CA.
-if [[ -n "${SERVICE_CA}" ]]; then
-  {
-    echo "    destinationCACertificate: |"
-    echo "${SERVICE_CA}" | sed 's/^/      /'
-  } >> mlflow_route.yaml
-fi
 
 if oc get route "${RELEASE}" -n "${NAMESPACE}" &>/dev/null; then
   echo "Route '${RELEASE}' already exists. Updating..."
