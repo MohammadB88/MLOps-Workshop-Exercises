@@ -61,6 +61,14 @@ bike_forecasting/
 | [Docker](https://www.docker.com/) / OpenShift | Containerization and orchestration |
 | [Evidently AI](https://www.evidentlyai.com/) | Model monitoring and drift detection |
 
+## Lab Environment Diagram
+
+The diagram below illustrates the environment and components used throughout this lab.
+
+<figure markdown>
+  ![bike sharing lab diagram](../../assets/images/bike_sharing_lab_diagram.png)
+</figure>
+
 ## Hands-On Sessions
 
 Start with the environment setup, then proceed through the exercises in order:
