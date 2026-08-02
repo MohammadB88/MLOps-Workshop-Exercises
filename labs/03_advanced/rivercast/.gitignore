@@ -14,6 +14,11 @@ artifacts/
 # Trained model artifacts (rivercast train / 03_baseline_training.ipynb output)
 models/local/
 
+# Local MLflow tracking store (fixture-mode default; see configs/base.yaml mlflow.tracking_uri_default)
+mlflow.db
+mlruns/
+mlartifacts/
+
 # Notebook noise
 .ipynb_checkpoints/
 *.nbconvert.ipynb

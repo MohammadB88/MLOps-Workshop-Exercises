@@ -1,4 +1,4 @@
-# RiverCast model card (Phase 6)
+# RiverCast model card (Phase 6-7)
 
 > **Educational system.** These models must never be used for navigation,
 > flood protection, or any real-world decision. PEGELONLINE water level is
@@ -8,8 +8,8 @@
 
 Forecast the water level (`W`, cm relative to local gauge zero) at **KAUB on
 the Rhine**, 6 hours and 12 hours ahead, on an hourly canonical grid. One
-model per horizon (`rivercast-kaub-6h`, `rivercast-kaub-12h` once registered
-in Phase 7).
+model per horizon, registered in MLflow as `rivercast-kaub-6h` /
+`rivercast-kaub-12h` (Phase 7).
 
 ## Inputs
 
@@ -67,12 +67,50 @@ on the full multi-year bootstrap dataset (Phase 2 spike recommendation:
   signature a review of this model card / the baseline report should treat
   as disqualifying.
 
-## Known limitations (Phase 6 scope)
+## Tracking and registry (Phase 7)
+
+Every training run is logged to MLflow (`rivercast.models.tracking.log_training_run`)
+with: parameters, headline and slice metrics, the feature list, a dataset
+manifest, the model signature and an input example, and tags for Git commit,
+container image digest (once Phase 8 exists), station UUIDs, `dataset_id`,
+`horizon_hours`, `validation_status`, and `deployment_status`. The tracking
+URI is resolved from the `MLFLOW_TRACKING_URI` environment variable when
+set, falling back to a local sqlite store under `storage.root`
+(`configs/base.yaml` `mlflow.tracking_uri_default`) so fixture-mode
+workbenches and CI need no live server (`rivercast.models.tracking.resolve_tracking_uri`).
+
+Registered artifacts are versions of `rivercast-kaub-6h` /
+`rivercast-kaub-12h`. Promotion follows a strict transaction
+(`rivercast.models.registry.promote_challenger_to_champion`): register →
+assign `challenger` → validate the deployable artifact → deploy to a
+non-production endpoint → smoke test → only then move `champion`. A failed
+or raising deploy/smoke-test step leaves the existing `champion` untouched
+(CLAUDE.md rule 14) — real deployment arrives in Phases 8-11, so the current
+deploy/smoke-test step is an injectable stub (`_always_pass_smoke_test`)
+that a caller can replace, as demonstrated with a deliberately failing stub
+in `notebooks/04_mlflow_tracking.ipynb`.
+
+Promotion gates (`rivercast.models.registry.evaluate_promotion_gates`,
+thresholds from `configs/base.yaml` `thresholds.promotion`) compare a
+candidate's test-split metrics against the **current champion's real logged
+metrics**, reconstructed from its MLflow run
+(`rivercast.models.registry.champion_test_report`) — not a placeholder. Three
+checks must all pass: skill vs. persistence, MAE regression vs. champion
+(bounded), and no slice regressing beyond the configured fraction. A
+rejected candidate is still registered (traceable) and tagged
+`validation_status=rejected`; it never receives the `champion` alias. The
+first model for a horizon has no champion to compare against, so only the
+skill-vs-persistence check applies (first-model bootstrap).
+
+## Known limitations (Phase 7 scope)
 
 - Trained and evaluated only against the small fixture bootstrap window; not
   yet run against the full historical dataset from the Phase 2 spike.
-- No MLflow tracking/registry yet (Phase 7) — no `champion`/`challenger`
-  aliasing, no promotion gate evaluation.
-- No slice-based promotion checks yet; `thresholds.promotion` in
-  `configs/base.yaml` is evaluated by later pipeline phases, not this report.
-- No deployment or serving (Phases 8-11).
+- The deploy/smoke-test step in the promotion transaction is a stub
+  (always succeeds by default) until Phases 8-11 add real serving; no actual
+  endpoint is deployed yet.
+- No slice-based promotion checks are exercised against real multi-slice
+  data yet — the fixture window is too short for season slices to be
+  meaningful (same caveat as `reports/baseline/baseline_report.md`).
+- No scheduled/automatic retraining yet (Phase 10 and Phase 12's retraining
+  signal).

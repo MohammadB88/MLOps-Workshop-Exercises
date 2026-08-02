@@ -118,6 +118,10 @@ class StorageConfig(_FrozenModel):
 
 class MlflowConfig(_FrozenModel):
     tracking_uri_env_var: str = Field(min_length=1)
+    # Used only when tracking_uri_env_var is unset in the environment -- keeps
+    # fixture mode and CI self-sufficient without a live MLflow server. A
+    # relative sqlite path is resolved against storage.root by the caller.
+    tracking_uri_default: str | None = None
     experiment: str = Field(min_length=1)
     registered_models: dict[str, str]
 

@@ -23,7 +23,7 @@ from rivercast.models.baseline import PersistenceModel
 from rivercast.models.evaluate import EvaluationReport, evaluate_predictions
 from rivercast.models.package import save_model
 from rivercast.models.split import temporal_split
-from rivercast.models.train import ModelName, predict_candidate, train_candidate
+from rivercast.models.train import ModelName, TrainResult, predict_candidate, train_candidate
 from rivercast.processing import (
     assemble_dataset,
     build_features,
@@ -51,6 +51,8 @@ class TrainRunResult:
     validation_report: EvaluationReport
     test_report: EvaluationReport
     model_path: Path
+    candidate: TrainResult
+    train_features: pd.DataFrame
 
 
 def _require_uuid(name: str, uuid: str | None) -> str:
@@ -166,6 +168,8 @@ def run_training(
         validation_report=validation_report,
         test_report=test_report,
         model_path=model_path,
+        candidate=candidate,
+        train_features=split.train[feature_columns],
     )
 
 

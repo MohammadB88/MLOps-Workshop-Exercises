@@ -13,7 +13,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 | 4 | Build canonicalization and data-quality contracts | in review | | Silver contracts, normalize (dedup + documented conflict rule), hourly resample (explicit missingness, no interpolation), fail-closed quality checks, DST regression tests on real 2025 fixtures. Maintainer commits/opens PR |
 | 5 | Build leakage-safe features and labels | in review | | Lag/rolling/calendar/missingness features, 6h/12h labels, content-hashed dataset manifest, mandatory leakage tests (mutation, label-in-features, centered-window, lag-future checks) all passing. Added pandas/pyarrow/numpy deps. Maintainer commits/opens PR |
 | 6 | Establish baselines and offline evaluation | in review | | Temporal split, persistence/ridge/HistGradientBoosting, MAE/RMSE/skill + slice metrics, serialization parity, `rivercast train` CLI. Ridge beats persistence at both horizons on the fixture dataset; HGB honestly reported as not beating it (overfits on 168 rows) — see reports/baseline/baseline_report.md. Added scikit-learn dep. Maintainer commits/opens PR |
-| 7 | Add MLflow tracking and registry | not started | | |
+| 7 | Add MLflow tracking and registry | in review | | Full run logging (params/metrics/slices/manifest/signature/tags) via `rivercast.models.tracking`; registry + challenger/champion promotion transaction via `rivercast.models.registry` (bootstrap, idempotent registration, real champion-metrics comparison, deploy-failure never moves champion). `rivercast train --track-mlflow`/`--promote` CLI flags. Downgraded pandas 3.0.5 → 2.3.3 (mlflow's own metadata caps pandas <3 on every current release); re-ran full Phase 4-6 suite with no regressions. Local sqlite tracking-URI default added so fixture mode needs no live server. Maintainer commits/opens PR |
 | 8 | Containerize reusable pipeline components | not started | | |
 | 9 | Implement `rivercast-data-ops` pipeline | not started | | |
 | 10 | Implement `rivercast-model` pipeline | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phases 0–6 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 7 (MLflow tracking and registry).
+Phases 0–7 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 8 (containerize reusable pipeline components).
 
 ## Blockers
 

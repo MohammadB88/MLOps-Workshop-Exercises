@@ -37,6 +37,9 @@ notebook-check:
 	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
 		--output-dir build/notebooks --output 03_baseline_training.executed.ipynb \
 		notebooks/03_baseline_training.ipynb
+	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
+		--output-dir build/notebooks --output 04_mlflow_tracking.executed.ipynb \
+		notebooks/04_mlflow_tracking.ipynb
 
 check: lint typecheck test notebook-check
 

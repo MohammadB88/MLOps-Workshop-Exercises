@@ -15,6 +15,7 @@ import rivercast
 from rivercast.config import ConfigError, load_config
 from rivercast.envcheck import find_lab_root, require_no_failures, run_all, summarize
 from rivercast.models.local_pipeline import report_to_json, run_training
+from rivercast.models.mlflow_pipeline import train_track_and_register
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -72,6 +73,20 @@ def _build_parser() -> argparse.ArgumentParser:
             "Phase 6 always materializes from the committed fixtures and ignores this value"
         ),
     )
+    train_cmd.add_argument(
+        "--track-mlflow",
+        action="store_true",
+        help="log the run to MLflow and register it as a candidate model version (Phase 7)",
+    )
+    train_cmd.add_argument(
+        "--promote",
+        action="store_true",
+        help=(
+            "if the promotion gates pass, run the promotion transaction and move the "
+            "champion alias; implies --track-mlflow; no-op deploy/smoke-test stub until "
+            "Phases 8-11 add real serving"
+        ),
+    )
     return parser
 
 
@@ -99,7 +114,9 @@ def _cmd_envcheck(config_path: Path | None) -> int:
     return 0
 
 
-def _cmd_train(config_path: Path | None, horizon: int, model: str, seed: int) -> int:
+def _cmd_train(
+    config_path: Path | None, horizon: int, model: str, seed: int, track_mlflow: bool, promote: bool
+) -> int:
     lab_root = find_lab_root()
     resolved_config_path = config_path or lab_root / "configs" / "local.yaml"
     try:
@@ -107,6 +124,32 @@ def _cmd_train(config_path: Path | None, horizon: int, model: str, seed: int) ->
     except ConfigError as exc:
         print(f"INVALID CONFIG: {exc}", file=sys.stderr)
         return 2
+
+    if track_mlflow or promote:
+        try:
+            outcome = train_track_and_register(
+                config=config,
+                lab_root=lab_root,
+                fixture_dir=lab_root / "data_fixtures" / "pegelonline",
+                horizon_hours=horizon,
+                model_name=model,  # type: ignore[arg-type]
+                models_dir=lab_root / "models" / "local",
+                seed=seed,
+                promote=promote,
+            )
+        except (ValueError, FileNotFoundError) as exc:
+            print(f"TRAINING FAILED: {exc}", file=sys.stderr)
+            return 1
+
+        print(report_to_json(outcome.train_result))
+        print(
+            f"\nmlflow run: {outcome.logged_run.run_id}"
+            f"\nregistered: {outcome.registered_model_name} v{outcome.model_version.version}"
+            f"\npromotion gates: {'PASS' if outcome.decision.approved else 'REJECTED'}"
+            + ("" if outcome.decision.approved else f" ({'; '.join(outcome.decision.reasons)})")
+            + f"\npromoted to champion: {outcome.promoted}"
+        )
+        return 0
 
     try:
         result = run_training(
@@ -136,7 +179,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "envcheck":
         return _cmd_envcheck(args.config)
     if args.command == "train":
-        return _cmd_train(args.config, args.horizon, args.model, args.seed)
+        return _cmd_train(
+            args.config, args.horizon, args.model, args.seed, args.track_mlflow, args.promote
+        )
     raise AssertionError(f"unhandled command: {args.command}")  # pragma: no cover
 
 

@@ -64,6 +64,9 @@ storage:
 mlflow:
   # Resolved from the environment; never hard-code credentials or cluster URIs.
   tracking_uri_env_var: MLFLOW_TRACKING_URI
+  # Fallback when the env var is unset, e.g. fixture-mode workbenches and CI.
+  # A relative sqlite path is resolved against storage.root at load time.
+  tracking_uri_default: sqlite:///mlflow.db
   experiment: rivercast
   registered_models:
     "6": rivercast-kaub-6h
