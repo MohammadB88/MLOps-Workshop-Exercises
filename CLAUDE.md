@@ -35,7 +35,8 @@ MLOps-Workshop-Exercises/
 │   │   ├── 02_intermediate/llm-instruction-tuning/  # 6 step-by-step guides
 │   │   └── 03_advanced/
 │   │       ├── kubeflow-advanced/     # 5 step-by-step guides
-│   │       └── ml-security-compliance/ # 4 step-by-step guides
+│   │       ├── ml-security-compliance/ # 4 step-by-step guides
+│   │       └── rivercast/              # planned — not yet written, see labs/03_advanced/rivercast/PLAN.md
 │   └── assets/                        # Images, CSS, JS
 
 ├── environment_preparations/
@@ -77,11 +78,16 @@ MLOps-Workshop-Exercises/
 │       │   ├── requirements.txt
 │       │   ├── scripts/pipeline_helpers.py  # KFP component wrappers
 │       │   └── notebooks/            # 5 notebooks
-│       └── ml_security_compliance/
-│           ├── README.md
-│           ├── requirements.txt
-│           ├── scripts/audit_logger.py  # JSONL audit trail
-│           └── notebooks/            # 4 notebooks
+│       ├── ml_security_compliance/
+│       │   ├── README.md
+│       │   ├── requirements.txt
+│       │   ├── scripts/audit_logger.py  # JSONL audit trail
+│       │   └── notebooks/            # 4 notebooks
+│       └── rivercast/                # NEW — Level-1 continuous forecasting capstone (in progress)
+│           ├── README.md             # trainee-facing lab guide — not yet written
+│           ├── PLAN.md               # phase-by-phase implementation plan (phases 0-15 + extensions)
+│           ├── CLAUDE.md             # nested — rivercast-specific agent operating rules
+│           └── PROGRESS.md           # phase status tracker
 ├── zensical.toml                     # Zensical site config
 ├── zensical-test/                    # Zensical test configuration
 ├── requirements.txt                  # Root: zensical==0.0.43
@@ -119,6 +125,7 @@ jupyter lab
 # Advanced Labs
 cd labs/03_advanced/kubeflow_advanced
 cd labs/03_advanced/ml_security_compliance
+cd labs/03_advanced/rivercast   # in progress — see PLAN.md and CLAUDE.md
 ```
 
 ## Key Technologies
