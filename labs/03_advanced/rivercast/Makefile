@@ -9,12 +9,12 @@ install:
 	$(PYTHON) -m pip install -e ".[dev]"
 
 lint:
-	$(PYTHON) -m ruff check src tests
-	$(PYTHON) -m ruff format --check src tests
+	$(PYTHON) -m ruff check src tests scripts
+	$(PYTHON) -m ruff format --check src tests scripts
 
 format:
-	$(PYTHON) -m ruff format src tests
-	$(PYTHON) -m ruff check --fix src tests
+	$(PYTHON) -m ruff format src tests scripts
+	$(PYTHON) -m ruff check --fix src tests scripts
 
 typecheck:
 	$(PYTHON) -m mypy
@@ -28,6 +28,9 @@ notebook-check:
 	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
 		--output-dir build/notebooks --output 00_environment_check.executed.ipynb \
 		notebooks/00_environment_check.ipynb
+	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
+		--output-dir build/notebooks --output 01_source_and_data_quality.executed.ipynb \
+		notebooks/01_source_and_data_quality.ipynb
 
 check: lint typecheck test notebook-check
 

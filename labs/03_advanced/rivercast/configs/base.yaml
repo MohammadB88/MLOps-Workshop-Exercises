@@ -29,23 +29,22 @@ source:
     backoff_max_seconds: 30.0
 
 # Rhine corridor (ADR 0001). Stations are identified by immutable PEGELONLINE
-# UUID once resolved; display names are for humans only. UUIDs are null until
-# the Phase 2 data-viability spike resolves and pins them (with the final list
-# recorded in configs/stations.yaml).
+# UUID; display names are for humans only. UUIDs pinned by the Phase 2
+# data-viability spike (2026-08-02); provenance in configs/stations.yaml.
 target_station: KAUB
 stations:
   - name: MAINZ
     water_body: RHEIN
-    uuid: null
+    uuid: a37a9aa3-45e9-4d90-9df6-109f3a28a5af
   - name: OESTRICH
     water_body: RHEIN
-    uuid: null
+    uuid: 665be0fe-5e38-43f6-8b04-02a93bdbeeb4
   - name: BINGEN
     water_body: RHEIN
-    uuid: null
+    uuid: 0309cd61-90c9-470e-99d4-2ee4fb2c5f84
   - name: KAUB
     water_body: RHEIN
-    uuid: null
+    uuid: 1d26e504-7f9e-480a-b52c-5932be6549ab
 
 horizons_hours: [6, 12]
 

@@ -1,0 +1,39 @@
+# Pinned PEGELONLINE stations — produced by the Phase 2 data-viability spike
+# (scripts/source_spike.py --live, resolved 2026-08-02 from the stable REST API).
+# UUIDs are immutable source identifiers (ADR 0001); display names and gauge
+# numbers are informational. base.yaml carries the same UUIDs for runtime use;
+# this file is the authoritative spike record with full provenance.
+#
+# Corridor geometry (Rhine kilometers, upstream -> downstream -> target):
+#   MAINZ (498.27) -> OESTRICH (518.08) -> BINGEN (528.36) -> KAUB (546.23)
+
+resolved_at_utc: "2026-08-02T17:37:43+00:00"
+source:
+  rest_api: https://www.pegelonline.wsv.de/webservices/rest-api/v2
+  historical_download: https://www.pegelonline.wsv.de/gast/historische-zeitreihen/prepare-download
+  parameter: W          # water level in cm relative to local gauge zero
+water_body: RHEIN
+
+target_station: KAUB
+
+stations:
+  - name: MAINZ
+    uuid: a37a9aa3-45e9-4d90-9df6-109f3a28a5af
+    number: "25100100"
+    km: 498.27
+    agency: STANDORT BINGEN
+  - name: OESTRICH
+    uuid: 665be0fe-5e38-43f6-8b04-02a93bdbeeb4
+    number: "25100300"
+    km: 518.08
+    agency: STANDORT BINGEN
+  - name: BINGEN
+    uuid: 0309cd61-90c9-470e-99d4-2ee4fb2c5f84
+    number: "25300200"
+    km: 528.36
+    agency: STANDORT BINGEN
+  - name: KAUB
+    uuid: 1d26e504-7f9e-480a-b52c-5932be6549ab
+    number: "25700100"
+    km: 546.23
+    agency: STANDORT BINGEN

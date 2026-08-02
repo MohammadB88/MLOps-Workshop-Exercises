@@ -70,9 +70,23 @@ def test_invalid_mode_names_the_field(tmp_path: Path, configs_dir: Path) -> None
 
 
 def test_live_mode_requires_station_uuids(tmp_path: Path, configs_dir: Path) -> None:
-    path = _write_overlay(tmp_path, configs_dir, {"mode": "live"})
+    path = _write_overlay(
+        tmp_path,
+        configs_dir,
+        {
+            "mode": "live",
+            "target_station": "KAUB",
+            "stations": [{"name": "KAUB", "water_body": "RHEIN", "uuid": None}],
+        },
+    )
     with pytest.raises(ConfigError, match="no resolved UUID"):
         load_config(path)
+
+
+def test_live_mode_with_pinned_uuids_is_valid(tmp_path: Path, configs_dir: Path) -> None:
+    # Since the Phase 2 spike pinned all UUIDs in base.yaml, live mode validates.
+    path = _write_overlay(tmp_path, configs_dir, {"mode": "live"})
+    assert load_config(path).mode == "live"
 
 
 def test_target_station_must_be_configured(tmp_path: Path, configs_dir: Path) -> None:

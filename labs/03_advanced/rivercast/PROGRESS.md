@@ -8,7 +8,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 |---|---|---|---|---|
 | 0 | Record scope and architecture decisions | in review | [open from `rivercast` branch](https://github.com/MohammadB88/MLOps-Workshop-Exercises/pull/new/rivercast) | ADRs 0001–0003, configs/base.yaml, README educational label |
 | 1 | Create the JupyterLab workbench and project skeleton | in review | | Package, typed config, JSON logging, local object store, CLI, envcheck notebook, workbench docs + bootstrap. Maintainer commits/opens PR |
-| 2 | Run a data-viability spike | not started | | Gate — do not build pipelines until the source is proven usable |
+| 2 | Run a data-viability spike | in review | | Gate passed: PROCEED. Spike run live 2026-08-02; UUIDs pinned, fixtures committed, report in docs/data_viability_report.md. Maintainer commits/opens PR |
 | 3 | Implement source adapters and immutable raw storage | not started | | |
 | 4 | Build canonicalization and data-quality contracts | not started | | |
 | 5 | Build leakage-safe features and labels | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phase 0 — in review. Phase 1 — built and verified in the working tree, in review; maintainer commits and opens the PR. Phase 2 (data-viability spike) is next.
+Phases 0–2 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision is PROCEED (see docs/data_viability_report.md), so Phase 3 (source adapters + immutable raw storage) is next after merges.
 
 ## Blockers
 
