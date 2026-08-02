@@ -1,0 +1,101 @@
+# RiverCast base configuration.
+# Single source of truth for stations, horizons, time zone, storage paths,
+# and thresholds (PLAN.md Phase 0 acceptance criteria; CLAUDE.md rule 12).
+# Environment overlays (local.yaml, openshift.yaml) override these values;
+# they never introduce new threshold keys.
+
+schema_version: 1
+feature_version: 1
+
+# fixture | live — fixture is the default for workshops and CI (ADR 0002).
+mode: fixture
+
+time:
+  # Internal storage and all computation use UTC (CLAUDE.md rule 6).
+  canonical_timezone: UTC
+  # PEGELONLINE reports local-time offsets; preserved alongside UTC (rule 7).
+  source_timezone: Europe/Berlin
+  # Canonical grid frequency for resampled observations.
+  grid_frequency: 1h
+
+source:
+  name: pegelonline-rest-v2
+  base_url: https://www.pegelonline.wsv.de/webservices/rest-api/v2
+  parameter: W          # water level, cm relative to local gauge zero
+  request_timeout_seconds: 10
+  retry:
+    max_attempts: 4
+    backoff_initial_seconds: 1.0
+    backoff_max_seconds: 30.0
+
+# Rhine corridor (ADR 0001). Stations are identified by immutable PEGELONLINE
+# UUID once resolved; display names are for humans only. UUIDs are null until
+# the Phase 2 data-viability spike resolves and pins them (with the final list
+# recorded in configs/stations.yaml).
+target_station: KAUB
+stations:
+  - name: MAINZ
+    water_body: RHEIN
+    uuid: null
+  - name: OESTRICH
+    water_body: RHEIN
+    uuid: null
+  - name: BINGEN
+    water_body: RHEIN
+    uuid: null
+  - name: KAUB
+    water_body: RHEIN
+    uuid: null
+
+horizons_hours: [6, 12]
+
+storage:
+  # local | s3 — both implement the same object-store interface (ADR 0002).
+  backend: local
+  # Overlays set this to the workbench PVC path or the S3 bucket root.
+  root: ./artifacts
+  zones:
+    bronze: bronze
+    silver: silver
+    gold: gold
+    predictions: predictions
+    reports: reports
+    models: models
+
+mlflow:
+  # Resolved from the environment; never hard-code credentials or cluster URIs.
+  tracking_uri_env_var: MLFLOW_TRACKING_URI
+  experiment: rivercast
+  registered_models:
+    "6": rivercast-kaub-6h
+    "12": rivercast-kaub-12h
+
+thresholds:
+  data_quality:
+    # Newest observation older than this fails freshness; no forecast is issued.
+    max_source_staleness_minutes: 120
+    # Hourly resampling: last valid reading at or before the hour within this
+    # tolerance; otherwise the hour is marked missing (never interpolated).
+    resample_tolerance_minutes: 30
+    # Gaps longer than this stay explicit missing intervals.
+    max_short_gap_minutes: 180
+    # Plausible bounds for W in cm relative to gauge zero; values outside fail
+    # validation. Revisit after the Phase 2 spike.
+    value_bounds_cm:
+      min: -200
+      max: 1500
+  labels:
+    # Tolerance for matching a future observation to the exact target time.
+    match_tolerance_minutes: 30
+  promotion:
+    # Candidate must beat persistence on the untouched test window:
+    # skill = 1 - candidate_mae / persistence_mae must exceed this.
+    min_skill_vs_persistence: 0.0
+    # Candidate MAE may exceed champion MAE by at most this much (cm).
+    max_mae_regression_vs_champion_cm: 1.0
+    # No critical slice may regress more than this fraction vs the champion.
+    max_slice_regression_fraction: 0.10
+  retraining:
+    # Minimum newly labeled rows before a scheduled run actually trains
+    # (~1 week of hourly labels).
+    min_new_labeled_rows: 168
