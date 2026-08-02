@@ -6,7 +6,7 @@ An agent may set a phase to `in review` when it opens a PR for it. Only the main
 
 | # | Phase | Status | PR | Notes |
 |---|---|---|---|---|
-| 0 | Record scope and architecture decisions | in review | (open) | ADRs 0001–0003, configs/base.yaml, README educational label |
+| 0 | Record scope and architecture decisions | in review | [open from `rivercast` branch](https://github.com/MohammadB88/MLOps-Workshop-Exercises/pull/new/rivercast) | ADRs 0001–0003, configs/base.yaml, README educational label |
 | 1 | Create the JupyterLab workbench and project skeleton | not started | | |
 | 2 | Run a data-viability spike | not started | | Gate — do not build pipelines until the source is proven usable |
 | 3 | Implement source adapters and immutable raw storage | not started | | |
