@@ -1,0 +1,10 @@
+# Local / workbench development overlay. Fixture mode, local-filesystem
+# storage under ./artifacts (gitignored). Values here override base.yaml;
+# no new threshold keys may be introduced in overlays.
+extends: base.yaml
+
+mode: fixture
+
+storage:
+  backend: local
+  root: ./artifacts

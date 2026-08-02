@@ -1,0 +1,16 @@
+# Project-local environment and caches
+.venv/
+build/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local artifact store (storage.root in configs/local.yaml)
+artifacts/
+
+# Notebook noise
+.ipynb_checkpoints/
+*.nbconvert.ipynb

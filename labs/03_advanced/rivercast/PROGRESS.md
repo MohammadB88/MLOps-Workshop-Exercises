@@ -7,7 +7,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 | # | Phase | Status | PR | Notes |
 |---|---|---|---|---|
 | 0 | Record scope and architecture decisions | in review | [open from `rivercast` branch](https://github.com/MohammadB88/MLOps-Workshop-Exercises/pull/new/rivercast) | ADRs 0001–0003, configs/base.yaml, README educational label |
-| 1 | Create the JupyterLab workbench and project skeleton | not started | | |
+| 1 | Create the JupyterLab workbench and project skeleton | in review | | Package, typed config, JSON logging, local object store, CLI, envcheck notebook, workbench docs + bootstrap. Maintainer commits/opens PR |
 | 2 | Run a data-viability spike | not started | | Gate — do not build pipelines until the source is proven usable |
 | 3 | Implement source adapters and immutable raw storage | not started | | |
 | 4 | Build canonicalization and data-quality contracts | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phase 0 — in review (PR opened; awaiting maintainer review). Phase 1 starts after merge.
+Phase 0 — in review. Phase 1 — built and verified in the working tree, in review; maintainer commits and opens the PR. Phase 2 (data-viability spike) is next.
 
 ## Blockers
 

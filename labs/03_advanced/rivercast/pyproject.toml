@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rivercast"
+version = "0.1.0"
+description = "RiverCast — Level-1 continuous forecasting capstone lab (educational; not a flood-warning product)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+# Runtime dependencies are pinned exactly (PLAN.md Phase 1: locked project
+# environment). Bump deliberately, not implicitly.
+dependencies = [
+    "pydantic==2.13.4",
+    "PyYAML==6.0.3",
+    "tzdata==2026.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.16.1",
+    "mypy==2.3.0",
+    "types-PyYAML==6.0.12.20260724",
+    "nbconvert==7.17.1",
+    "nbformat==5.10.4",
+    "ipykernel==7.3.0",
+]
+
+[project.scripts]
+rivercast = "rivercast.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = [".venv", "build"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "RET"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+check_untyped_defs = true
