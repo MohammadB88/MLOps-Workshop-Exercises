@@ -33,7 +33,7 @@ You build under maintainer review, the same as any other contribution — see ru
 18. A notebook is not accepted unless it passes a fresh-kernel run-all smoke test. Verify this headlessly with `jupyter nbconvert --to notebook --execute` (or `papermill`) before opening a PR — do not rely on a human clicking "Restart & Run All" to catch this.
 19. Do not assume Docker is available inside the workbench.
 20. Compile pipeline YAML in the workbench; build immutable images in CI or an approved cluster build service.
-21. Every phase's pull request requires explicit maintainer review and approval before merge. Open the PR and stop: do not self-merge, do not merge on green CI alone, and do not mark a phase `done` in `PROGRESS.md` — only the maintainer does that, after merging.
+21. Every phase still ends in a pull request, but the maintainer runs all git operations themselves: branching, committing, pushing, and opening the PR. Agents: leave your changes uncommitted in the working tree, summarize what changed and why, and stop. Do not commit, push, open PRs, or self-merge, and do not mark a phase `done` in `PROGRESS.md` — only the maintainer does that, after merging.
 
 ## Before starting a session
 
@@ -41,9 +41,10 @@ You build under maintainer review, the same as any other contribution — see ru
 2. Read that phase's section in the plan (`## Phase N — ...`) for Build steps, acceptance criteria, and deliverables.
 3. Confirm required external connections for this phase (object storage, MLflow, cluster API) are configured in your environment. If they're not, stop and flag it rather than mocking around it.
 
-## Before opening a PR
+## Before handing off a phase
 
 - `make lint`, `make typecheck`, `make test` all pass.
 - Fixture-mode tests pass with no network access.
 - The phase's acceptance criteria (in the plan) are met — self-check against them, and call out any you couldn't verify (e.g. ones needing live cluster infra you don't have).
-- Update `PROGRESS.md`: set the phase to `in review`, link the PR. Leave `done` for the maintainer to set after merge.
+- Update `PROGRESS.md`: set the phase to `in review`. The maintainer commits, pushes, opens the PR, and adds the PR link. Leave `done` for the maintainer to set after merge.
+- Stop with the changes uncommitted — git operations are the maintainer's job (rule 21).

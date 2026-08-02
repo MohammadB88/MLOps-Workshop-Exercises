@@ -2,7 +2,7 @@
 
 Status values: `not started` · `in progress` · `in review` · `blocked` · `done`.
 
-An agent may set a phase to `in review` when it opens a PR for it. Only the maintainer sets a phase to `done`, and only after merging. See `CLAUDE.md` rule 21.
+An agent sets a phase to `in review` when it hands off completed work; the maintainer commits, pushes, opens the PR, links it here, and sets `done` after merging. See `CLAUDE.md` rule 21.
 
 | # | Phase | Status | PR | Notes |
 |---|---|---|---|---|
