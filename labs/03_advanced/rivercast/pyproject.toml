@@ -15,6 +15,9 @@ dependencies = [
     "pydantic==2.13.4",
     "PyYAML==6.0.3",
     "tzdata==2026.3",
+    "pandas==3.0.5",
+    "pyarrow==25.0.0",
+    "numpy==2.5.1",
 ]
 
 [project.optional-dependencies]
@@ -26,6 +29,7 @@ dev = [
     "nbconvert==7.17.1",
     "nbformat==5.10.4",
     "ipykernel==7.3.0",
+    "pandas-stubs==2.3.2.250926",
 ]
 
 [project.scripts]
@@ -48,7 +52,9 @@ extend-exclude = [".venv", "build"]
 select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "RET"]
 
 [tool.mypy]
-python_version = "3.11"
+# numpy's bundled stubs use 3.12 syntax; keep in sync with the CI/workbench
+# interpreter (>= 3.11 per requires-python, but stub-checked at 3.12).
+python_version = "3.12"
 files = ["src"]
 disallow_untyped_defs = true
 no_implicit_optional = true
