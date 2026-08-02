@@ -10,7 +10,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 | 1 | Create the JupyterLab workbench and project skeleton | in review | | Package, typed config, JSON logging, local object store, CLI, envcheck notebook, workbench docs + bootstrap. Maintainer commits/opens PR |
 | 2 | Run a data-viability spike | in review | | Gate passed: PROCEED. Spike run live 2026-08-02; UUIDs pinned, fixtures committed, report in docs/data_viability_report.md. Maintainer commits/opens PR |
 | 3 | Implement source adapters and immutable raw storage | in review | | PegelOnlineSource + FixtureGaugeSource behind one protocol, shared parser, bronze RawArchive (immutable, checksum-idempotent), ingest flow, contract tests. Maintainer commits/opens PR |
-| 4 | Build canonicalization and data-quality contracts | not started | | |
+| 4 | Build canonicalization and data-quality contracts | in review | | Silver contracts, normalize (dedup + documented conflict rule), hourly resample (explicit missingness, no interpolation), fail-closed quality checks, DST regression tests on real 2025 fixtures. Maintainer commits/opens PR |
 | 5 | Build leakage-safe features and labels | not started | | |
 | 6 | Establish baselines and offline evaluation | not started | | |
 | 7 | Add MLflow tracking and registry | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phases 0–3 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 4 (canonicalization and data-quality contracts).
+Phases 0–4 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 5 (leakage-safe features and labels).
 
 ## Blockers
 
