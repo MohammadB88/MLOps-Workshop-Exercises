@@ -14,6 +14,7 @@ from pathlib import Path
 import rivercast
 from rivercast.config import ConfigError, load_config
 from rivercast.envcheck import find_lab_root, require_no_failures, run_all, summarize
+from rivercast.models.local_pipeline import report_to_json, run_training
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -46,6 +47,31 @@ def _build_parser() -> argparse.ArgumentParser:
         default=None,
         help="configuration file (default: <lab root>/configs/local.yaml)",
     )
+
+    train_cmd = subcommands.add_parser(
+        "train", help="train a candidate against persistence in fixture mode (Phase 6)"
+    )
+    train_cmd.add_argument(
+        "--config", type=Path, default=None, help="configuration file (default: configs/local.yaml)"
+    )
+    train_cmd.add_argument(
+        "--horizon", type=int, required=True, help="forecast horizon in hours, e.g. 6 or 12"
+    )
+    train_cmd.add_argument(
+        "--model",
+        choices=["ridge", "hist-gradient-boosting"],
+        required=True,
+        help="candidate model family",
+    )
+    train_cmd.add_argument("--seed", type=int, default=42, help="random seed (default: 42)")
+    train_cmd.add_argument(
+        "--dataset-id",
+        default=None,
+        help=(
+            "reserved for the object-store-backed dataset in later phases; "
+            "Phase 6 always materializes from the committed fixtures and ignores this value"
+        ),
+    )
     return parser
 
 
@@ -73,12 +99,44 @@ def _cmd_envcheck(config_path: Path | None) -> int:
     return 0
 
 
+def _cmd_train(config_path: Path | None, horizon: int, model: str, seed: int) -> int:
+    lab_root = find_lab_root()
+    resolved_config_path = config_path or lab_root / "configs" / "local.yaml"
+    try:
+        config = load_config(resolved_config_path)
+    except ConfigError as exc:
+        print(f"INVALID CONFIG: {exc}", file=sys.stderr)
+        return 2
+
+    try:
+        result = run_training(
+            config=config,
+            fixture_dir=lab_root / "data_fixtures" / "pegelonline",
+            horizon_hours=horizon,
+            model_name=model,  # type: ignore[arg-type]
+            models_dir=lab_root / "models" / "local",
+            seed=seed,
+        )
+    except (ValueError, FileNotFoundError) as exc:
+        print(f"TRAINING FAILED: {exc}", file=sys.stderr)
+        return 1
+
+    print(report_to_json(result))
+    print(
+        f"\nmodel saved to {result.model_path}\n"
+        f"test skill vs. persistence: {result.test_report.skill_vs_persistence:.3f}"
+    )
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     if args.command == "config" and args.config_command == "validate":
         return _cmd_config_validate(args.config)
     if args.command == "envcheck":
         return _cmd_envcheck(args.config)
+    if args.command == "train":
+        return _cmd_train(args.config, args.horizon, args.model, args.seed)
     raise AssertionError(f"unhandled command: {args.command}")  # pragma: no cover
 
 

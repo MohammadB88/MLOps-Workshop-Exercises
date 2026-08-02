@@ -18,6 +18,9 @@ dependencies = [
     "pandas==3.0.5",
     "pyarrow==25.0.0",
     "numpy==2.5.1",
+    "scikit-learn==1.9.0",
+    "scipy==1.18.0",
+    "joblib==1.5.3",
 ]
 
 [project.optional-dependencies]
@@ -62,3 +65,10 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 warn_return_any = true
 check_untyped_defs = true
+
+# No published type stubs for these; their public surface used here
+# (sklearn Pipeline/Ridge/HistGradientBoostingRegressor, joblib dump/load)
+# is small and stable enough to type-check by hand at call sites instead.
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "joblib.*"]
+ignore_missing_imports = true

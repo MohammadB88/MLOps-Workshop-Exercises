@@ -12,7 +12,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 | 3 | Implement source adapters and immutable raw storage | in review | | PegelOnlineSource + FixtureGaugeSource behind one protocol, shared parser, bronze RawArchive (immutable, checksum-idempotent), ingest flow, contract tests. Maintainer commits/opens PR |
 | 4 | Build canonicalization and data-quality contracts | in review | | Silver contracts, normalize (dedup + documented conflict rule), hourly resample (explicit missingness, no interpolation), fail-closed quality checks, DST regression tests on real 2025 fixtures. Maintainer commits/opens PR |
 | 5 | Build leakage-safe features and labels | in review | | Lag/rolling/calendar/missingness features, 6h/12h labels, content-hashed dataset manifest, mandatory leakage tests (mutation, label-in-features, centered-window, lag-future checks) all passing. Added pandas/pyarrow/numpy deps. Maintainer commits/opens PR |
-| 6 | Establish baselines and offline evaluation | not started | | |
+| 6 | Establish baselines and offline evaluation | in review | | Temporal split, persistence/ridge/HistGradientBoosting, MAE/RMSE/skill + slice metrics, serialization parity, `rivercast train` CLI. Ridge beats persistence at both horizons on the fixture dataset; HGB honestly reported as not beating it (overfits on 168 rows) — see reports/baseline/baseline_report.md. Added scikit-learn dep. Maintainer commits/opens PR |
 | 7 | Add MLflow tracking and registry | not started | | |
 | 8 | Containerize reusable pipeline components | not started | | |
 | 9 | Implement `rivercast-data-ops` pipeline | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phases 0–5 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 6 (baselines and offline evaluation).
+Phases 0–6 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 7 (MLflow tracking and registry).
 
 ## Blockers
 

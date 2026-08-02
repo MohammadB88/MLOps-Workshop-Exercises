@@ -11,6 +11,9 @@ __pycache__/
 # Local artifact store (storage.root in configs/local.yaml)
 artifacts/
 
+# Trained model artifacts (rivercast train / 03_baseline_training.ipynb output)
+models/local/
+
 # Notebook noise
 .ipynb_checkpoints/
 *.nbconvert.ipynb
