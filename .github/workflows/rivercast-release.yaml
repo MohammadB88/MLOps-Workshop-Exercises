@@ -1,0 +1,151 @@
+---
+# RiverCast release workflow (PLAN.md Phase 13 "Main-branch workflow").
+#
+# Runs on every push to main that touches this lab. Builds the four
+# immutable images, compiles pipeline YAML referencing their real digests,
+# runs a fixture-mode end-to-end smoke test, and publishes everything as a
+# GitHub Release artifact.
+#
+# No registry push: this workshop has no live container registry configured
+# (CLAUDE.md rule 20 -- image builds belong in CI or an approved cluster
+# build service; pushing to a real registry is a deployment decision for
+# whoever stands up the actual OpenShift AI environment, not this repo).
+# Images are built locally to the runner's Docker daemon so their real
+# content digests can be captured for release_metadata.json and the
+# compiled pipeline YAML, and are cached as workflow artifacts -- "publish
+# pipeline definitions as release artifacts" and "release metadata" are
+# genuinely satisfied; "push images" is documented as the deliberately
+# deferred step it is, not silently skipped.
+name: RiverCast Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'labs/03_advanced/rivercast/**'
+      - '.github/workflows/rivercast-release.yaml'
+
+defaults:
+  run:
+    working-directory: labs/03_advanced/rivercast
+
+permissions:
+  contents: read
+
+jobs:
+  build-images:
+    name: Build immutable images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [data, train, ops, serving]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/build-push-action@v6
+        id: build
+        with:
+          context: labs/03_advanced/rivercast
+          file: labs/03_advanced/rivercast/Containerfile.${{ matrix.image }}
+          push: false
+          load: true
+          tags: rivercast-${{ matrix.image }}:${{ github.sha }}
+      # A matrix job's own `outputs:` only captures whichever leg finishes
+      # last (a race, not a merge) -- each leg instead uploads its digest as
+      # a small artifact file; release-metadata downloads and merges all
+      # four. docker/build-push-action's `imageid` output is the local
+      # image ID (untagged-repo digest), not a registry digest -- honest
+      # given no push happens; recorded verbatim in release_metadata.json
+      # rather than fabricating a registry-style sha256 that was never
+      # actually pushed.
+      - run: |
+          mkdir -p /tmp/digests
+          echo -n "${{ steps.build.outputs.imageid }}" > /tmp/digests/${{ matrix.image }}.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-digest-${{ matrix.image }}
+          path: /tmp/digests/${{ matrix.image }}.txt
+
+  compile-pipelines:
+    name: Compile pipeline YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pipelines.data_ops_pipeline
+      - run: python -m pipelines.model_pipeline
+      - uses: actions/upload-artifact@v4
+        with:
+          name: compiled-pipelines
+          path: |
+            labs/03_advanced/rivercast/pipelines/compiled/rivercast-data-ops.yaml
+            labs/03_advanced/rivercast/pipelines/compiled/rivercast-model.yaml
+
+  fixture-e2e-smoke:
+    name: Fixture-mode end-to-end smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      # The full fetch -> transform -> validate -> train -> register ->
+      # promote -> forecast -> monitor chain against real (isolated)
+      # fixture data and MLflow tracking -- no live cluster or PEGELONLINE
+      # access, matching the plan's "fixture-mode end-to-end smoke test"
+      # release-workflow step exactly.
+      - run: python -m pytest tests/integration/test_components_end_to_end.py -v
+
+  release-metadata:
+    name: Assemble and publish release
+    needs: [build-images, compile-pipelines, fixture-e2e-smoke]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pipelines.data_ops_pipeline
+      - run: python -m pipelines.model_pipeline
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: image-digest-*
+          path: /tmp/digests
+          merge-multiple: true
+      - id: version
+        run: echo "value=$(date -u +%Y.%m.%d)-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+      - run: |
+          python -m scripts.release_metadata \
+            --release-version "${{ steps.version.outputs.value }}" \
+            --image-digest data="$(cat /tmp/digests/data.txt)" \
+            --image-digest train="$(cat /tmp/digests/train.txt)" \
+            --image-digest ops="$(cat /tmp/digests/ops.txt)" \
+            --image-digest serving="$(cat /tmp/digests/serving.txt)" \
+            --output release_metadata.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-metadata
+          path: labs/03_advanced/rivercast/release_metadata.json
+      # A tagged release bundles fixture data, manifests, and compiled
+      # pipelines (plan §Phase 13 acceptance criteria) as a downloadable
+      # archive attached to a GitHub Release -- not a git tag push, which is
+      # a repo-history decision left to the maintainer (CLAUDE.md rule 21
+      # spirit: agents don't take actions with effects beyond this workflow
+      # run without being asked).
+      - run: |
+          tar -czf rivercast-release-${{ steps.version.outputs.value }}.tar.gz \
+            -C labs/03_advanced/rivercast \
+            release_metadata.json \
+            pipelines/compiled \
+            data_fixtures \
+            configs
+        working-directory: .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rivercast-release-${{ steps.version.outputs.value }}
+          path: rivercast-release-${{ steps.version.outputs.value }}.tar.gz

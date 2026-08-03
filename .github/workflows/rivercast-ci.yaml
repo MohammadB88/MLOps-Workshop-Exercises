@@ -1,0 +1,126 @@
+---
+# RiverCast PR checks (PLAN.md Phase 13). Scoped to labs/03_advanced/rivercast/
+# only via path filters and a working-directory default -- unrelated to the
+# repo-wide docs workflow in ci.yml.
+name: RiverCast CI
+
+on:
+  pull_request:
+    paths:
+      - 'labs/03_advanced/rivercast/**'
+      - '.github/workflows/rivercast-ci.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'labs/03_advanced/rivercast/**'
+      - '.github/workflows/rivercast-ci.yaml'
+
+defaults:
+  run:
+    working-directory: labs/03_advanced/rivercast
+
+permissions:
+  contents: read
+
+jobs:
+  lint-typecheck-test:
+    name: Lint, typecheck, unit/contract/integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      - run: make lint
+      - run: make typecheck
+      # Fixture mode is the default (CLAUDE.md rule 15); no PEGELONLINE or
+      # live MLflow access needed. Covers unit, contract, and fixture-mode
+      # integration tests together -- `tests/` is not split by directory in
+      # pytest's testpaths, so a single `make test` is the real CI surface,
+      # not three separate invocations pretending to be independent jobs.
+      - run: make test
+
+  notebook-smoke:
+    name: Fresh-kernel notebook smoke execution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      # CLAUDE.md rule 18: notebooks are not accepted without a headless
+      # fresh-kernel Restart & Run All, verified here rather than trusted to
+      # a human. Fixture mode only -- no PEGELONLINE or live MLflow access.
+      - run: make notebook-check
+
+  pipelines-compile:
+    name: Compile KFP pipelines to YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pipelines.data_ops_pipeline
+      - run: python -m pipelines.model_pipeline
+      # Compiled YAML is committed (pipelines/compiled/*.yaml); a PR that
+      # changes pipeline source without recompiling fails here rather than
+      # merging stale YAML.
+      - run: git diff --exit-code pipelines/compiled/
+
+  dependency-scan:
+    name: Dependency vulnerability scan (pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pip-audit
+      # Extracted directly from pyproject.toml's exactly-pinned runtime
+      # dependencies (not `--local`, which audits every package in the
+      # active environment including unrelated ambient tooling) -- the
+      # actual surface that ships in the four container images, nothing more.
+      - run: python -m scripts.extract_requirements > /tmp/requirements.txt
+      - run: python -m pip_audit -r /tmp/requirements.txt
+
+  kubernetes-manifests:
+    name: Validate Kubernetes/Kustomize manifests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # kubectl ships a kustomize build; no live cluster or KServe CRDs
+      # required for `kustomize build` itself (CLAUDE.md: no cluster access
+      # assumed in CI). This validates composition/patches, not admission
+      # against the real KServe/OpenShift API -- that needs a live cluster,
+      # out of scope here (see docs/operations.md "what isn't tested").
+      # `kubectl kustomize` itself exits non-zero on any composition error
+      # (bad patch target, missing resource, cyclic base), so a bare
+      # invocation is a real pass/fail check, not just YAML well-formedness.
+      - uses: azure/setup-kubectl@v4
+      - run: kubectl kustomize deploy/base > /dev/null
+      - run: kubectl kustomize deploy/overlays/local > /dev/null
+      - run: kubectl kustomize deploy/overlays/openshift > /dev/null
+
+  container-build:
+    name: Build container images (no push)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [data, train, ops, serving]
+    steps:
+      - uses: actions/checkout@v4
+      # Proves each Containerfile actually builds; images are not pushed
+      # anywhere from PR checks (CLAUDE.md rule 20: build in CI/an approved
+      # cluster build service, never assume Docker in the trainee workbench
+      # -- this job is that CI build, scoped to "does it build", not release).
+      - uses: docker/build-push-action@v6
+        with:
+          context: labs/03_advanced/rivercast
+          file: labs/03_advanced/rivercast/Containerfile.${{ matrix.image }}
+          push: false
+          tags: rivercast-${{ matrix.image }}:pr-${{ github.event.pull_request.number || github.sha }}
