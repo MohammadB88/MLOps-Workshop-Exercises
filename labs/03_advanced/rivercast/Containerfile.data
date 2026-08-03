@@ -1,0 +1,25 @@
+# rivercast-data: fetch, transform, validate, monitor (PLAN.md Phase 8).
+# Immutable tag convention: rivercast-data:<git-sha>, built in CI or an
+# approved cluster build service, never inside the JupyterLab workbench
+# (CLAUDE.md rules 19-20).
+FROM registry.access.redhat.com/ubi9/python-311:latest
+
+WORKDIR /app
+
+COPY pyproject.toml ./
+COPY src/ ./src/
+COPY components/ ./components/
+
+# Runtime-only install: no [dev] extras (pytest, ruff, mypy, kfp, nbconvert)
+# in the shipped image.
+RUN pip install --no-cache-dir .
+
+COPY configs/ ./configs/
+
+# The UBI9 python-311 image's default user (1001) is already non-root, but
+# it's declared explicitly so this holds even if a future base-image change
+# ever ships a root default (plan §Phase 8 acceptance criteria).
+USER 1001
+
+ENTRYPOINT ["python", "-m"]
+CMD ["components.fetch.component", "--help"]

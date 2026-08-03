@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import mlflow
+from mlflow.client import MlflowClient
 from mlflow.models import infer_signature
 
 from rivercast.config import RivercastConfig
@@ -63,6 +64,43 @@ def resolve_tracking_uri(config: RivercastConfig, lab_root: Path) -> str:
     return default
 
 
+def resolve_artifact_location(config: RivercastConfig, lab_root: Path) -> str:
+    """Where MLflow stores logged artifacts (models, dicts) for a *new*
+    experiment on a local sqlite/file tracking store. Without this, a fresh
+    sqlite-backed experiment silently defaults to
+    ``./mlruns/<experiment_id>`` relative to the process's current working
+    directory instead of the isolated storage root, which both pollutes the
+    repository and breaks test isolation.
+    """
+    storage_root = Path(config.storage.root)
+    if not storage_root.is_absolute():
+        storage_root = lab_root / storage_root
+    mlartifacts_dir = (storage_root / "mlartifacts").resolve()
+    mlartifacts_dir.mkdir(parents=True, exist_ok=True)
+    return mlartifacts_dir.as_uri()
+
+
+def _ensure_experiment(config: RivercastConfig, lab_root: Path, tracking_uri: str) -> None:
+    """Set the active experiment, creating it with an explicit artifact
+    location the first time -- but only for a local sqlite/file tracking
+    store (see :func:`resolve_artifact_location`); a real remote server
+    (``http(s)://`` or a Databricks URI) already has its own server-side
+    artifact store and must not be overridden here. What matters is the
+    *tracking URI's own scheme*, not merely whether the env var happens to
+    be set -- a test can set the env var to a local sqlite path for
+    isolation and still needs the local-store behavior.
+    """
+    client = MlflowClient()
+    existing = client.get_experiment_by_name(config.mlflow.experiment)
+    if existing is not None:
+        mlflow.set_experiment(config.mlflow.experiment)
+        return
+    is_local_store = tracking_uri.startswith("sqlite:") or tracking_uri.startswith("file:")
+    artifact_location = resolve_artifact_location(config, lab_root) if is_local_store else None
+    client.create_experiment(config.mlflow.experiment, artifact_location=artifact_location)
+    mlflow.set_experiment(config.mlflow.experiment)
+
+
 def _slice_metrics_dict(report_name: str, slices: list[SliceMetric]) -> dict[str, float]:
     metrics: dict[str, float] = {}
     for slice_metric in slices:
@@ -88,7 +126,7 @@ def log_training_run(
     train_features = result.train_features
     tracking_uri = resolve_tracking_uri(config, lab_root)
     mlflow.set_tracking_uri(tracking_uri)
-    mlflow.set_experiment(config.mlflow.experiment)
+    _ensure_experiment(config, lab_root, tracking_uri)
 
     station_uuids = {s.name: s.uuid for s in config.stations}
     run_name = f"{result.model_name}_h{result.horizon_hours}h_{result.dataset_id[7:19]}"

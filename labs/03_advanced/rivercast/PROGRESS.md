@@ -14,7 +14,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 | 5 | Build leakage-safe features and labels | in review | | Lag/rolling/calendar/missingness features, 6h/12h labels, content-hashed dataset manifest, mandatory leakage tests (mutation, label-in-features, centered-window, lag-future checks) all passing. Added pandas/pyarrow/numpy deps. Maintainer commits/opens PR |
 | 6 | Establish baselines and offline evaluation | in review | | Temporal split, persistence/ridge/HistGradientBoosting, MAE/RMSE/skill + slice metrics, serialization parity, `rivercast train` CLI. Ridge beats persistence at both horizons on the fixture dataset; HGB honestly reported as not beating it (overfits on 168 rows) — see reports/baseline/baseline_report.md. Added scikit-learn dep. Maintainer commits/opens PR |
 | 7 | Add MLflow tracking and registry | in review | | Full run logging (params/metrics/slices/manifest/signature/tags) via `rivercast.models.tracking`; registry + challenger/champion promotion transaction via `rivercast.models.registry` (bootstrap, idempotent registration, real champion-metrics comparison, deploy-failure never moves champion). `rivercast train --track-mlflow`/`--promote` CLI flags. Downgraded pandas 3.0.5 → 2.3.3 (mlflow's own metadata caps pandas <3 on every current release); re-ran full Phase 4-6 suite with no regressions. Local sqlite tracking-URI default added so fixture mode needs no live server. Maintainer commits/opens PR |
-| 8 | Containerize reusable pipeline components | not started | | |
+| 8 | Containerize reusable pipeline components | in review | | 10 components (`fetch`, `transform`, `validate`, `train`, `evaluate`, `register`, `promote`, `forecast`, `monitor`, `deploy`), each a plain `run()` function + thin CLI, reading/writing via object-store keys, small JSON result envelope, fail-closed. `tests/integration/test_components_end_to_end.py` runs the full chain against real (isolated) object storage + MLflow. Found and fixed two real upstream/pre-existing bugs: an MLflow-on-Windows `models:/` URI resolution bug (worked around via `runs:/<run_id>/model`, see `docs/pipeline_components.md`) and a Phase 7 gap where a fresh sqlite-backed MLflow experiment defaulted its artifact store to the process CWD instead of the isolated storage root. Four Containerfiles (`rivercast-data/train/ops/serving`), non-root (UID 1001); `pip install .` + each entrypoint verified against a clean staged copy (no Docker daemon available here, per CLAUDE.md rule 19). KFP compatibility verified at the component-signature and compile level; full `SubprocessRunner` execution not verifiable on this Windows dev box (documented, re-verify in the Linux workbench at Phase 9). Added `kfp` dev dependency. Maintainer commits/opens PR |
 | 9 | Implement `rivercast-data-ops` pipeline | not started | | |
 | 10 | Implement `rivercast-model` pipeline | not started | | |
 | 11 | Build the serving layer | not started | | |
@@ -29,7 +29,7 @@ An agent sets a phase to `in review` when it hands off completed work; the maint
 
 ## Current phase
 
-Phases 0–7 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 8 (containerize reusable pipeline components).
+Phases 0–8 — in review; maintainer commits and opens PRs (one phase per PR). Phase 2's gate decision was PROCEED (docs/data_viability_report.md). Next: Phase 9 (implement the `rivercast-data-ops` pipeline).
 
 ## Blockers
 

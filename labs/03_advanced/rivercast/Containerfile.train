@@ -1,0 +1,20 @@
+# rivercast-train: train, evaluate, register, promote (PLAN.md Phase 8).
+# Immutable tag convention: rivercast-train:<git-sha>, built in CI or an
+# approved cluster build service, never inside the JupyterLab workbench
+# (CLAUDE.md rules 19-20).
+FROM registry.access.redhat.com/ubi9/python-311:latest
+
+WORKDIR /app
+
+COPY pyproject.toml ./
+COPY src/ ./src/
+COPY components/ ./components/
+
+RUN pip install --no-cache-dir .
+
+COPY configs/ ./configs/
+
+USER 1001
+
+ENTRYPOINT ["python", "-m"]
+CMD ["components.train.component", "--help"]
