@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -94,11 +94,55 @@ def test_validate_passes_on_a_full_transformed_window(
     )
     silver_key = transform_result.output_keys[0]
 
+    # now_utc anchored to the fixture window (not the real wall clock) so
+    # this test isn't sensitive to the freshness check as time passes.
     result = validate_run(
-        config_path=isolated_config_path, lab_root=tmp_path, silver_key=silver_key
+        config_path=isolated_config_path,
+        lab_root=tmp_path,
+        silver_key=silver_key,
+        now_utc=WINDOW_END,
     )
     assert result.status == "ok"
     assert result.metadata["passed"] is True
+
+
+def test_validate_fails_closed_on_stale_target_station_data(
+    isolated_config_path: Path, tmp_path: Path, lab_root: Path
+) -> None:
+    """PLAN.md Phase 9 acceptance criterion: "A stale-source fixture
+    prevents forecast generation." now_utc is set far past the fixture
+    window's newest reading, well beyond max_source_staleness_minutes.
+    """
+    config = load_config(isolated_config_path)
+    fixture_dir = lab_root / "data_fixtures" / "pegelonline"
+    for station in config.stations:
+        assert station.uuid is not None
+        fetch_run(
+            config_path=isolated_config_path,
+            lab_root=tmp_path,
+            station_uuid=station.uuid,
+            parameter=config.source.parameter,
+            start=WINDOW_START,
+            end=WINDOW_END,
+            fixture_dir=fixture_dir,
+        )
+    transform_result = transform_run(
+        config_path=isolated_config_path, lab_root=tmp_path, start=WINDOW_START, end=WINDOW_END
+    )
+    silver_key = transform_result.output_keys[0]
+
+    far_future = WINDOW_END + timedelta(days=30)
+    result = validate_run(
+        config_path=isolated_config_path,
+        lab_root=tmp_path,
+        silver_key=silver_key,
+        now_utc=far_future,
+    )
+    assert result.status == "failed"
+    assert result.metadata["passed"] is False
+    assert any(
+        "freshness" in msg.lower() or "old" in msg.lower() for msg in result.metadata["errors"]
+    )
 
 
 def test_validate_fails_closed_on_missing_station_coverage(

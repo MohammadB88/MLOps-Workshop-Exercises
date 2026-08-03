@@ -7,6 +7,13 @@ the full quality-check battery, and writes a quality report to
 issue makes this component's status ``"failed"``, which a caller must treat
 as "stop before training" — this component never partially passes.
 
+Also runs the target-station freshness check from PLAN.md Phase 9's
+schedule: "If source data is not fresh enough: do not issue a forecast;
+record a failed freshness check". The ``rivercast-data-ops`` pipeline reads
+this component's ``status`` to decide whether to run ``forecast`` at all —
+a stale window fails validation the same way a missing station does, so the
+freshness gate is enforced in one place rather than duplicated per caller.
+
 Container image: ``rivercast-data`` (Containerfile.data).
 """
 
@@ -34,6 +41,37 @@ from rivercast.storage import zone_key
 _LOG = component_logger("validate")
 
 
+def _check_target_freshness(
+    hourly: list[HourlyObservation],
+    target_station_uuid: str,
+    now_utc: datetime,
+    max_staleness_minutes: float,
+) -> list[QualityIssue]:
+    latest_present = max(
+        (h.hour_utc for h in hourly if h.station_uuid == target_station_uuid and not h.is_missing),
+        default=None,
+    )
+    if latest_present is None:
+        return [
+            QualityIssue(
+                "freshness",
+                "error",
+                f"no non-missing hourly data for target station {target_station_uuid}",
+            )
+        ]
+    age_minutes = (now_utc - latest_present).total_seconds() / 60.0
+    if age_minutes > max_staleness_minutes:
+        return [
+            QualityIssue(
+                "freshness",
+                "error",
+                f"target station {target_station_uuid} latest reading is {age_minutes:.1f} min "
+                f"old (limit {max_staleness_minutes}); no forecast will be issued",
+            )
+        ]
+    return []
+
+
 def run(
     config_path: Path,
     lab_root: Path,
@@ -43,17 +81,19 @@ def run(
     """Validate one silver hourly artifact; write a quality report either way."""
     config = load_component_config(config_path)
     store = open_store(config, lab_root)
+    now = now_utc or datetime.now(UTC)
 
     raw_rows = read_json(store, silver_key)
     hourly = [HourlyObservation.model_validate(row) for row in raw_rows]
     # run_checks() takes CanonicalObservation-shaped bounds/freshness checks
     # over native-cadence data; at the hourly-gate stage we only have the
     # already-resampled grid, so we check what's meaningful for it: required
-    # station coverage and short-gap missingness. Value-bounds and freshness
-    # are checked earlier, over CanonicalObservation, inside `transform`'s
-    # own normalize step (normalize_measurements never emits out-of-schema
-    # records) -- this gate specifically catches gaps and missing stations
-    # that only become visible once data is on the canonical hourly grid.
+    # station coverage, short-gap missingness, and target-station freshness.
+    # Value bounds are checked earlier, over CanonicalObservation, inside
+    # `transform`'s own normalize step (normalize_measurements never emits
+    # out-of-schema records) -- this gate specifically catches gaps, missing
+    # stations, and staleness that only become visible on the canonical
+    # hourly grid.
     required_uuids = {s.uuid for s in config.stations if s.uuid is not None}
     present_uuids = {h.station_uuid for h in hourly}
     missing_stations = required_uuids - present_uuids
@@ -70,9 +110,14 @@ def run(
     issues += check_short_gap_missingness(
         hourly, config.thresholds.data_quality.max_short_gap_minutes
     )
+    target = config.station(config.target_station)
+    if target.uuid is not None:
+        issues += _check_target_freshness(
+            hourly, target.uuid, now, config.thresholds.data_quality.max_source_staleness_minutes
+        )
     report = QualityReport(
         issues=issues,
-        checked_at_utc=(now_utc or datetime.now(UTC)).isoformat(timespec="seconds"),
+        checked_at_utc=now.isoformat(timespec="seconds"),
         row_count=len(hourly),
     )
 

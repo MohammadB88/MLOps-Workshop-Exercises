@@ -1,17 +1,12 @@
 """Forecast component: issue one prediction from the current champion model
-(PLAN.md Phase 9 prediction-record shape, called early per Phase 8's
-component contract).
+and persist it to the ``predictions`` zone (PLAN.md Phase 9).
 
-Loads the champion model version for one horizon by MLflow alias and scores
-one feature row, producing a record shaped exactly like the Phase 9
-prediction-record schema (``prediction_id``, ``issued_at_utc``,
-``target_time_utc``, ...). This component does *not* persist that record to
-the ``predictions`` object-store zone or define ``contracts/predictions.py``
-— that lineage/versioning contract, and the scheduled/hourly calling
-context, are Phase 9's job (``rivercast-data-ops`` pipeline); building it
-ahead of the pipeline that owns it would be speculative. What Phase 8 needs
-from this component is proven now: it loads a champion by alias and scores a
-feature row as a normal, testable Python function.
+Loads the champion model version for one horizon by MLflow alias, scores one
+feature row, and writes a :class:`~rivercast.contracts.predictions.PredictionRecord`
+to ``predictions/horizon_hours=<h>/issued_at=<ts>-<id>.json`` so a later
+pipeline run can join it against the matured observation
+(``rivercast.monitoring.delayed.join_matured_predictions``) once
+``target_time_utc`` has passed.
 
 Container image: ``rivercast-serving`` (Containerfile.serving).
 """
@@ -34,10 +29,14 @@ from components.common import (
     component_logger,
     emit,
     load_component_config,
+    open_store,
     with_git_commit,
+    write_json,
 )
+from rivercast.contracts.predictions import PredictionRecord
 from rivercast.models.registry import get_champion
 from rivercast.models.tracking import resolve_tracking_uri
+from rivercast.storage import zone_key
 
 _LOG = component_logger("forecast")
 
@@ -49,8 +48,11 @@ def run(
     issue_time: datetime,
     features: dict[str, float],
     created_by_pipeline_run: str | None = None,
+    input_snapshot_uri: str | None = None,
 ) -> ComponentResult:
-    """Score one feature row with the current champion for ``horizon_hours``."""
+    """Score one feature row with the current champion for ``horizon_hours``
+    and persist the resulting :class:`PredictionRecord`.
+    """
     config = load_component_config(config_path)
     registered_model_name = config.mlflow.registered_models.get(str(horizon_hours))
     if registered_model_name is None:
@@ -82,31 +84,46 @@ def run(
     prediction_cm = float(np.asarray(model.predict(_as_frame(features)))[0])
 
     target = config.station(config.target_station)
-    record = {
-        "prediction_id": str(uuid.uuid4()),
-        "issued_at_utc": issue_time.astimezone(UTC).isoformat(),
-        "target_time_utc": (issue_time + timedelta(hours=horizon_hours))
-        .astimezone(UTC)
-        .isoformat(),
-        "horizon_hours": horizon_hours,
-        "target_station_uuid": target.uuid,
-        "prediction_cm": prediction_cm,
-        "model_name": registered_model_name,
-        "model_version": str(champion.version),
-        "model_alias": "champion",
-        "dataset_id": champion.tags.get("dataset_id"),
-        "feature_version": config.feature_version,
-        "created_by_pipeline_run": created_by_pipeline_run,
-    }
+    issued_at = issue_time.astimezone(UTC)
+    target_time = issued_at + timedelta(hours=horizon_hours)
+    record = PredictionRecord(
+        prediction_id=str(uuid.uuid4()),
+        issued_at_utc=issued_at.isoformat(),
+        target_time_utc=target_time.isoformat(),
+        horizon_hours=horizon_hours,
+        target_station_uuid=target.uuid or "",
+        prediction_cm=prediction_cm,
+        model_name=registered_model_name,
+        model_version=str(champion.version),
+        model_alias="champion",
+        dataset_id=champion.tags.get("dataset_id"),
+        feature_version=config.feature_version,
+        input_snapshot_uri=input_snapshot_uri,
+        created_by_pipeline_run=created_by_pipeline_run,
+    )
+
+    store = open_store(config, lab_root)
+    prediction_key = zone_key(
+        config.storage.zones,
+        "predictions",
+        f"horizon_hours={horizon_hours}",
+        f"issued_at={issued_at.strftime('%Y%m%dT%H%M%SZ')}-{record.prediction_id[:8]}.json",
+    )
+    write_json(store, prediction_key, record.model_dump())
 
     _LOG.info(
         "forecast issued",
-        extra={"horizon_hours": horizon_hours, "prediction_cm": prediction_cm},
+        extra={
+            "horizon_hours": horizon_hours,
+            "prediction_cm": prediction_cm,
+            "prediction_key": prediction_key,
+        },
     )
     return ComponentResult(
         component="forecast",
         status="ok",
-        metadata=record,
+        output_keys=[prediction_key],
+        metadata=record.model_dump(),
         code_commit=with_git_commit(lab_root),
     )
 
@@ -122,6 +139,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--horizon", type=int, required=True)
     parser.add_argument("--issue-time", required=True, help="ISO-8601 UTC timestamp")
     parser.add_argument("--features-json", required=True, help="JSON object of feature values")
+    parser.add_argument("--created-by-pipeline-run", default=None)
+    parser.add_argument("--input-snapshot-uri", default=None)
     args = parser.parse_args(argv)
 
     result = run(
@@ -130,6 +149,8 @@ def main(argv: list[str] | None = None) -> None:
         horizon_hours=args.horizon,
         issue_time=datetime.fromisoformat(args.issue_time).astimezone(UTC),
         features=json.loads(args.features_json),
+        created_by_pipeline_run=args.created_by_pipeline_run,
+        input_snapshot_uri=args.input_snapshot_uri,
     )
     emit(result)
 

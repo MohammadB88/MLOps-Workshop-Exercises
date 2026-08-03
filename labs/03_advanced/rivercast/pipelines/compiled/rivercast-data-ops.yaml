@@ -1,0 +1,691 @@
+# PIPELINE DEFINITION
+# Name: rivercast-data-ops
+# Description: Hourly data-operations pipeline: fetch, archive, validate, issue forecasts from the champion model, and calculate delayed accuracy once predictions mature. Educational system; not a flood-warning product.
+# Inputs:
+#    config_path: str
+#    fixture_dir: str [Default: '']
+#    horizons_hours: list
+#    lab_root: str
+#    parameter: str
+#    pipeline_run_id: str [Default: '']
+#    station_uuids: list
+#    window_end: str
+#    window_start: str
+components:
+  comp-condition-2:
+    dag:
+      tasks:
+        for-loop-3:
+          componentRef:
+            name: comp-for-loop-3
+          inputs:
+            parameters:
+              pipelinechannel--config_path:
+                componentInputParameter: pipelinechannel--config_path
+              pipelinechannel--horizons_hours:
+                componentInputParameter: pipelinechannel--horizons_hours
+              pipelinechannel--lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              pipelinechannel--pipeline_run_id:
+                componentInputParameter: pipelinechannel--pipeline_run_id
+              pipelinechannel--transform-task-dataset_short_id:
+                componentInputParameter: pipelinechannel--transform-task-dataset_short_id
+              pipelinechannel--validate-task-Output:
+                componentInputParameter: pipelinechannel--validate-task-Output
+              pipelinechannel--window_end:
+                componentInputParameter: pipelinechannel--window_end
+          iteratorPolicy:
+            parallelismLimit: 2
+          parameterIterator:
+            itemInput: pipelinechannel--horizons_hours-loop-item
+            items:
+              inputParameter: pipelinechannel--horizons_hours
+          taskInfo:
+            name: for-loop-3
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--horizons_hours:
+          parameterType: LIST
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--pipeline_run_id:
+          parameterType: STRING
+        pipelinechannel--transform-task-dataset_short_id:
+          parameterType: STRING
+        pipelinechannel--validate-task-Output:
+          parameterType: STRING
+        pipelinechannel--window_end:
+          parameterType: STRING
+  comp-delayed-metrics-task:
+    executorLabel: exec-delayed-metrics-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        horizons_hours:
+          parameterType: LIST
+        lab_root:
+          parameterType: STRING
+        now_utc:
+          parameterType: STRING
+        silver_key:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-fetch-station-task:
+    executorLabel: exec-fetch-station-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        end:
+          parameterType: STRING
+        fixture_dir:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        parameter:
+          parameterType: STRING
+        start:
+          parameterType: STRING
+        station_uuid:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-for-loop-1:
+    dag:
+      tasks:
+        fetch-station-task:
+          cachingOptions: {}
+          componentRef:
+            name: comp-fetch-station-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              end:
+                componentInputParameter: pipelinechannel--window_end
+              fixture_dir:
+                componentInputParameter: pipelinechannel--fixture_dir
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              parameter:
+                componentInputParameter: pipelinechannel--parameter
+              start:
+                componentInputParameter: pipelinechannel--window_start
+              station_uuid:
+                componentInputParameter: pipelinechannel--station_uuids-loop-item
+          taskInfo:
+            name: fetch-station-task
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--fixture_dir:
+          parameterType: STRING
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--parameter:
+          parameterType: STRING
+        pipelinechannel--station_uuids:
+          parameterType: LIST
+        pipelinechannel--station_uuids-loop-item:
+          parameterType: STRING
+        pipelinechannel--window_end:
+          parameterType: STRING
+        pipelinechannel--window_start:
+          parameterType: STRING
+  comp-for-loop-3:
+    dag:
+      tasks:
+        forecast-task:
+          cachingOptions: {}
+          componentRef:
+            name: comp-forecast-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                componentInputParameter: pipelinechannel--transform-task-dataset_short_id
+              horizon_hours:
+                componentInputParameter: pipelinechannel--horizons_hours-loop-item
+              issue_time:
+                componentInputParameter: pipelinechannel--window_end
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              pipeline_run_id:
+                componentInputParameter: pipelinechannel--pipeline_run_id
+          taskInfo:
+            name: forecast-task
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--horizons_hours:
+          parameterType: LIST
+        pipelinechannel--horizons_hours-loop-item:
+          parameterType: NUMBER_INTEGER
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--pipeline_run_id:
+          parameterType: STRING
+        pipelinechannel--transform-task-dataset_short_id:
+          parameterType: STRING
+        pipelinechannel--validate-task-Output:
+          parameterType: STRING
+        pipelinechannel--window_end:
+          parameterType: STRING
+  comp-forecast-task:
+    executorLabel: exec-forecast-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_short_id:
+          parameterType: STRING
+        horizon_hours:
+          parameterType: NUMBER_INTEGER
+        issue_time:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        pipeline_run_id:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-monitor-task:
+    executorLabel: exec-monitor-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        now_utc:
+          parameterType: STRING
+        silver_key:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-transform-task:
+    executorLabel: exec-transform-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        end:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        start:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        dataset_short_id:
+          parameterType: STRING
+        silver_key:
+          parameterType: STRING
+        status:
+          parameterType: STRING
+  comp-validate-task:
+    executorLabel: exec-validate-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        now_utc:
+          parameterType: STRING
+        silver_key:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+deploymentSpec:
+  executors:
+    exec-delayed-metrics-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - delayed_metrics_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef delayed_metrics_task(\n    config_path: str, lab_root: str, silver_key:\
+          \ str, horizons_hours: list[int], now_utc: str\n) -> str:\n    \"\"\"Join\
+          \ every persisted prediction against the silver hourly grid and\n    compute\
+          \ delayed MAE/RMSE per horizon; writes one report to\n    ``reports/delayed_metrics/``.\n\
+          \    \"\"\"\n    from datetime import datetime\n    from pathlib import\
+          \ Path\n\n    from components.common import open_store, read_json, write_json\n\
+          \n    from rivercast.config import load_config\n    from rivercast.contracts.hourly\
+          \ import HourlyObservation\n    from rivercast.contracts.predictions import\
+          \ PredictionRecord\n    from rivercast.processing.delayed_metrics import\
+          \ (\n        calculate_delayed_metrics,\n        join_matured_predictions,\n\
+          \    )\n    from rivercast.storage import zone_key\n\n    config_p = Path(config_path)\n\
+          \    lab_root_p = Path(lab_root)\n    config = load_config(config_p)\n \
+          \   store = open_store(config, lab_root_p)\n    now = datetime.fromisoformat(now_utc)\n\
+          \n    hourly_rows = read_json(store, silver_key)\n    hourly = [HourlyObservation.model_validate(row)\
+          \ for row in hourly_rows]\n\n    predictions: list[PredictionRecord] = []\n\
+          \    for horizon in horizons_hours:\n        prefix = zone_key(config.storage.zones,\
+          \ \"predictions\", f\"horizon_hours={horizon}\")\n        for key in store.list_keys(f\"\
+          {prefix}/\"):\n            predictions.append(PredictionRecord.model_validate(read_json(store,\
+          \ key)))\n\n    matured = join_matured_predictions(predictions, hourly,\
+          \ now_utc=now)\n    metrics = [calculate_delayed_metrics(matured, horizon)\
+          \ for horizon in horizons_hours]\n\n    report = {\n        \"checked_at_utc\"\
+          : now.isoformat(timespec=\"seconds\"),\n        \"metrics\": [\n       \
+          \     {\n                \"horizon_hours\": m.horizon_hours,\n         \
+          \       \"n_matured\": m.n_matured,\n                \"n_total\": m.n_total,\n\
+          \                \"mae_cm\": m.mae_cm,\n                \"rmse_cm\": m.rmse_cm,\n\
+          \            }\n            for m in metrics\n        ],\n    }\n    report_key\
+          \ = zone_key(\n        config.storage.zones,\n        \"reports\",\n   \
+          \     \"delayed_metrics\",\n        f\"{silver_key.rsplit('/', 1)[-1].removesuffix('.json')}_delayed_metrics.json\"\
+          ,\n    )\n    write_json(store, report_key, report, overwrite=True)\n  \
+          \  return \"ok\"\n\n"
+        image: python:3.12
+    exec-fetch-station-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - fetch_station_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef fetch_station_task(\n    config_path: str,\n    lab_root: str,\n\
+          \    station_uuid: str,\n    parameter: str,\n    start: str,\n    end:\
+          \ str,\n    fixture_dir: str,\n) -> str:\n    \"\"\"One ``components.fetch``\
+          \ call for one station; returns its status.\"\"\"\n    from datetime import\
+          \ UTC, datetime\n    from pathlib import Path\n\n    from components.fetch.component\
+          \ import run\n\n    result = run(\n        config_path=Path(config_path),\n\
+          \        lab_root=Path(lab_root),\n        station_uuid=station_uuid,\n\
+          \        parameter=parameter,\n        start=datetime.fromisoformat(start).astimezone(UTC),\n\
+          \        end=datetime.fromisoformat(end).astimezone(UTC),\n        fixture_dir=Path(fixture_dir)\
+          \ if fixture_dir else None,\n    )\n    return result.status\n\n"
+        image: python:3.12
+    exec-forecast-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - forecast_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef forecast_task(\n    config_path: str,\n    lab_root: str,\n \
+          \   horizon_hours: int,\n    issue_time: str,\n    dataset_short_id: str,\n\
+          \    pipeline_run_id: str,\n) -> str:\n    \"\"\"Load the champion for one\
+          \ horizon and issue+persist one prediction\n    from the latest feature\
+          \ row in the just-built gold dataset.\n    \"\"\"\n    import io\n    from\
+          \ datetime import UTC, datetime\n    from pathlib import Path\n\n    import\
+          \ pandas as pd\n    from components.forecast.component import run\n\n  \
+          \  from rivercast.config import load_config\n    from rivercast.storage\
+          \ import create_object_store, zone_key\n\n    config_p = Path(config_path)\n\
+          \    lab_root_p = Path(lab_root)\n    config = load_config(config_p)\n \
+          \   storage_root = Path(config.storage.root)\n    if not storage_root.is_absolute():\n\
+          \        storage_root = lab_root_p / storage_root\n    store = create_object_store(config.storage.model_copy(update={\"\
+          root\": str(storage_root)}))\n\n    prefix = zone_key(config.storage.zones,\
+          \ \"gold\", f\"training/dataset_id={dataset_short_id}\")\n    dataset =\
+          \ pd.read_parquet(io.BytesIO(store.get_bytes(f\"{prefix}/dataset.parquet\"\
+          )))\n    feature_columns = [\n        c for c in dataset.columns if not\
+          \ c.startswith(\"target_level_\") and c != \"issue_time_utc\"\n    ]\n \
+          \   latest_row = dataset.iloc[-1][feature_columns].fillna(0.0)\n    features\
+          \ = {col: float(latest_row[col]) for col in feature_columns}\n\n    result\
+          \ = run(\n        config_path=config_p,\n        lab_root=lab_root_p,\n\
+          \        horizon_hours=horizon_hours,\n        issue_time=datetime.fromisoformat(issue_time).astimezone(UTC),\n\
+          \        features=features,\n        created_by_pipeline_run=pipeline_run_id,\n\
+          \    )\n    return result.status\n\n"
+        image: python:3.12
+    exec-monitor-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - monitor_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef monitor_task(config_path: str, lab_root: str, silver_key: str,\
+          \ now_utc: str) -> str:\n    \"\"\"Freshness/coverage summary, independent\
+          \ of whether validation passed.\"\"\"\n    from datetime import datetime\n\
+          \    from pathlib import Path\n\n    from components.monitor.component import\
+          \ run\n\n    result = run(\n        config_path=Path(config_path),\n   \
+          \     lab_root=Path(lab_root),\n        silver_key=silver_key,\n       \
+          \ now_utc=datetime.fromisoformat(now_utc),\n    )\n    return result.status\n\
+          \n"
+        image: python:3.12
+    exec-transform-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - transform_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef transform_task(config_path: str, lab_root: str, start: str, end:\
+          \ str) -> TransformOutputs:\n    \"\"\"Bronze -> silver hourly grid -> gold\
+          \ training dataset.\"\"\"\n    from datetime import UTC, datetime\n    from\
+          \ pathlib import Path\n\n    from components.transform.component import\
+          \ run\n\n    result = run(\n        config_path=Path(config_path),\n   \
+          \     lab_root=Path(lab_root),\n        start=datetime.fromisoformat(start).astimezone(UTC),\n\
+          \        end=datetime.fromisoformat(end).astimezone(UTC),\n    )\n    if\
+          \ result.status != \"ok\":\n        return TransformOutputs(status=result.status,\
+          \ dataset_short_id=\"\", silver_key=\"\")\n\n    dataset_id = str(result.metadata[\"\
+          dataset_id\"])\n    silver_key = next(k for k in result.output_keys if k.startswith(\"\
+          silver/\"))\n    return TransformOutputs(\n        status=result.status,\n\
+          \        dataset_short_id=dataset_id.removeprefix(\"sha256:\")[:12],\n \
+          \       silver_key=silver_key,\n    )\n\n"
+        image: python:3.12
+    exec-validate-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - validate_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef validate_task(config_path: str, lab_root: str, silver_key: str,\
+          \ now_utc: str) -> str:\n    \"\"\"Quality gate + freshness check over the\
+          \ silver hourly window; returns status.\"\"\"\n    from datetime import\
+          \ datetime\n    from pathlib import Path\n\n    from components.validate.component\
+          \ import run\n\n    result = run(\n        config_path=Path(config_path),\n\
+          \        lab_root=Path(lab_root),\n        silver_key=silver_key,\n    \
+          \    now_utc=datetime.fromisoformat(now_utc),\n    )\n    return result.status\n\
+          \n"
+        image: python:3.12
+pipelineInfo:
+  description: 'Hourly data-operations pipeline: fetch, archive, validate, issue forecasts
+    from the champion model, and calculate delayed accuracy once predictions mature.
+    Educational system; not a flood-warning product.'
+  name: rivercast-data-ops
+root:
+  dag:
+    tasks:
+      condition-2:
+        componentRef:
+          name: comp-condition-2
+        dependentTasks:
+        - transform-task
+        - validate-task
+        inputs:
+          parameters:
+            pipelinechannel--config_path:
+              componentInputParameter: config_path
+            pipelinechannel--horizons_hours:
+              componentInputParameter: horizons_hours
+            pipelinechannel--lab_root:
+              componentInputParameter: lab_root
+            pipelinechannel--pipeline_run_id:
+              componentInputParameter: pipeline_run_id
+            pipelinechannel--transform-task-dataset_short_id:
+              taskOutputParameter:
+                outputParameterKey: dataset_short_id
+                producerTask: transform-task
+            pipelinechannel--validate-task-Output:
+              taskOutputParameter:
+                outputParameterKey: Output
+                producerTask: validate-task
+            pipelinechannel--window_end:
+              componentInputParameter: window_end
+        taskInfo:
+          name: condition-2
+        triggerPolicy:
+          condition: inputs.parameter_values['pipelinechannel--validate-task-Output']
+            == 'ok'
+      delayed-metrics-task:
+        cachingOptions: {}
+        componentRef:
+          name: comp-delayed-metrics-task
+        dependentTasks:
+        - transform-task
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            horizons_hours:
+              componentInputParameter: horizons_hours
+            lab_root:
+              componentInputParameter: lab_root
+            now_utc:
+              componentInputParameter: window_end
+            silver_key:
+              taskOutputParameter:
+                outputParameterKey: silver_key
+                producerTask: transform-task
+        taskInfo:
+          name: delayed-metrics-task
+      for-loop-1:
+        componentRef:
+          name: comp-for-loop-1
+        inputs:
+          parameters:
+            pipelinechannel--config_path:
+              componentInputParameter: config_path
+            pipelinechannel--fixture_dir:
+              componentInputParameter: fixture_dir
+            pipelinechannel--lab_root:
+              componentInputParameter: lab_root
+            pipelinechannel--parameter:
+              componentInputParameter: parameter
+            pipelinechannel--station_uuids:
+              componentInputParameter: station_uuids
+            pipelinechannel--window_end:
+              componentInputParameter: window_end
+            pipelinechannel--window_start:
+              componentInputParameter: window_start
+        iteratorPolicy:
+          parallelismLimit: 4
+        parameterIterator:
+          itemInput: pipelinechannel--station_uuids-loop-item
+          items:
+            inputParameter: pipelinechannel--station_uuids
+        taskInfo:
+          name: for-loop-1
+      monitor-task:
+        cachingOptions: {}
+        componentRef:
+          name: comp-monitor-task
+        dependentTasks:
+        - transform-task
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            lab_root:
+              componentInputParameter: lab_root
+            now_utc:
+              componentInputParameter: window_end
+            silver_key:
+              taskOutputParameter:
+                outputParameterKey: silver_key
+                producerTask: transform-task
+        taskInfo:
+          name: monitor-task
+      transform-task:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-transform-task
+        dependentTasks:
+        - for-loop-1
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            end:
+              componentInputParameter: window_end
+            lab_root:
+              componentInputParameter: lab_root
+            start:
+              componentInputParameter: window_start
+        taskInfo:
+          name: transform-task
+      validate-task:
+        cachingOptions: {}
+        componentRef:
+          name: comp-validate-task
+        dependentTasks:
+        - transform-task
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            lab_root:
+              componentInputParameter: lab_root
+            now_utc:
+              componentInputParameter: window_end
+            silver_key:
+              taskOutputParameter:
+                outputParameterKey: silver_key
+                producerTask: transform-task
+        taskInfo:
+          name: validate-task
+  inputDefinitions:
+    parameters:
+      config_path:
+        parameterType: STRING
+      fixture_dir:
+        defaultValue: ''
+        isOptional: true
+        parameterType: STRING
+      horizons_hours:
+        parameterType: LIST
+      lab_root:
+        parameterType: STRING
+      parameter:
+        parameterType: STRING
+      pipeline_run_id:
+        defaultValue: ''
+        isOptional: true
+        parameterType: STRING
+      station_uuids:
+        parameterType: LIST
+      window_end:
+        parameterType: STRING
+      window_start:
+        parameterType: STRING
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.17.0

@@ -9,12 +9,12 @@ install:
 	$(PYTHON) -m pip install -e ".[dev]"
 
 lint:
-	$(PYTHON) -m ruff check src tests scripts
-	$(PYTHON) -m ruff format --check src tests scripts
+	$(PYTHON) -m ruff check src components pipelines tests scripts
+	$(PYTHON) -m ruff format --check src components pipelines tests scripts
 
 format:
-	$(PYTHON) -m ruff format src tests scripts
-	$(PYTHON) -m ruff check --fix src tests scripts
+	$(PYTHON) -m ruff format src components pipelines tests scripts
+	$(PYTHON) -m ruff check --fix src components pipelines tests scripts
 
 typecheck:
 	$(PYTHON) -m mypy
@@ -40,6 +40,9 @@ notebook-check:
 	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
 		--output-dir build/notebooks --output 04_mlflow_tracking.executed.ipynb \
 		notebooks/04_mlflow_tracking.ipynb
+	$(PYTHON) -m jupyter nbconvert --to notebook --execute \
+		--output-dir build/notebooks --output 05_pipeline_development.executed.ipynb \
+		notebooks/05_pipeline_development.ipynb
 
 check: lint typecheck test notebook-check
 

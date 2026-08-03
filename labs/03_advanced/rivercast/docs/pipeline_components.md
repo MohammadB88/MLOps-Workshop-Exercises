@@ -1,4 +1,4 @@
-# RiverCast pipeline components (Phase 8)
+# RiverCast pipeline components (Phase 8; extended in Phase 9)
 
 Ten single-purpose components under `components/`, each with a plain
 `run(...)` function and a thin CLI `main()`. Every component is:
@@ -54,23 +54,35 @@ forecast                     -> loads the champion by run_id, scores one feature
 sequence against real (isolated, offline) object storage and MLflow tracking
 — it is the executable specification of this data flow.
 
-## What `forecast` and `deploy` intentionally do not do yet
+## What `forecast` and `deploy` do (Phase 9 update) and don't do yet
 
-Full prediction persistence (the Phase 9 prediction-record contract —
-`prediction_id`, `dataset_id`, `input_snapshot_uri`, storage under the
-`predictions` zone) and real KServe deployment (Phase 11) don't exist yet.
-Building either ahead of the phase that owns it would be speculative:
+Phase 9 added `contracts/predictions.py` (`PredictionRecord`,
+`MaturedPrediction`) and wired `forecast` to persist every issued prediction
+under the `predictions` object-store zone
+(`predictions/horizon_hours=<h>/issued_at=<ts>-<id>.json`), matching the
+plan's Phase 9 prediction-record schema exactly. `rivercast.processing.delayed_metrics`
+(`join_matured_predictions`, `calculate_delayed_metrics`) joins persisted
+predictions against the silver hourly grid once `target_time_utc` has
+passed, never fabricating a missing observation.
 
-- `forecast` produces one prediction record shaped exactly like the Phase 9
-  schema and returns it in `ComponentResult.metadata`, but does not persist
-  it or define `contracts/predictions.py` — that lineage/versioning contract
-  and the scheduled/hourly calling context are Phase 9's job.
-- `deploy` validates the one piece of deployment readiness that's available
-  now: the registered artifact loads and produces a finite prediction. It
-  does not create a KServe `InferenceService` or any cluster resource.
+`deploy` still only validates the one piece of deployment readiness that's
+available now: the registered artifact loads and produces a finite
+prediction. Real KServe deployment (Phase 11) does not exist yet — `deploy`
+does not create a KServe `InferenceService` or any cluster resource. Both
+components are real, useful, independently testable today, not stubs that
+always return a canned answer.
 
-Both are still real, useful, independently testable components today, not
-stubs that always return a canned answer.
+### The freshness gate (Phase 9)
+
+`components.validate` also runs a target-station freshness check now (using
+`thresholds.data_quality.max_source_staleness_minutes`): if the newest
+non-missing reading for the target station is older than the threshold,
+validation fails with a `"freshness"` issue and the `rivercast-data-ops`
+pipeline's `dsl.If(validate.output == "ok")` branch skips forecasting
+entirely for that run (PLAN.md Phase 9 schedule: *"if source data is not
+fresh enough: do not issue a forecast ... keep the last deployed model
+unchanged"*). `monitor` and the delayed-metrics join still run regardless —
+they report on the data itself, not on whether a forecast was issued.
 
 ## A real upstream bug found and worked around
 
@@ -119,8 +131,39 @@ to RiverCast's code (CLAUDE.md §Scope: agents are not expected to run inside
 the trainee's — Linux — JupyterLab workbench; this reproduces even for a
 two-line `add(a, b)` component with no RiverCast dependency at all).
 `SubprocessRunner` execution should be re-verified in the actual OpenShift
-AI JupyterLab workbench (Linux) as part of Phase 9, where the pipeline
-`.ipynb` first submits real runs.
+AI JupyterLab workbench (Linux), where a trainee submits the real pipeline
+run (`pipelines/data_ops_pipeline.py`, compiled with
+`notebooks/05_pipeline_development.ipynb`).
+
+### A second real KFP incompatibility found while building the pipeline (Phase 9)
+
+`@dsl.component` cannot be used in a module with
+`from __future__ import annotations` at the top. With PEP 563 postponed
+evaluation active, every parameter/return annotation KFP inspects resolves
+to the literal string `"str"`/`"int"` instead of the type object itself;
+KFP's artifact-type validator then misreads that string as a malformed
+bundled-artifact type:
+
+```text
+TypeError: Artifacts must have both a schema_title and a schema_version,
+separated by `@`. Got: str
+```
+
+This reproduces for a trivial `def add(a: int, b: int) -> int` component
+with the future-import present — confirmed with a two-line isolated script
+before touching `pipelines/data_ops_pipeline.py`. `pipelines/data_ops_pipeline.py`
+deliberately omits `from __future__ import annotations` (documented inline
+at the top of the file) — every other module in this repository keeps it,
+this is the one, KFP-specific exception.
+
+A separate, unrelated compile-time gotcha: KFP requires parameterized
+generic types (`list[str]`, `list[int]`) on component parameters — a bare
+`list` fails the same artifact-type validator with the same error message.
+Pipeline-parameter-typed values (declared on `@dsl.pipeline`, e.g.
+`horizons_hours: list[int]`) are `PipelineParameterChannel` objects at
+compile time, not plain Python lists — iterate them with `dsl.ParallelFor`,
+never a bare `for` loop (`TypeError: 'PipelineParameterChannel' object is
+not iterable`).
 
 ## Images
 

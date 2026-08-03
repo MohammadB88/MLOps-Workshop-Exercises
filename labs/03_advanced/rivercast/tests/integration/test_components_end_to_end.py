@@ -87,9 +87,11 @@ def test_full_component_chain(isolated_config: Path, tmp_path: Path, lab_root: P
     dataset_id = str(transform_result.metadata["dataset_id"])
     dataset_short_id = dataset_id.removeprefix("sha256:")[:12]
 
-    # 3. validate: quality gate over the silver window.
+    # 3. validate: quality gate over the silver window. now_utc anchored to
+    # the fixture window (not the real wall clock) so the freshness check
+    # doesn't fail as time passes.
     validate_result = validate_run(
-        config_path=isolated_config, lab_root=tmp_path, silver_key=silver_key
+        config_path=isolated_config, lab_root=tmp_path, silver_key=silver_key, now_utc=WINDOW_END
     )
     assert validate_result.status == "ok", validate_result.metadata
     assert validate_result.metadata["passed"] is True
