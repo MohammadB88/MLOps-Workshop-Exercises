@@ -1,0 +1,579 @@
+# PIPELINE DEFINITION
+# Name: rivercast-model
+# Description: Scheduled model pipeline: check the training trigger, train and evaluate a candidate against the current champion, and promote it only after a real deploy/smoke-test passes. Educational system; not a flood-warning product.
+# Inputs:
+#    config_path: str
+#    dataset_id: str
+#    dataset_short_id: str
+#    horizon_hours: int
+#    lab_root: str
+#    model_name: str [Default: 'ridge']
+#    seed: int [Default: 42.0]
+#    test_persistence_mae_cm: float [Default: 0.0]
+components:
+  comp-condition-1:
+    dag:
+      tasks:
+        evaluate-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-evaluate-task
+          dependentTasks:
+          - train-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                componentInputParameter: pipelinechannel--dataset_short_id
+              horizon_hours:
+                componentInputParameter: pipelinechannel--horizon_hours
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              model_name:
+                componentInputParameter: pipelinechannel--model_name
+              model_path:
+                taskOutputParameter:
+                  outputParameterKey: model_path
+                  producerTask: train-task
+          taskInfo:
+            name: evaluate-task
+        promote-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-promote-task
+          dependentTasks:
+          - evaluate-task
+          - register-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                componentInputParameter: pipelinechannel--dataset_short_id
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              model_version:
+                taskOutputParameter:
+                  outputParameterKey: model_version
+                  producerTask: register-task
+              registered_model_name:
+                taskOutputParameter:
+                  outputParameterKey: registered_model_name
+                  producerTask: register-task
+              test_mae_cm:
+                taskOutputParameter:
+                  outputParameterKey: mae_cm
+                  producerTask: evaluate-task
+              test_persistence_mae_cm:
+                componentInputParameter: pipelinechannel--test_persistence_mae_cm
+              test_rmse_cm:
+                taskOutputParameter:
+                  outputParameterKey: rmse_cm
+                  producerTask: evaluate-task
+              test_skill_vs_persistence:
+                taskOutputParameter:
+                  outputParameterKey: skill_vs_persistence
+                  producerTask: evaluate-task
+          taskInfo:
+            name: promote-task
+        register-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-register-task
+          dependentTasks:
+          - evaluate-task
+          - train-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_id:
+                componentInputParameter: pipelinechannel--dataset_id
+              horizon_hours:
+                componentInputParameter: pipelinechannel--horizon_hours
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              model_name:
+                componentInputParameter: pipelinechannel--model_name
+              run_id:
+                taskOutputParameter:
+                  outputParameterKey: mlflow_run_id
+                  producerTask: train-task
+          taskInfo:
+            name: register-task
+        train-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-train-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                componentInputParameter: pipelinechannel--dataset_short_id
+              horizon_hours:
+                componentInputParameter: pipelinechannel--horizon_hours
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              model_name:
+                componentInputParameter: pipelinechannel--model_name
+              seed:
+                componentInputParameter: pipelinechannel--seed
+          taskInfo:
+            name: train-task
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--dataset_id:
+          parameterType: STRING
+        pipelinechannel--dataset_short_id:
+          parameterType: STRING
+        pipelinechannel--horizon_hours:
+          parameterType: NUMBER_INTEGER
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--model_name:
+          parameterType: STRING
+        pipelinechannel--seed:
+          parameterType: NUMBER_INTEGER
+        pipelinechannel--test_persistence_mae_cm:
+          parameterType: NUMBER_DOUBLE
+        pipelinechannel--trigger-task-should_train:
+          parameterType: BOOLEAN
+  comp-evaluate-task:
+    executorLabel: exec-evaluate-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_short_id:
+          parameterType: STRING
+        horizon_hours:
+          parameterType: NUMBER_INTEGER
+        lab_root:
+          parameterType: STRING
+        model_name:
+          parameterType: STRING
+        model_path:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        mae_cm:
+          parameterType: NUMBER_DOUBLE
+        rmse_cm:
+          parameterType: NUMBER_DOUBLE
+        skill_vs_persistence:
+          parameterType: NUMBER_DOUBLE
+        status:
+          parameterType: STRING
+  comp-promote-task:
+    executorLabel: exec-promote-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_short_id:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        model_version:
+          parameterType: STRING
+        registered_model_name:
+          parameterType: STRING
+        test_mae_cm:
+          parameterType: NUMBER_DOUBLE
+        test_persistence_mae_cm:
+          parameterType: NUMBER_DOUBLE
+        test_rmse_cm:
+          parameterType: NUMBER_DOUBLE
+        test_skill_vs_persistence:
+          parameterType: NUMBER_DOUBLE
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-register-task:
+    executorLabel: exec-register-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_id:
+          parameterType: STRING
+        horizon_hours:
+          parameterType: NUMBER_INTEGER
+        lab_root:
+          parameterType: STRING
+        model_name:
+          parameterType: STRING
+        run_id:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        model_version:
+          parameterType: STRING
+        registered_model_name:
+          parameterType: STRING
+        status:
+          parameterType: STRING
+  comp-train-task:
+    executorLabel: exec-train-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_short_id:
+          parameterType: STRING
+        horizon_hours:
+          parameterType: NUMBER_INTEGER
+        lab_root:
+          parameterType: STRING
+        model_name:
+          parameterType: STRING
+        seed:
+          parameterType: NUMBER_INTEGER
+    outputDefinitions:
+      parameters:
+        mlflow_run_id:
+          parameterType: STRING
+        model_path:
+          parameterType: STRING
+        status:
+          parameterType: STRING
+        test_mae_cm:
+          parameterType: NUMBER_DOUBLE
+        test_skill_vs_persistence:
+          parameterType: NUMBER_DOUBLE
+  comp-trigger-task:
+    executorLabel: exec-trigger-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        dataset_short_id:
+          parameterType: STRING
+        horizon_hours:
+          parameterType: NUMBER_INTEGER
+        lab_root:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        reason:
+          parameterType: STRING
+        should_train:
+          parameterType: BOOLEAN
+        status:
+          parameterType: STRING
+deploymentSpec:
+  executors:
+    exec-evaluate-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - evaluate_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef evaluate_task(\n    config_path: str,\n    lab_root: str,\n \
+          \   dataset_short_id: str,\n    horizon_hours: int,\n    model_path: str,\n\
+          \    model_name: str,\n) -> EvaluateOutputs:\n    \"\"\"Re-score the saved\
+          \ training artifact on the untouched test split.\"\"\"\n    from pathlib\
+          \ import Path\n\n    from components.evaluate.component import run\n\n \
+          \   result = run(\n        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        dataset_short_id=dataset_short_id,\n        horizon_hours=horizon_hours,\n\
+          \        model_path=Path(model_path),\n        model_name=model_name,\n\
+          \        split_name=\"test\",\n    )\n    if result.status != \"ok\":\n\
+          \        return EvaluateOutputs(\n            status=result.status, mae_cm=0.0,\
+          \ rmse_cm=0.0, skill_vs_persistence=0.0\n        )\n    return EvaluateOutputs(\n\
+          \        status=result.status,\n        mae_cm=float(result.metadata[\"\
+          mae_cm\"]),\n        rmse_cm=float(result.metadata[\"rmse_cm\"]),\n    \
+          \    skill_vs_persistence=float(result.metadata[\"skill_vs_persistence\"\
+          ]),\n    )\n\n"
+        image: python:3.12
+    exec-promote-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - promote_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef promote_task(\n    config_path: str,\n    lab_root: str,\n  \
+          \  registered_model_name: str,\n    model_version: str,\n    test_mae_cm:\
+          \ float,\n    test_rmse_cm: float,\n    test_persistence_mae_cm: float,\n\
+          \    test_skill_vs_persistence: float,\n    dataset_short_id: str,\n) ->\
+          \ str:\n    \"\"\"Evaluate promotion gates and, if they pass, run the real\n\
+          \    register->challenger->deploy->smoke-test->champion transaction.\n \
+          \   \"\"\"\n    import io\n    from pathlib import Path\n\n    import pandas\
+          \ as pd\n    from components.promote.component import run\n\n    from rivercast.config\
+          \ import load_config\n    from rivercast.storage import create_object_store,\
+          \ zone_key\n\n    config_p = Path(config_path)\n    lab_root_p = Path(lab_root)\n\
+          \    config = load_config(config_p)\n    storage_root = Path(config.storage.root)\n\
+          \    if not storage_root.is_absolute():\n        storage_root = lab_root_p\
+          \ / storage_root\n    store = create_object_store(config.storage.model_copy(update={\"\
+          root\": str(storage_root)}))\n\n    prefix = zone_key(config.storage.zones,\
+          \ \"gold\", f\"training/dataset_id={dataset_short_id}\")\n    dataset =\
+          \ pd.read_parquet(io.BytesIO(store.get_bytes(f\"{prefix}/dataset.parquet\"\
+          )))\n    feature_columns = [\n        c for c in dataset.columns if not\
+          \ c.startswith(\"target_level_\") and c != \"issue_time_utc\"\n    ]\n \
+          \   latest_row = dataset.iloc[-1][feature_columns].fillna(0.0)\n    smoke_test_features\
+          \ = {\n        col: int(latest_row[col]) if col.startswith(\"missing_\"\
+          ) else float(latest_row[col])\n        for col in feature_columns\n    }\n\
+          \n    result = run(\n        config_path=config_p,\n        lab_root=lab_root_p,\n\
+          \        registered_model_name=registered_model_name,\n        model_version=model_version,\n\
+          \        test_mae_cm=test_mae_cm,\n        test_rmse_cm=test_rmse_cm,\n\
+          \        test_persistence_mae_cm=test_persistence_mae_cm,\n        test_skill_vs_persistence=test_skill_vs_persistence,\n\
+          \        smoke_test_features=smoke_test_features,\n    )\n    return result.status\n\
+          \n"
+        image: python:3.12
+    exec-register-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - register_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef register_task(\n    config_path: str,\n    lab_root: str,\n \
+          \   run_id: str,\n    dataset_id: str,\n    horizon_hours: int,\n    model_name:\
+          \ str,\n) -> RegisterOutputs:\n    \"\"\"Register the training run's model\
+          \ as a new candidate version.\"\"\"\n    from pathlib import Path\n\n  \
+          \  from components.register.component import run\n\n    result = run(\n\
+          \        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        run_id=run_id,\n        dataset_id=dataset_id,\n        horizon_hours=horizon_hours,\n\
+          \        model_name=model_name,\n    )\n    if result.status != \"ok\":\n\
+          \        return RegisterOutputs(status=result.status, registered_model_name=\"\
+          \", model_version=\"\")\n    return RegisterOutputs(\n        status=result.status,\n\
+          \        registered_model_name=str(result.metadata[\"registered_model_name\"\
+          ]),\n        model_version=str(result.metadata[\"model_version\"]),\n  \
+          \  )\n\n"
+        image: python:3.12
+    exec-train-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - train_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef train_task(\n    config_path: str,\n    lab_root: str,\n    dataset_short_id:\
+          \ str,\n    horizon_hours: int,\n    model_name: str,\n    seed: int,\n\
+          ) -> TrainOutputs:\n    \"\"\"Train one candidate (and the persistence baseline,\
+          \ internally) against the gold dataset.\"\"\"\n    from pathlib import Path\n\
+          \n    from components.train.component import run\n\n    result = run(\n\
+          \        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        dataset_short_id=dataset_short_id,\n        horizon_hours=horizon_hours,\n\
+          \        model_name=model_name,  # type: ignore[arg-type]\n        seed=seed,\n\
+          \    )\n    if result.status != \"ok\":\n        return TrainOutputs(\n\
+          \            status=result.status,\n            mlflow_run_id=\"\",\n  \
+          \          model_path=\"\",\n            test_mae_cm=0.0,\n            test_skill_vs_persistence=0.0,\n\
+          \        )\n    return TrainOutputs(\n        status=result.status,\n  \
+          \      mlflow_run_id=str(result.metadata[\"mlflow_run_id\"]),\n        model_path=str(result.metadata[\"\
+          model_path\"]),\n        test_mae_cm=float(result.metadata[\"test_mae_cm\"\
+          ]),\n        test_skill_vs_persistence=float(result.metadata[\"test_skill_vs_persistence\"\
+          ]),\n    )\n\n"
+        image: python:3.12
+    exec-trigger-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - trigger_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef trigger_task(\n    config_path: str, lab_root: str, dataset_short_id:\
+          \ str, horizon_hours: int\n) -> TriggerOutputs:\n    \"\"\"Decide whether\
+          \ to train for this dataset/horizon.\"\"\"\n    from pathlib import Path\n\
+          \n    from components.trigger.component import run\n\n    result = run(\n\
+          \        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        dataset_short_id=dataset_short_id,\n        horizon_hours=horizon_hours,\n\
+          \    )\n    if result.status != \"ok\":\n        return TriggerOutputs(\n\
+          \            status=result.status, should_train=False, reason=str(result.metadata.get(\"\
+          error\", \"\"))\n        )\n    return TriggerOutputs(\n        status=result.status,\n\
+          \        should_train=bool(result.metadata[\"should_train\"]),\n       \
+          \ reason=str(result.metadata.get(\"reason\", \"\")),\n    )\n\n"
+        image: python:3.12
+pipelineInfo:
+  description: 'Scheduled model pipeline: check the training trigger, train and evaluate
+    a candidate against the current champion, and promote it only after a real deploy/smoke-test
+    passes. Educational system; not a flood-warning product.'
+  name: rivercast-model
+root:
+  dag:
+    tasks:
+      condition-1:
+        componentRef:
+          name: comp-condition-1
+        dependentTasks:
+        - trigger-task
+        inputs:
+          parameters:
+            pipelinechannel--config_path:
+              componentInputParameter: config_path
+            pipelinechannel--dataset_id:
+              componentInputParameter: dataset_id
+            pipelinechannel--dataset_short_id:
+              componentInputParameter: dataset_short_id
+            pipelinechannel--horizon_hours:
+              componentInputParameter: horizon_hours
+            pipelinechannel--lab_root:
+              componentInputParameter: lab_root
+            pipelinechannel--model_name:
+              componentInputParameter: model_name
+            pipelinechannel--seed:
+              componentInputParameter: seed
+            pipelinechannel--test_persistence_mae_cm:
+              componentInputParameter: test_persistence_mae_cm
+            pipelinechannel--trigger-task-should_train:
+              taskOutputParameter:
+                outputParameterKey: should_train
+                producerTask: trigger-task
+        taskInfo:
+          name: condition-1
+        triggerPolicy:
+          condition: inputs.parameter_values['pipelinechannel--trigger-task-should_train']
+            == true
+      trigger-task:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-trigger-task
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            dataset_short_id:
+              componentInputParameter: dataset_short_id
+            horizon_hours:
+              componentInputParameter: horizon_hours
+            lab_root:
+              componentInputParameter: lab_root
+        taskInfo:
+          name: trigger-task
+  inputDefinitions:
+    parameters:
+      config_path:
+        parameterType: STRING
+      dataset_id:
+        parameterType: STRING
+      dataset_short_id:
+        parameterType: STRING
+      horizon_hours:
+        parameterType: NUMBER_INTEGER
+      lab_root:
+        parameterType: STRING
+      model_name:
+        defaultValue: ridge
+        isOptional: true
+        parameterType: STRING
+      seed:
+        defaultValue: 42.0
+        isOptional: true
+        parameterType: NUMBER_INTEGER
+      test_persistence_mae_cm:
+        defaultValue: 0.0
+        isOptional: true
+        parameterType: NUMBER_DOUBLE
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.17.0

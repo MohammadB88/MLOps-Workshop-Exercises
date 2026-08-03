@@ -1,6 +1,6 @@
-# RiverCast pipeline components (Phase 8; extended in Phase 9)
+# RiverCast pipeline components (Phase 8; extended in Phases 9-10)
 
-Ten single-purpose components under `components/`, each with a plain
+Eleven single-purpose components under `components/`, each with a plain
 `run(...)` function and a thin CLI `main()`. Every component is:
 
 - callable directly as a Python function (from a notebook, a test, or a
@@ -26,6 +26,7 @@ Ten single-purpose components under `components/`, each with a plain
 | `forecast` | champion lookup by alias + scoring | `rivercast-serving` |
 | `deploy` | artifact loadability + prediction-sanity smoke test | `rivercast-serving` |
 | `monitor` | freshness/coverage summary over a silver window | `rivercast-ops` |
+| `trigger` | labeled-row-count + duplicate-run checks against a gold dataset | `rivercast-train` |
 
 The plan's finer-grained Phase 8 component list ("normalize", "feature
 generation", "join labels", "smoke test") maps onto these ten: `transform`
@@ -83,6 +84,40 @@ entirely for that run (PLAN.md Phase 9 schedule: *"if source data is not
 fresh enough: do not issue a forecast ... keep the last deployed model
 unchanged"*). `monitor` and the delayed-metrics join still run regardless —
 they report on the data itself, not on whether a forecast was issued.
+
+## The training trigger and the real promotion transaction (Phase 10)
+
+`components.trigger` decides whether the `rivercast-model` pipeline should
+train at all, per the plan's "check-training-trigger" step. It skips
+(`status="ok"`, `should_train=False`) when either:
+
+- fewer than `thresholds.retraining.min_new_labeled_rows` labeled rows exist
+  for the horizon in the gold dataset (the real committed fixture window
+  naturally has 161/155 trainable rows for 6h/12h, both under the default
+  168 threshold — the skip path is exercised by real data, not a contrived
+  fixture); or
+- an MLflow run already exists for the exact same `dataset_id` + horizon
+  (matched against the gold dataset manifest's full `dataset_id`, not a
+  reconstructed short id — an earlier draft of this component compared the
+  truncated 12-character id against the full hash logged in every run's
+  params and always found zero matches; fixed by reading the manifest's
+  `dataset_id` directly).
+
+The third plan-mandated skip condition ("data quality fails") is not
+re-checked here — `pipelines/model_pipeline.py` only calls `trigger` for a
+dataset whose silver window already passed `components.validate`'s gate
+(Phase 9), so re-implementing the same check against the gold dataset would
+just be duplicated logic over the same underlying data.
+
+`components.promote` now wires a **real** smoke test into its
+register→challenger→deploy→champion transaction instead of an always-pass
+stub: given `smoke_test_features`, it calls `components.deploy.run()`
+in-process (the transaction needs the boolean pass/fail result
+synchronously, so this cannot be a separate KFP task) and only moves
+`champion` if that smoke test actually passes. Omitting
+`smoke_test_features` registers the candidate as `challenger` but leaves
+`champion` untouched — the alias is never moved without evidence the
+artifact actually loads and predicts (CLAUDE.md rule 14).
 
 ## A real upstream bug found and worked around
 

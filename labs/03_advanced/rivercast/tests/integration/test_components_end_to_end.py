@@ -145,22 +145,8 @@ def test_full_component_chain(isolated_config: Path, tmp_path: Path, lab_root: P
     registered_model_name = str(register_result.metadata["registered_model_name"])
     model_version = str(register_result.metadata["model_version"])
 
-    # 8. promote: first model for this horizon -> gates pass -> becomes champion.
-    promote_result = promote_run(
-        config_path=isolated_config,
-        lab_root=tmp_path,
-        registered_model_name=registered_model_name,
-        model_version=model_version,
-        test_mae_cm=float(evaluate_result.metadata["mae_cm"]),
-        test_rmse_cm=float(evaluate_result.metadata["rmse_cm"]),
-        test_persistence_mae_cm=3.24,
-        test_skill_vs_persistence=float(evaluate_result.metadata["skill_vs_persistence"]),
-    )
-    assert promote_result.status == "ok", promote_result.metadata
-    assert promote_result.metadata["approved"] is True
-    assert promote_result.metadata["promoted"] is True
-
-    # 9. deploy: load the now-champion version and smoke-test it with a real
+    # 8. promote: first model for this horizon -> gates pass -> becomes
+    # champion, once the real deploy/smoke-test (Phase 10) passes. A real
     # feature row pulled from the gold dataset (component outputs are kept
     # small and stable, so components don't echo feature columns themselves).
     store = create_object_store(
@@ -185,6 +171,24 @@ def test_full_component_chain(isolated_config: Path, tmp_path: Path, lab_root: P
         for column in feature_columns
     }
 
+    promote_result = promote_run(
+        config_path=isolated_config,
+        lab_root=tmp_path,
+        registered_model_name=registered_model_name,
+        model_version=model_version,
+        test_mae_cm=float(evaluate_result.metadata["mae_cm"]),
+        test_rmse_cm=float(evaluate_result.metadata["rmse_cm"]),
+        test_persistence_mae_cm=3.24,
+        test_skill_vs_persistence=float(evaluate_result.metadata["skill_vs_persistence"]),
+        smoke_test_features=smoke_features,
+    )
+    assert promote_result.status == "ok", promote_result.metadata
+    assert promote_result.metadata["approved"] is True
+    assert promote_result.metadata["promoted"] is True
+
+    # 9. deploy: independently re-verify the now-champion version loads and
+    # smoke-tests cleanly (proves components.deploy also works standalone,
+    # not only as promote's internal transaction step).
     deploy_result = deploy_run(
         config_path=isolated_config,
         lab_root=tmp_path,
