@@ -1,0 +1,16 @@
+# Points the base InferenceService at the OpenShift AI configuration overlay
+# (S3-backed object storage, live MLflow tracking server) instead of the
+# fixture-mode local.yaml baked into the base manifest.
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: rivercast
+spec:
+  predictor:
+    containers:
+      - name: kserve-container
+        env:
+          - name: RIVERCAST_CONFIG
+            value: /app/configs/openshift.yaml
+          - name: MLFLOW_TRACKING_URI
+            value: http://mlflow-tracking.mlflow.svc.cluster.local:80

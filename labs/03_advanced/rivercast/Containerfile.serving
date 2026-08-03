@@ -1,5 +1,7 @@
-# rivercast-serving: forecast, deploy (smoke test), and the future FastAPI
-# application (PLAN.md Phase 8 now; Phase 11 adds src/rivercast/serving/).
+# rivercast-serving: the FastAPI application (PLAN.md Phase 11), plus the
+# forecast/deploy (smoke test) batch components from Phase 8-9, which share
+# this image and can still be run with an explicit command override, e.g.
+# `podman run rivercast-serving python -m components.forecast.component --help`.
 # Immutable tag convention: rivercast-serving:<git-sha>, built in CI or an
 # approved cluster build service, never inside the JupyterLab workbench
 # (CLAUDE.md rules 19-20).
@@ -15,9 +17,11 @@ RUN pip install --no-cache-dir .
 
 COPY configs/ ./configs/
 
+ENV RIVERCAST_CONFIG=/app/configs/local.yaml \
+    RIVERCAST_LAB_ROOT=/app
+
 EXPOSE 8080
 
 USER 1001
 
-ENTRYPOINT ["python", "-m"]
-CMD ["components.forecast.component", "--help"]
+CMD ["python", "-m", "uvicorn", "rivercast.serving.app:app", "--host", "0.0.0.0", "--port", "8080"]

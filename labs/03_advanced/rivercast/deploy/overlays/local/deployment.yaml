@@ -1,0 +1,65 @@
+# Plain Deployment+Service fallback for a cluster without KServe (PLAN.md
+# Phase 11 "deployment strategy": "Keep direct FastAPI-on-OpenShift
+# deployment as a local/development fallback"). Runs the identical
+# rivercast-serving image and uvicorn command as the KServe path
+# (Containerfile.serving CMD) -- only the wrapping resource kind differs.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rivercast-serving
+  labels:
+    app: rivercast-serving
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rivercast-serving
+  template:
+    metadata:
+      labels:
+        app: rivercast-serving
+    spec:
+      containers:
+        - name: rivercast-serving
+          image: rivercast-serving:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: RIVERCAST_CONFIG
+              value: /app/configs/local.yaml
+            - name: RIVERCAST_LAB_ROOT
+              value: /app
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rivercast-serving
+  labels:
+    app: rivercast-serving
+spec:
+  selector:
+    app: rivercast-serving
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

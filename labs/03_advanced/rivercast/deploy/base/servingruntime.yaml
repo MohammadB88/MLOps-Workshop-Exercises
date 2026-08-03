@@ -1,0 +1,39 @@
+# Custom KServe ServingRuntime for the rivercast-serving image (PLAN.md
+# Phase 11 "deployment strategy" order of preference: a stable existing
+# runtime first, otherwise a custom ServingRuntime). RiverCast's FastAPI
+# service is not an MLflow/sklearn pyfunc runtime shape KServe ships
+# out of the box (it multiplexes two horizons behind one process and
+# exposes the plan's own /health, /ready, /metadata, /predict contract), so
+# it runs as a plain HTTP container runtime instead of a pre-built one.
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  name: rivercast-serving-runtime
+  labels:
+    app.kubernetes.io/part-of: rivercast
+spec:
+  supportedModelFormats:
+    - name: rivercast
+      version: "1"
+      autoSelect: true
+  containers:
+    - name: kserve-container
+      # Replaced with an immutable rivercast-serving:<git-sha> digest by the
+      # overlay that references this base (CLAUDE.md rule 11); "latest" here
+      # is only a placeholder so the manifest is self-describing.
+      image: rivercast-serving:latest
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      env:
+        - name: RIVERCAST_CONFIG
+          value: /app/configs/local.yaml
+        - name: RIVERCAST_LAB_ROOT
+          value: /app
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "250m"
+        limits:
+          memory: "1Gi"
+          cpu: "500m"

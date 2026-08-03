@@ -1,0 +1,6 @@
+# Local/development fallback: plain Deployment+Service, no KServe required
+# (PLAN.md Phase 11). Does not build on deploy/base -- base is KServe-only.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml

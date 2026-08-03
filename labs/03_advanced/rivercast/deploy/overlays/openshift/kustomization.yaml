@@ -1,0 +1,11 @@
+# OpenShift AI overlay: real KServe deployment against the openshift.yaml
+# configuration (S3-backed object storage, cluster MLflow tracking server).
+# The image reference here is a placeholder; CI/the cluster build service
+# replaces it with an immutable rivercast-serving:<git-sha> digest before
+# apply (CLAUDE.md rule 11) -- this repo does not build or push images.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+patches:
+  - path: inferenceservice-patch.yaml

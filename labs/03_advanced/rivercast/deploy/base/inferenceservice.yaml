@@ -1,0 +1,45 @@
+# KServe InferenceService for the RiverCast champion-serving FastAPI app
+# (PLAN.md Phase 11). Pairs with servingruntime.yaml's custom
+# rivercast-serving-runtime. Readiness/liveness use the plan's own /ready and
+# /health endpoints -- KServe's default readiness probing otherwise assumes a
+# model-server shape this app does not have.
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: rivercast
+  labels:
+    app.kubernetes.io/part-of: rivercast
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 1
+    containers:
+      - name: kserve-container
+        image: rivercast-serving:latest
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        env:
+          - name: RIVERCAST_CONFIG
+            value: /app/configs/local.yaml
+          - name: RIVERCAST_LAB_ROOT
+            value: /app
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 15
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
