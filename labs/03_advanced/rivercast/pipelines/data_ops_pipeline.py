@@ -143,8 +143,15 @@ def validate_task(config_path: str, lab_root: str, silver_key: str, now_utc: str
 
 
 @dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
-def monitor_task(config_path: str, lab_root: str, silver_key: str, now_utc: str) -> str:
-    """Freshness/coverage summary, independent of whether validation passed."""
+def monitor_task(
+    config_path: str, lab_root: str, silver_key: str, dataset_short_id: str, now_utc: str
+) -> str:
+    """Freshness/coverage summary, independent of whether validation passed,
+    plus (best-effort) delayed performance/drift/retraining-signal per
+    horizon (PLAN.md Phase 12) once ``dataset_short_id`` names a real gold
+    dataset -- passed through even on a failed validation so monitoring
+    still reports on whatever data exists.
+    """
     from datetime import datetime
     from pathlib import Path
 
@@ -154,6 +161,7 @@ def monitor_task(config_path: str, lab_root: str, silver_key: str, now_utc: str)
         config_path=Path(config_path),
         lab_root=Path(lab_root),
         silver_key=silver_key,
+        dataset_short_id=dataset_short_id or None,
         now_utc=datetime.fromisoformat(now_utc),
     )
     return result.status
@@ -329,6 +337,7 @@ def rivercast_data_ops_pipeline(
         config_path=config_path,
         lab_root=lab_root,
         silver_key=transform.outputs["silver_key"],
+        dataset_short_id=transform.outputs["dataset_short_id"],
         now_utc=window_end,
     ).after(transform)
     monitor.set_caching_options(enable_caching=False)

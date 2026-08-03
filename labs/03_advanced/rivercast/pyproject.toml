@@ -24,6 +24,7 @@ dependencies = [
     "mlflow==3.15.0",
     "fastapi==0.141.1",
     "uvicorn==0.52.1",
+    "evidently==0.7.21",
 ]
 
 [project.optional-dependencies]
@@ -74,8 +75,8 @@ check_untyped_defs = true
 
 # No published type stubs for these; their public surface used here
 # (sklearn Pipeline/Ridge/HistGradientBoostingRegressor, joblib dump/load,
-# kfp dsl/compiler) is small and stable enough to type-check by hand at call
-# sites instead.
+# kfp dsl/compiler, evidently Report/Dataset/presets) is small and stable
+# enough to type-check by hand at call sites instead.
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "joblib.*", "kfp.*"]
+module = ["sklearn.*", "joblib.*", "kfp.*", "evidently.*"]
 ignore_missing_imports = true

@@ -5,7 +5,7 @@ store zone so it can later be joined with the matured observation (once the
 target time has passed) to compute delayed accuracy metrics (Phase 9's
 "join-matured-predictions" / "calculate-delayed-metrics" pipeline steps,
 extended by Phase 12's monitoring). ``actual_cm``/``error_cm`` start unset
-and are filled in by :func:`rivercast.monitoring.delayed.join_matured_predictions`
+and are filled in by :func:`rivercast.processing.delayed_metrics.join_matured_predictions`
 once a real observation exists at ``target_time_utc`` — the record is never
 rewritten before that, only extended.
 """

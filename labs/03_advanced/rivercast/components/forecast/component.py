@@ -5,7 +5,7 @@ Loads the champion model version for one horizon by MLflow alias, scores one
 feature row, and writes a :class:`~rivercast.contracts.predictions.PredictionRecord`
 to ``predictions/horizon_hours=<h>/issued_at=<ts>-<id>.json`` so a later
 pipeline run can join it against the matured observation
-(``rivercast.monitoring.delayed.join_matured_predictions``) once
+(``rivercast.processing.delayed_metrics.join_matured_predictions``) once
 ``target_time_utc`` has passed.
 
 Container image: ``rivercast-serving`` (Containerfile.serving).

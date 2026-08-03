@@ -158,11 +158,28 @@ class RetrainingThresholds(_FrozenModel):
     min_new_labeled_rows: int = Field(gt=0)
 
 
+class MonitoringThresholds(_FrozenModel):
+    # A rolling-window delayed MAE this many times the training-time
+    # persistence MAE (Phase 6 baseline) is a performance-degradation
+    # retraining signal. Drift alone (below) never triggers retraining
+    # (ADR 0003) -- only this metric does.
+    performance_degradation_mae_ratio: float = Field(gt=1.0)
+    # Minimum matured predictions before a rolling performance check is
+    # meaningful; fewer than this and the window is reported but not used
+    # as a retraining signal (too noisy to trust).
+    min_matured_predictions_for_signal: int = Field(gt=0)
+    # Evidently DriftedColumnsCount share above this raises a drift warning
+    # in the monitoring report. Advisory only (rule: drift triggers
+    # investigation, not automatic retraining).
+    drift_share_warning_threshold: float = Field(gt=0, le=1)
+
+
 class Thresholds(_FrozenModel):
     data_quality: DataQualityThresholds
     labels: LabelThresholds
     promotion: PromotionThresholds
     retraining: RetrainingThresholds
+    monitoring: MonitoringThresholds
 
 
 class RivercastConfig(_FrozenModel):

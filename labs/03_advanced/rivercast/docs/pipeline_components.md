@@ -25,7 +25,7 @@ Eleven single-purpose components under `components/`, each with a plain
 | `promote` | `rivercast.models.registry` (gates + promotion transaction) | `rivercast-train` |
 | `forecast` | champion lookup by alias + scoring | `rivercast-serving` |
 | `deploy` | artifact loadability + prediction-sanity smoke test | `rivercast-serving` |
-| `monitor` | freshness/coverage summary over a silver window | `rivercast-ops` |
+| `monitor` | freshness/coverage summary over a silver window, plus (Phase 12) `rivercast.monitoring.{data_quality,drift,performance}` for delayed model-quality, drift, and the retraining-decision artifact | `rivercast-ops` |
 | `trigger` | labeled-row-count + duplicate-run checks against a gold dataset | `rivercast-train` |
 
 The plan's finer-grained Phase 8 component list ("normalize", "feature
@@ -50,6 +50,10 @@ promote                      -> challenger alias -> deploy validation -> champio
 deploy                       -> loads a registered version, scores one row, checks it's finite
 forecast                     -> loads the champion by run_id, scores one feature row
 ```
+
+`monitor`'s Phase 12 delayed-performance, drift, and retraining-signal
+additions are documented in `docs/operations.md`, including the Evidently
+0.7 API note (the plan's reference links describe a removed legacy API).
 
 `tests/integration/test_components_end_to_end.py` runs every step above in
 sequence against real (isolated, offline) object storage and MLflow tracking

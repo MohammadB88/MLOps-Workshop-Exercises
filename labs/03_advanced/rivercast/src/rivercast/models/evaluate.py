@@ -34,11 +34,11 @@ class EvaluationReport:
     slices: list[SliceMetric]
 
 
-def _mae(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+def mae_cm(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(np.mean(np.abs(y_true - y_pred)))
 
 
-def _rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+def rmse_cm(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
 
 
@@ -62,8 +62,8 @@ def _slice_metrics(
                 slice_name=slice_name,
                 slice_value=str(value),
                 n=len(group),
-                mae_cm=_mae(group["y_true"].to_numpy(), group["y_pred"].to_numpy()),
-                rmse_cm=_rmse(group["y_true"].to_numpy(), group["y_pred"].to_numpy()),
+                mae_cm=mae_cm(group["y_true"].to_numpy(), group["y_pred"].to_numpy()),
+                rmse_cm=rmse_cm(group["y_true"].to_numpy(), group["y_pred"].to_numpy()),
             )
         )
     return out
@@ -105,9 +105,9 @@ def evaluate_predictions(
         raise ValueError("y_true, y_pred, and persistence_pred must have equal length")
 
     y_true_arr = y_true.to_numpy(dtype=float)
-    mae = _mae(y_true_arr, y_pred)
-    rmse = _rmse(y_true_arr, y_pred)
-    persistence_mae = _mae(y_true_arr, persistence_pred)
+    mae = mae_cm(y_true_arr, y_pred)
+    rmse = rmse_cm(y_true_arr, y_pred)
+    persistence_mae = mae_cm(y_true_arr, persistence_pred)
 
     slices: list[SliceMetric] = []
     for name, labels in (slice_labels or {}).items():

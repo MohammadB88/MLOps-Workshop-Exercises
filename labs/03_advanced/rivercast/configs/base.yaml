@@ -101,3 +101,14 @@ thresholds:
     # Minimum newly labeled rows before a scheduled run actually trains
     # (~1 week of hourly labels).
     min_new_labeled_rows: 168
+  monitoring:
+    # Rolling delayed MAE at or above persistence_mae * this ratio is a
+    # performance-degradation retraining signal (ADR 0003: drift alone
+    # never triggers retraining -- only this metric does).
+    performance_degradation_mae_ratio: 1.2
+    # Fewer matured predictions than this and the rolling check is reported
+    # but withheld as a signal (too few points to trust).
+    min_matured_predictions_for_signal: 24
+    # Evidently DriftedColumnsCount share above this raises a warning in the
+    # monitoring report; advisory only, never a retraining trigger by itself.
+    drift_share_warning_threshold: 0.5
