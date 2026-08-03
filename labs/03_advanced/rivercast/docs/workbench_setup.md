@@ -70,4 +70,6 @@ mounted persistently; fix the workbench storage before continuing.
 - **No Docker inside the workbench** (CLAUDE.md rule 19): container images are
   built by CI or an approved cluster build service from Phase 8 onward.
 - Fixture mode is the default (`configs/local.yaml`); live PEGELONLINE access
-  is a deliberate opt-in and stays blocked until Phase 2 pins station UUIDs.
+  is a deliberate opt-in (`mode: live`) — see `docs/workshop_exercises.md`
+  ("Live mode") for how to enable it and its current storage-backend
+  limitation.

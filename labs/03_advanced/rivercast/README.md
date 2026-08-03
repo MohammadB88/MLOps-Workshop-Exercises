@@ -20,6 +20,14 @@ validated candidates to a KServe-compatible endpoint on OpenShift AI.
 - monitoring with delayed ground truth and conditional scheduled retraining;
 - fixture-first development: the whole lab runs without internet access.
 
+## Get started
+
+Trainees: start with [docs/workshop_exercises.md](docs/workshop_exercises.md)
+after setting up the workbench per
+[docs/workbench_setup.md](docs/workbench_setup.md). Instructors: see
+[docs/instructor_guide.md](docs/instructor_guide.md) for provisioning, mode
+selection, and reset procedures between attempts or cohorts.
+
 ## Status
 
 **In development.** Phases, acceptance criteria, and deliverables are defined
@@ -34,8 +42,9 @@ in [PLAN.md](PLAN.md); current phase status is tracked in
 | [0003](docs/adr/0003-pipeline-boundaries.md) | Two KFP pipelines, MLflow registry with champion/challenger, KServe serving |
 
 Configuration (stations, horizons, storage paths, thresholds) lives in
-[configs/base.yaml](configs/base.yaml). The trainee-facing lab guide will be
-written once the underlying phases exist.
+[configs/base.yaml](configs/base.yaml). Known gaps before this is fully
+production-shaped (S3 storage backend, live-cluster KServe/KFP verification)
+are listed in [docs/instructor_guide.md](docs/instructor_guide.md#known-gaps-to-mention-if-asked).
 
 Contributors and coding agents: read [CLAUDE.md](CLAUDE.md) for the operating
 rules before changing anything in this directory.
