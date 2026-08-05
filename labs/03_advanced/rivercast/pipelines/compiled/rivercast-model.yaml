@@ -1,6 +1,6 @@
 # PIPELINE DEFINITION
 # Name: rivercast-model
-# Description: Scheduled model pipeline: check the training trigger, train and evaluate a candidate against the current champion, and promote it only after a real deploy/smoke-test passes. Educational system; not a flood-warning product.
+# Description: [v1] Scheduled model pipeline: check the training trigger, train and evaluate a candidate against the current champion, and promote it only after a real deploy/smoke-test passes. Educational system; not a flood-warning product.
 # Inputs:
 #    config_path: str
 #    dataset_id: str
@@ -8,10 +8,11 @@
 #    horizon_hours: int
 #    lab_root: str
 #    model_name: str [Default: 'ridge']
+#    pipeline_run_id: str [Default: '']
 #    seed: int [Default: 42.0]
 #    test_persistence_mae_cm: float [Default: 0.0]
 components:
-  comp-condition-1:
+  comp-condition-2:
     dag:
       tasks:
         evaluate-task:
@@ -172,6 +173,76 @@ components:
           parameterType: NUMBER_DOUBLE
         status:
           parameterType: STRING
+  comp-exit-handler-1:
+    dag:
+      tasks:
+        condition-2:
+          componentRef:
+            name: comp-condition-2
+          dependentTasks:
+          - trigger-task
+          inputs:
+            parameters:
+              pipelinechannel--config_path:
+                componentInputParameter: pipelinechannel--config_path
+              pipelinechannel--dataset_id:
+                componentInputParameter: pipelinechannel--dataset_id
+              pipelinechannel--dataset_short_id:
+                componentInputParameter: pipelinechannel--dataset_short_id
+              pipelinechannel--horizon_hours:
+                componentInputParameter: pipelinechannel--horizon_hours
+              pipelinechannel--lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              pipelinechannel--model_name:
+                componentInputParameter: pipelinechannel--model_name
+              pipelinechannel--seed:
+                componentInputParameter: pipelinechannel--seed
+              pipelinechannel--test_persistence_mae_cm:
+                componentInputParameter: pipelinechannel--test_persistence_mae_cm
+              pipelinechannel--trigger-task-should_train:
+                taskOutputParameter:
+                  outputParameterKey: should_train
+                  producerTask: trigger-task
+          taskInfo:
+            name: condition-2
+          triggerPolicy:
+            condition: inputs.parameter_values['pipelinechannel--trigger-task-should_train']
+              == true
+        trigger-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-trigger-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                componentInputParameter: pipelinechannel--dataset_short_id
+              horizon_hours:
+                componentInputParameter: pipelinechannel--horizon_hours
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+          taskInfo:
+            name: trigger-task
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--dataset_id:
+          parameterType: STRING
+        pipelinechannel--dataset_short_id:
+          parameterType: STRING
+        pipelinechannel--horizon_hours:
+          parameterType: NUMBER_INTEGER
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--model_name:
+          parameterType: STRING
+        pipelinechannel--seed:
+          parameterType: NUMBER_INTEGER
+        pipelinechannel--test_persistence_mae_cm:
+          parameterType: NUMBER_DOUBLE
   comp-promote-task:
     executorLabel: exec-promote-task
     inputDefinitions:
@@ -221,6 +292,38 @@ components:
         registered_model_name:
           parameterType: STRING
         status:
+          parameterType: STRING
+  comp-run-lock-acquire-task:
+    executorLabel: exec-run-lock-acquire-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        pipeline_name:
+          parameterType: STRING
+        run_id:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-run-lock-release-task:
+    executorLabel: exec-run-lock-release-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        pipeline_name:
+          parameterType: STRING
+        run_id:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
           parameterType: STRING
   comp-train-task:
     executorLabel: exec-train-task
@@ -411,6 +514,77 @@ deploymentSpec:
           ]),\n        model_version=str(result.metadata[\"model_version\"]),\n  \
           \  )\n\n"
         image: python:3.12
+    exec-run-lock-acquire-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - run_lock_acquire_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef run_lock_acquire_task(config_path: str, lab_root: str, pipeline_name:\
+          \ str, run_id: str) -> str:\n    \"\"\"First DAG task: refuse to start if\
+          \ another run of this pipeline is\n    still in flight (PLAN.md Phase 15\
+          \ duplicate-run protection).\n    \"\"\"\n    from pathlib import Path\n\
+          \n    from components.run_lock.component import acquire\n\n    result =\
+          \ acquire(\n        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        pipeline_name=pipeline_name,\n        run_id=run_id,\n    )\n \
+          \   return result.status\n\n"
+        image: python:3.12
+    exec-run-lock-release-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - run_lock_release_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef run_lock_release_task(config_path: str, lab_root: str, pipeline_name:\
+          \ str, run_id: str) -> str:\n    \"\"\"Last DAG task: always release the\
+          \ lock, even on upstream failure.\"\"\"\n    from pathlib import Path\n\n\
+          \    from components.run_lock.component import release\n\n    result = release(\n\
+          \        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        pipeline_name=pipeline_name,\n        run_id=run_id,\n    )\n \
+          \   return result.status\n\n"
+        image: python:3.12
     exec-train-task:
       container:
         args:
@@ -495,18 +669,18 @@ deploymentSpec:
           \ reason=str(result.metadata.get(\"reason\", \"\")),\n    )\n\n"
         image: python:3.12
 pipelineInfo:
-  description: 'Scheduled model pipeline: check the training trigger, train and evaluate
-    a candidate against the current champion, and promote it only after a real deploy/smoke-test
-    passes. Educational system; not a flood-warning product.'
+  description: '[v1] Scheduled model pipeline: check the training trigger, train and
+    evaluate a candidate against the current champion, and promote it only after a
+    real deploy/smoke-test passes. Educational system; not a flood-warning product.'
   name: rivercast-model
 root:
   dag:
     tasks:
-      condition-1:
+      exit-handler-1:
         componentRef:
-          name: comp-condition-1
+          name: comp-exit-handler-1
         dependentTasks:
-        - trigger-task
+        - run-lock-acquire-task
         inputs:
           parameters:
             pipelinechannel--config_path:
@@ -525,32 +699,46 @@ root:
               componentInputParameter: seed
             pipelinechannel--test_persistence_mae_cm:
               componentInputParameter: test_persistence_mae_cm
-            pipelinechannel--trigger-task-should_train:
-              taskOutputParameter:
-                outputParameterKey: should_train
-                producerTask: trigger-task
         taskInfo:
-          name: condition-1
-        triggerPolicy:
-          condition: inputs.parameter_values['pipelinechannel--trigger-task-should_train']
-            == true
-      trigger-task:
-        cachingOptions:
-          enableCache: true
+          name: release-run-lock
+      run-lock-acquire-task:
+        cachingOptions: {}
         componentRef:
-          name: comp-trigger-task
+          name: comp-run-lock-acquire-task
         inputs:
           parameters:
             config_path:
               componentInputParameter: config_path
-            dataset_short_id:
-              componentInputParameter: dataset_short_id
-            horizon_hours:
-              componentInputParameter: horizon_hours
             lab_root:
               componentInputParameter: lab_root
+            pipeline_name:
+              runtimeValue:
+                constant: rivercast-model
+            run_id:
+              componentInputParameter: pipeline_run_id
         taskInfo:
-          name: trigger-task
+          name: run-lock-acquire-task
+      run-lock-release-task:
+        cachingOptions: {}
+        componentRef:
+          name: comp-run-lock-release-task
+        dependentTasks:
+        - exit-handler-1
+        inputs:
+          parameters:
+            config_path:
+              componentInputParameter: config_path
+            lab_root:
+              componentInputParameter: lab_root
+            pipeline_name:
+              runtimeValue:
+                constant: rivercast-model
+            run_id:
+              componentInputParameter: pipeline_run_id
+        taskInfo:
+          name: run-lock-release-task
+        triggerPolicy:
+          strategy: ALL_UPSTREAM_TASKS_COMPLETED
   inputDefinitions:
     parameters:
       config_path:
@@ -565,6 +753,10 @@ root:
         parameterType: STRING
       model_name:
         defaultValue: ridge
+        isOptional: true
+        parameterType: STRING
+      pipeline_run_id:
+        defaultValue: ''
         isOptional: true
         parameterType: STRING
       seed:

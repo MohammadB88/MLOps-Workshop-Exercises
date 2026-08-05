@@ -1,6 +1,6 @@
 # PIPELINE DEFINITION
 # Name: rivercast-data-ops
-# Description: Hourly data-operations pipeline: fetch, archive, validate, issue forecasts from the champion model, and calculate delayed accuracy once predictions mature. Educational system; not a flood-warning product.
+# Description: [v1] Hourly data-operations pipeline: fetch, archive, validate, issue forecasts from the champion model, and calculate delayed accuracy once predictions mature. Educational system; not a flood-warning product.
 # Inputs:
 #    config_path: str
 #    fixture_dir: str [Default: '']
@@ -12,12 +12,12 @@
 #    window_end: str
 #    window_start: str
 components:
-  comp-condition-2:
+  comp-condition-3:
     dag:
       tasks:
-        for-loop-3:
+        for-loop-4:
           componentRef:
-            name: comp-for-loop-3
+            name: comp-for-loop-4
           inputs:
             parameters:
               pipelinechannel--config_path:
@@ -41,7 +41,7 @@ components:
             items:
               inputParameter: pipelinechannel--horizons_hours
           taskInfo:
-            name: for-loop-3
+            name: for-loop-4
     inputDefinitions:
       parameters:
         pipelinechannel--config_path:
@@ -76,6 +76,172 @@ components:
       parameters:
         Output:
           parameterType: STRING
+  comp-exit-handler-1:
+    dag:
+      tasks:
+        condition-3:
+          componentRef:
+            name: comp-condition-3
+          dependentTasks:
+          - transform-task
+          - validate-task
+          inputs:
+            parameters:
+              pipelinechannel--config_path:
+                componentInputParameter: pipelinechannel--config_path
+              pipelinechannel--horizons_hours:
+                componentInputParameter: pipelinechannel--horizons_hours
+              pipelinechannel--lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              pipelinechannel--pipeline_run_id:
+                componentInputParameter: pipelinechannel--pipeline_run_id
+              pipelinechannel--transform-task-dataset_short_id:
+                taskOutputParameter:
+                  outputParameterKey: dataset_short_id
+                  producerTask: transform-task
+              pipelinechannel--validate-task-Output:
+                taskOutputParameter:
+                  outputParameterKey: Output
+                  producerTask: validate-task
+              pipelinechannel--window_end:
+                componentInputParameter: pipelinechannel--window_end
+          taskInfo:
+            name: condition-3
+          triggerPolicy:
+            condition: inputs.parameter_values['pipelinechannel--validate-task-Output']
+              == 'ok'
+        delayed-metrics-task:
+          cachingOptions: {}
+          componentRef:
+            name: comp-delayed-metrics-task
+          dependentTasks:
+          - transform-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              horizons_hours:
+                componentInputParameter: pipelinechannel--horizons_hours
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              now_utc:
+                componentInputParameter: pipelinechannel--window_end
+              silver_key:
+                taskOutputParameter:
+                  outputParameterKey: silver_key
+                  producerTask: transform-task
+          taskInfo:
+            name: delayed-metrics-task
+        for-loop-2:
+          componentRef:
+            name: comp-for-loop-2
+          inputs:
+            parameters:
+              pipelinechannel--config_path:
+                componentInputParameter: pipelinechannel--config_path
+              pipelinechannel--fixture_dir:
+                componentInputParameter: pipelinechannel--fixture_dir
+              pipelinechannel--lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              pipelinechannel--parameter:
+                componentInputParameter: pipelinechannel--parameter
+              pipelinechannel--station_uuids:
+                componentInputParameter: pipelinechannel--station_uuids
+              pipelinechannel--window_end:
+                componentInputParameter: pipelinechannel--window_end
+              pipelinechannel--window_start:
+                componentInputParameter: pipelinechannel--window_start
+          iteratorPolicy:
+            parallelismLimit: 4
+          parameterIterator:
+            itemInput: pipelinechannel--station_uuids-loop-item
+            items:
+              inputParameter: pipelinechannel--station_uuids
+          taskInfo:
+            name: for-loop-2
+        monitor-task:
+          cachingOptions: {}
+          componentRef:
+            name: comp-monitor-task
+          dependentTasks:
+          - transform-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              dataset_short_id:
+                taskOutputParameter:
+                  outputParameterKey: dataset_short_id
+                  producerTask: transform-task
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              now_utc:
+                componentInputParameter: pipelinechannel--window_end
+              silver_key:
+                taskOutputParameter:
+                  outputParameterKey: silver_key
+                  producerTask: transform-task
+          taskInfo:
+            name: monitor-task
+        transform-task:
+          cachingOptions:
+            enableCache: true
+          componentRef:
+            name: comp-transform-task
+          dependentTasks:
+          - for-loop-2
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              end:
+                componentInputParameter: pipelinechannel--window_end
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              start:
+                componentInputParameter: pipelinechannel--window_start
+          taskInfo:
+            name: transform-task
+        validate-task:
+          cachingOptions: {}
+          componentRef:
+            name: comp-validate-task
+          dependentTasks:
+          - transform-task
+          inputs:
+            parameters:
+              config_path:
+                componentInputParameter: pipelinechannel--config_path
+              lab_root:
+                componentInputParameter: pipelinechannel--lab_root
+              now_utc:
+                componentInputParameter: pipelinechannel--window_end
+              silver_key:
+                taskOutputParameter:
+                  outputParameterKey: silver_key
+                  producerTask: transform-task
+          taskInfo:
+            name: validate-task
+    inputDefinitions:
+      parameters:
+        pipelinechannel--config_path:
+          parameterType: STRING
+        pipelinechannel--fixture_dir:
+          parameterType: STRING
+        pipelinechannel--horizons_hours:
+          parameterType: LIST
+        pipelinechannel--lab_root:
+          parameterType: STRING
+        pipelinechannel--parameter:
+          parameterType: STRING
+        pipelinechannel--pipeline_run_id:
+          parameterType: STRING
+        pipelinechannel--station_uuids:
+          parameterType: LIST
+        pipelinechannel--window_end:
+          parameterType: STRING
+        pipelinechannel--window_start:
+          parameterType: STRING
   comp-fetch-station-task:
     executorLabel: exec-fetch-station-task
     inputDefinitions:
@@ -98,7 +264,7 @@ components:
       parameters:
         Output:
           parameterType: STRING
-  comp-for-loop-1:
+  comp-for-loop-2:
     dag:
       tasks:
         fetch-station-task:
@@ -141,7 +307,7 @@ components:
           parameterType: STRING
         pipelinechannel--window_start:
           parameterType: STRING
-  comp-for-loop-3:
+  comp-for-loop-4:
     dag:
       tasks:
         forecast-task:
@@ -215,6 +381,38 @@ components:
         now_utc:
           parameterType: STRING
         silver_key:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-run-lock-acquire-task:
+    executorLabel: exec-run-lock-acquire-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        pipeline_name:
+          parameterType: STRING
+        run_id:
+          parameterType: STRING
+    outputDefinitions:
+      parameters:
+        Output:
+          parameterType: STRING
+  comp-run-lock-release-task:
+    executorLabel: exec-run-lock-release-task
+    inputDefinitions:
+      parameters:
+        config_path:
+          parameterType: STRING
+        lab_root:
+          parameterType: STRING
+        pipeline_name:
+          parameterType: STRING
+        run_id:
           parameterType: STRING
     outputDefinitions:
       parameters:
@@ -445,6 +643,77 @@ deploymentSpec:
           \ dataset_short_id=dataset_short_id or None,\n        now_utc=datetime.fromisoformat(now_utc),\n\
           \    )\n    return result.status\n\n"
         image: python:3.12
+    exec-run-lock-acquire-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - run_lock_acquire_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef run_lock_acquire_task(config_path: str, lab_root: str, pipeline_name:\
+          \ str, run_id: str) -> str:\n    \"\"\"First DAG task: refuse to start if\
+          \ another run of this pipeline is\n    still in flight (PLAN.md Phase 15\
+          \ duplicate-run protection).\n    \"\"\"\n    from pathlib import Path\n\
+          \n    from components.run_lock.component import acquire\n\n    result =\
+          \ acquire(\n        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        pipeline_name=pipeline_name,\n        run_id=run_id,\n    )\n \
+          \   return result.status\n\n"
+        image: python:3.12
+    exec-run-lock-release-task:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - run_lock_release_task
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'rivercast' \
+          \ &&  python3 -m pip install --quiet --no-warn-script-location 'kfp==2.17.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"\
+          $0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef run_lock_release_task(config_path: str, lab_root: str, pipeline_name:\
+          \ str, run_id: str) -> str:\n    \"\"\"Last DAG task: always release the\
+          \ lock, even on upstream failure.\"\"\"\n    from pathlib import Path\n\n\
+          \    from components.run_lock.component import release\n\n    result = release(\n\
+          \        config_path=Path(config_path),\n        lab_root=Path(lab_root),\n\
+          \        pipeline_name=pipeline_name,\n        run_id=run_id,\n    )\n \
+          \   return result.status\n\n"
+        image: python:3.12
     exec-transform-task:
       container:
         args:
@@ -523,156 +792,78 @@ deploymentSpec:
           \n"
         image: python:3.12
 pipelineInfo:
-  description: 'Hourly data-operations pipeline: fetch, archive, validate, issue forecasts
-    from the champion model, and calculate delayed accuracy once predictions mature.
-    Educational system; not a flood-warning product.'
+  description: '[v1] Hourly data-operations pipeline: fetch, archive, validate, issue
+    forecasts from the champion model, and calculate delayed accuracy once predictions
+    mature. Educational system; not a flood-warning product.'
   name: rivercast-data-ops
 root:
   dag:
     tasks:
-      condition-2:
+      exit-handler-1:
         componentRef:
-          name: comp-condition-2
+          name: comp-exit-handler-1
         dependentTasks:
-        - transform-task
-        - validate-task
-        inputs:
-          parameters:
-            pipelinechannel--config_path:
-              componentInputParameter: config_path
-            pipelinechannel--horizons_hours:
-              componentInputParameter: horizons_hours
-            pipelinechannel--lab_root:
-              componentInputParameter: lab_root
-            pipelinechannel--pipeline_run_id:
-              componentInputParameter: pipeline_run_id
-            pipelinechannel--transform-task-dataset_short_id:
-              taskOutputParameter:
-                outputParameterKey: dataset_short_id
-                producerTask: transform-task
-            pipelinechannel--validate-task-Output:
-              taskOutputParameter:
-                outputParameterKey: Output
-                producerTask: validate-task
-            pipelinechannel--window_end:
-              componentInputParameter: window_end
-        taskInfo:
-          name: condition-2
-        triggerPolicy:
-          condition: inputs.parameter_values['pipelinechannel--validate-task-Output']
-            == 'ok'
-      delayed-metrics-task:
-        cachingOptions: {}
-        componentRef:
-          name: comp-delayed-metrics-task
-        dependentTasks:
-        - transform-task
-        inputs:
-          parameters:
-            config_path:
-              componentInputParameter: config_path
-            horizons_hours:
-              componentInputParameter: horizons_hours
-            lab_root:
-              componentInputParameter: lab_root
-            now_utc:
-              componentInputParameter: window_end
-            silver_key:
-              taskOutputParameter:
-                outputParameterKey: silver_key
-                producerTask: transform-task
-        taskInfo:
-          name: delayed-metrics-task
-      for-loop-1:
-        componentRef:
-          name: comp-for-loop-1
+        - run-lock-acquire-task
         inputs:
           parameters:
             pipelinechannel--config_path:
               componentInputParameter: config_path
             pipelinechannel--fixture_dir:
               componentInputParameter: fixture_dir
+            pipelinechannel--horizons_hours:
+              componentInputParameter: horizons_hours
             pipelinechannel--lab_root:
               componentInputParameter: lab_root
             pipelinechannel--parameter:
               componentInputParameter: parameter
+            pipelinechannel--pipeline_run_id:
+              componentInputParameter: pipeline_run_id
             pipelinechannel--station_uuids:
               componentInputParameter: station_uuids
             pipelinechannel--window_end:
               componentInputParameter: window_end
             pipelinechannel--window_start:
               componentInputParameter: window_start
-        iteratorPolicy:
-          parallelismLimit: 4
-        parameterIterator:
-          itemInput: pipelinechannel--station_uuids-loop-item
-          items:
-            inputParameter: pipelinechannel--station_uuids
         taskInfo:
-          name: for-loop-1
-      monitor-task:
+          name: release-run-lock
+      run-lock-acquire-task:
         cachingOptions: {}
         componentRef:
-          name: comp-monitor-task
-        dependentTasks:
-        - transform-task
+          name: comp-run-lock-acquire-task
         inputs:
           parameters:
             config_path:
               componentInputParameter: config_path
-            dataset_short_id:
-              taskOutputParameter:
-                outputParameterKey: dataset_short_id
-                producerTask: transform-task
             lab_root:
               componentInputParameter: lab_root
-            now_utc:
-              componentInputParameter: window_end
-            silver_key:
-              taskOutputParameter:
-                outputParameterKey: silver_key
-                producerTask: transform-task
+            pipeline_name:
+              runtimeValue:
+                constant: rivercast-data-ops
+            run_id:
+              componentInputParameter: pipeline_run_id
         taskInfo:
-          name: monitor-task
-      transform-task:
-        cachingOptions:
-          enableCache: true
-        componentRef:
-          name: comp-transform-task
-        dependentTasks:
-        - for-loop-1
-        inputs:
-          parameters:
-            config_path:
-              componentInputParameter: config_path
-            end:
-              componentInputParameter: window_end
-            lab_root:
-              componentInputParameter: lab_root
-            start:
-              componentInputParameter: window_start
-        taskInfo:
-          name: transform-task
-      validate-task:
+          name: run-lock-acquire-task
+      run-lock-release-task:
         cachingOptions: {}
         componentRef:
-          name: comp-validate-task
+          name: comp-run-lock-release-task
         dependentTasks:
-        - transform-task
+        - exit-handler-1
         inputs:
           parameters:
             config_path:
               componentInputParameter: config_path
             lab_root:
               componentInputParameter: lab_root
-            now_utc:
-              componentInputParameter: window_end
-            silver_key:
-              taskOutputParameter:
-                outputParameterKey: silver_key
-                producerTask: transform-task
+            pipeline_name:
+              runtimeValue:
+                constant: rivercast-data-ops
+            run_id:
+              componentInputParameter: pipeline_run_id
         taskInfo:
-          name: validate-task
+          name: run-lock-release-task
+        triggerPolicy:
+          strategy: ALL_UPSTREAM_TASKS_COMPLETED
   inputDefinitions:
     parameters:
       config_path:

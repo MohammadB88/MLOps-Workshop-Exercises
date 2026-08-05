@@ -64,6 +64,50 @@ from kfp import compiler, dsl
 _BASE_IMAGE = "python:3.12"
 _PACKAGE = "rivercast"  # placeholder package spec; a pinned image replaces this per Phase 8/13
 
+PIPELINE_VERSION = "1"
+"""Bumped when the DAG shape or a step's contract changes in a way a
+consumer of the compiled YAML should notice (PLAN.md Phase 15
+"reproducibility: pipeline versions"). Embedded in the pipeline description
+below and asserted by ``tests/unit/test_pipeline_versions.py`` so a
+compile-and-forget edit can't silently drift the two apart.
+"""
+
+_PIPELINE_NAME = "rivercast-data-ops"
+
+
+@dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
+def run_lock_acquire_task(config_path: str, lab_root: str, pipeline_name: str, run_id: str) -> str:
+    """First DAG task: refuse to start if another run of this pipeline is
+    still in flight (PLAN.md Phase 15 duplicate-run protection).
+    """
+    from pathlib import Path
+
+    from components.run_lock.component import acquire
+
+    result = acquire(
+        config_path=Path(config_path),
+        lab_root=Path(lab_root),
+        pipeline_name=pipeline_name,
+        run_id=run_id,
+    )
+    return result.status
+
+
+@dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
+def run_lock_release_task(config_path: str, lab_root: str, pipeline_name: str, run_id: str) -> str:
+    """Last DAG task: always release the lock, even on upstream failure."""
+    from pathlib import Path
+
+    from components.run_lock.component import release
+
+    result = release(
+        config_path=Path(config_path),
+        lab_root=Path(lab_root),
+        pipeline_name=pipeline_name,
+        run_id=run_id,
+    )
+    return result.status
+
 
 @dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
 def fetch_station_task(
@@ -282,8 +326,8 @@ def delayed_metrics_task(
 @dsl.pipeline(
     name="rivercast-data-ops",
     description=(
-        "Hourly data-operations pipeline: fetch, archive, validate, issue "
-        "forecasts from the champion model, and calculate delayed accuracy "
+        f"[v{PIPELINE_VERSION}] Hourly data-operations pipeline: fetch, archive, validate, "
+        "issue forecasts from the champion model, and calculate delayed accuracy "
         "once predictions mature. Educational system; not a flood-warning "
         "product."
     ),
@@ -306,75 +350,99 @@ def rivercast_data_ops_pipeline(
     caller (CLI or a KFP recurring run) resolves them from ``configs/*.yaml``
     once and passes the resolved values through.
     """
-    fetch_tasks = []
-    with dsl.ParallelFor(station_uuids, parallelism=4) as station_uuid:
-        fetch_task = fetch_station_task(
-            config_path=config_path,
-            lab_root=lab_root,
-            station_uuid=station_uuid,
-            parameter=parameter,
-            start=window_start,
-            end=window_end,
-            fixture_dir=fixture_dir,
-        )
-        fetch_task.set_caching_options(enable_caching=False)
-        fetch_tasks.append(fetch_task)
-
-    transform = transform_task(
-        config_path=config_path, lab_root=lab_root, start=window_start, end=window_end
-    ).after(*fetch_tasks)
-    # Deterministic given its bronze inputs -- default caching stays enabled.
-
-    validate = validate_task(
+    lock = run_lock_acquire_task(
         config_path=config_path,
         lab_root=lab_root,
-        silver_key=transform.outputs["silver_key"],
-        now_utc=window_end,
-    ).after(transform)
-    validate.set_caching_options(enable_caching=False)
+        pipeline_name=_PIPELINE_NAME,
+        run_id=pipeline_run_id,
+    )
+    lock.set_caching_options(enable_caching=False)
 
-    monitor = monitor_task(
+    release = run_lock_release_task(
         config_path=config_path,
         lab_root=lab_root,
-        silver_key=transform.outputs["silver_key"],
-        dataset_short_id=transform.outputs["dataset_short_id"],
-        now_utc=window_end,
-    ).after(transform)
-    monitor.set_caching_options(enable_caching=False)
+        pipeline_name=_PIPELINE_NAME,
+        run_id=pipeline_run_id,
+    )
+    release.set_caching_options(enable_caching=False)
 
-    # Real freshness/quality gate: forecasting only runs when validate_task
-    # actually reported "ok" (PLAN.md Phase 9 schedule -- a stale or invalid
-    # window must not issue a forecast). forecast_task itself still fails
-    # closed independently (no champion, bad horizon) if ever called
-    # directly outside this gate. horizons_hours is a pipeline-parameter
-    # channel, not a plain Python list, at compile time -- iterate it with
-    # dsl.ParallelFor, the same as station_uuids above, rather than a bare
-    # `for` loop (which raises "PipelineParameterChannel object is not
-    # iterable").
-    # Kept as nested `with` blocks (not combined into one `with` statement):
-    # dsl.If / dsl.ParallelFor are KFP DAG-scoping context managers, not
-    # ordinary ones, and combining them changes which tasks group under
-    # which control-flow node.
-    with dsl.If(validate.output == "ok"):  # noqa: SIM117
-        with dsl.ParallelFor(horizons_hours, parallelism=2) as horizon:
-            forecast = forecast_task(
+    # ExitHandler guarantees release_task runs once the group below exits,
+    # whether every task inside succeeded or one of them failed (KFP's
+    # `.after()` chaining alone would skip a downstream task once anything
+    # upstream fails, which is exactly the case -- a bad fetch/validate --
+    # where releasing the lock matters most; PLAN.md Phase 15 duplicate-run
+    # protection). ``lock`` itself sits outside the handler: if acquiring
+    # the lock fails, there is nothing to release.
+    with dsl.ExitHandler(release, name="release-run-lock"):
+        fetch_tasks = []
+        with dsl.ParallelFor(station_uuids, parallelism=4) as station_uuid:
+            fetch_task = fetch_station_task(
                 config_path=config_path,
                 lab_root=lab_root,
-                horizon_hours=horizon,
-                issue_time=window_end,
-                dataset_short_id=transform.outputs["dataset_short_id"],
-                pipeline_run_id=pipeline_run_id,
-            ).after(validate)
-            forecast.set_caching_options(enable_caching=False)
+                station_uuid=station_uuid,
+                parameter=parameter,
+                start=window_start,
+                end=window_end,
+                fixture_dir=fixture_dir,
+            ).after(lock)
+            fetch_task.set_caching_options(enable_caching=False)
+            fetch_tasks.append(fetch_task)
 
-    delayed_metrics = delayed_metrics_task(
-        config_path=config_path,
-        lab_root=lab_root,
-        silver_key=transform.outputs["silver_key"],
-        horizons_hours=horizons_hours,
-        now_utc=window_end,
-    ).after(transform)
-    delayed_metrics.set_caching_options(enable_caching=False)
+        transform = transform_task(
+            config_path=config_path, lab_root=lab_root, start=window_start, end=window_end
+        ).after(*fetch_tasks)
+        # Deterministic given its bronze inputs -- default caching stays enabled.
+
+        validate = validate_task(
+            config_path=config_path,
+            lab_root=lab_root,
+            silver_key=transform.outputs["silver_key"],
+            now_utc=window_end,
+        ).after(transform)
+        validate.set_caching_options(enable_caching=False)
+
+        monitor = monitor_task(
+            config_path=config_path,
+            lab_root=lab_root,
+            silver_key=transform.outputs["silver_key"],
+            dataset_short_id=transform.outputs["dataset_short_id"],
+            now_utc=window_end,
+        ).after(transform)
+        monitor.set_caching_options(enable_caching=False)
+
+        # Real freshness/quality gate: forecasting only runs when validate_task
+        # actually reported "ok" (PLAN.md Phase 9 schedule -- a stale or invalid
+        # window must not issue a forecast). forecast_task itself still fails
+        # closed independently (no champion, bad horizon) if ever called
+        # directly outside this gate. horizons_hours is a pipeline-parameter
+        # channel, not a plain Python list, at compile time -- iterate it with
+        # dsl.ParallelFor, the same as station_uuids above, rather than a bare
+        # `for` loop (which raises "PipelineParameterChannel object is not
+        # iterable").
+        # Kept as nested `with` blocks (not combined into one `with` statement):
+        # dsl.If / dsl.ParallelFor are KFP DAG-scoping context managers, not
+        # ordinary ones, and combining them changes which tasks group under
+        # which control-flow node.
+        with dsl.If(validate.output == "ok"):  # noqa: SIM117
+            with dsl.ParallelFor(horizons_hours, parallelism=2) as horizon:
+                forecast = forecast_task(
+                    config_path=config_path,
+                    lab_root=lab_root,
+                    horizon_hours=horizon,
+                    issue_time=window_end,
+                    dataset_short_id=transform.outputs["dataset_short_id"],
+                    pipeline_run_id=pipeline_run_id,
+                ).after(validate)
+                forecast.set_caching_options(enable_caching=False)
+
+        delayed_metrics = delayed_metrics_task(
+            config_path=config_path,
+            lab_root=lab_root,
+            silver_key=transform.outputs["silver_key"],
+            horizons_hours=horizons_hours,
+            now_utc=window_end,
+        ).after(transform)
+        delayed_metrics.set_caching_options(enable_caching=False)
 
 
 def compile_pipeline(output_path: str) -> None:

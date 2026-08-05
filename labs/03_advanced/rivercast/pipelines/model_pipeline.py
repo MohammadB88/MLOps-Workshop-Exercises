@@ -63,6 +63,45 @@ from kfp import compiler, dsl
 _BASE_IMAGE = "python:3.12"
 _PACKAGE = "rivercast"  # placeholder package spec; a pinned image replaces this per Phase 8/13
 
+PIPELINE_VERSION = "1"
+"""See ``pipelines/data_ops_pipeline.py``'s ``PIPELINE_VERSION`` docstring."""
+
+_PIPELINE_NAME = "rivercast-model"
+
+
+@dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
+def run_lock_acquire_task(config_path: str, lab_root: str, pipeline_name: str, run_id: str) -> str:
+    """First DAG task: refuse to start if another run of this pipeline is
+    still in flight (PLAN.md Phase 15 duplicate-run protection).
+    """
+    from pathlib import Path
+
+    from components.run_lock.component import acquire
+
+    result = acquire(
+        config_path=Path(config_path),
+        lab_root=Path(lab_root),
+        pipeline_name=pipeline_name,
+        run_id=run_id,
+    )
+    return result.status
+
+
+@dsl.component(base_image=_BASE_IMAGE, packages_to_install=[_PACKAGE])
+def run_lock_release_task(config_path: str, lab_root: str, pipeline_name: str, run_id: str) -> str:
+    """Last DAG task: always release the lock, even on upstream failure."""
+    from pathlib import Path
+
+    from components.run_lock.component import release
+
+    result = release(
+        config_path=Path(config_path),
+        lab_root=Path(lab_root),
+        pipeline_name=pipeline_name,
+        run_id=run_id,
+    )
+    return result.status
+
 
 class TriggerOutputs(NamedTuple):
     status: str
@@ -282,7 +321,7 @@ def promote_task(
 @dsl.pipeline(
     name="rivercast-model",
     description=(
-        "Scheduled model pipeline: check the training trigger, train and "
+        f"[v{PIPELINE_VERSION}] Scheduled model pipeline: check the training trigger, train and "
         "evaluate a candidate against the current champion, and promote it "
         "only after a real deploy/smoke-test passes. Educational system; "
         "not a flood-warning product."
@@ -297,6 +336,7 @@ def rivercast_model_pipeline(
     model_name: str = "ridge",
     seed: int = 42,
     test_persistence_mae_cm: float = 0.0,
+    pipeline_run_id: str = "",
 ) -> None:
     """See the module docstring for the full graph. ``dataset_short_id``/
     ``dataset_id`` are resolved by the caller (the data-ops pipeline's
@@ -305,52 +345,72 @@ def rivercast_model_pipeline(
     resolved values through instead of hiding a config-file dependency
     inside the compiled YAML.
     """
-    trigger = trigger_task(
+    lock = run_lock_acquire_task(
         config_path=config_path,
         lab_root=lab_root,
-        dataset_short_id=dataset_short_id,
-        horizon_hours=horizon_hours,
+        pipeline_name=_PIPELINE_NAME,
+        run_id=pipeline_run_id,
     )
+    lock.set_caching_options(enable_caching=False)
 
-    with dsl.If(trigger.outputs["should_train"] == True):  # noqa: E712
-        train = train_task(
+    release = run_lock_release_task(
+        config_path=config_path,
+        lab_root=lab_root,
+        pipeline_name=_PIPELINE_NAME,
+        run_id=pipeline_run_id,
+    )
+    release.set_caching_options(enable_caching=False)
+
+    # See data_ops_pipeline.py's matching ExitHandler comment: guarantees
+    # the lock is released whether training succeeds, is skipped by the
+    # trigger, or fails partway through (PLAN.md Phase 15).
+    with dsl.ExitHandler(release, name="release-run-lock"):
+        trigger = trigger_task(
             config_path=config_path,
             lab_root=lab_root,
             dataset_short_id=dataset_short_id,
             horizon_hours=horizon_hours,
-            model_name=model_name,
-            seed=seed,
-        ).after(trigger)
+        ).after(lock)
 
-        evaluate = evaluate_task(
-            config_path=config_path,
-            lab_root=lab_root,
-            dataset_short_id=dataset_short_id,
-            horizon_hours=horizon_hours,
-            model_path=train.outputs["model_path"],
-            model_name=model_name,
-        ).after(train)
+        with dsl.If(trigger.outputs["should_train"] == True):  # noqa: E712
+            train = train_task(
+                config_path=config_path,
+                lab_root=lab_root,
+                dataset_short_id=dataset_short_id,
+                horizon_hours=horizon_hours,
+                model_name=model_name,
+                seed=seed,
+            ).after(trigger)
 
-        register = register_task(
-            config_path=config_path,
-            lab_root=lab_root,
-            run_id=train.outputs["mlflow_run_id"],
-            dataset_id=dataset_id,
-            horizon_hours=horizon_hours,
-            model_name=model_name,
-        ).after(evaluate)
+            evaluate = evaluate_task(
+                config_path=config_path,
+                lab_root=lab_root,
+                dataset_short_id=dataset_short_id,
+                horizon_hours=horizon_hours,
+                model_path=train.outputs["model_path"],
+                model_name=model_name,
+            ).after(train)
 
-        promote_task(
-            config_path=config_path,
-            lab_root=lab_root,
-            registered_model_name=register.outputs["registered_model_name"],
-            model_version=register.outputs["model_version"],
-            test_mae_cm=evaluate.outputs["mae_cm"],
-            test_rmse_cm=evaluate.outputs["rmse_cm"],
-            test_persistence_mae_cm=test_persistence_mae_cm,
-            test_skill_vs_persistence=evaluate.outputs["skill_vs_persistence"],
-            dataset_short_id=dataset_short_id,
-        ).after(register)
+            register = register_task(
+                config_path=config_path,
+                lab_root=lab_root,
+                run_id=train.outputs["mlflow_run_id"],
+                dataset_id=dataset_id,
+                horizon_hours=horizon_hours,
+                model_name=model_name,
+            ).after(evaluate)
+
+            promote_task(
+                config_path=config_path,
+                lab_root=lab_root,
+                registered_model_name=register.outputs["registered_model_name"],
+                model_version=register.outputs["model_version"],
+                test_mae_cm=evaluate.outputs["mae_cm"],
+                test_rmse_cm=evaluate.outputs["rmse_cm"],
+                test_persistence_mae_cm=test_persistence_mae_cm,
+                test_skill_vs_persistence=evaluate.outputs["skill_vs_persistence"],
+                dataset_short_id=dataset_short_id,
+            ).after(register)
 
 
 def compile_pipeline(output_path: str) -> None:
