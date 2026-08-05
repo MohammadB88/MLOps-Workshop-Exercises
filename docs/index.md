@@ -45,8 +45,8 @@ Upon completing this lab, you will be equipped to apply MLOps principles and too
     * LLM Instruction Tuning (LLMOps)
 
 ??? dropdown "Advanced Labs"
-    * CI/CD and monitoring (planned)
-
+    * Kubeflow Advanced
+    * ML Security and Compliance 
 
 
 ## From other sources:
